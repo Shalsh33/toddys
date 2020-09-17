@@ -3,19 +3,21 @@
 include_once 'app/model/database.php';
 
 //El admin hereda atributos y funciones de db_conect
-class admin_model_concejales extends data_base_connect{
+class admin_model_personas extends data_base_connect{
 	
 	private $table;
 	
 	function __construct(){
-		//Defino El host, la db y la tabla que vamos a usar
-		$this->table = "concejales";
+		//Defino El host, los datos de la db y la tabla que vamos a usar
+		$this->table = "persona";
 		$host = "localhost";
 		$dbname = "bloque_de_todos";
-		parent::__construct($host,$dbname);
+		$user = "root";
+		$pass = "";
+		parent::__construct($host,$dbname,$user,$pass);
 	}
 	
-	function insertar_concejal($nombre,$periodo,$desc=null,$presidente){
+	function insertar_persona($nombre,$periodo,$desc=null,$presidente){
 		
 		//Si reemplazamos al presidente
 		if ( ($presidente) && ($self->comprobar_existe_presidente()) ){
@@ -24,20 +26,21 @@ class admin_model_concejales extends data_base_connect{
 		
 		// preparamos la consulta
 		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, 'desc', presidente) VALUES (?,?,?,?)");
+			//La consulta tiene que llevar el nombre de la tabla, sino no se ejecuta!
 			
 		//devolvemos el resultado de la ejecución (True/False)
 		return ($query->execute([$nombre,$periodo,$desc,$presidente]));
 		
 	}
 	
-	function borrar_concejal($id){
+	function borrar_persona($id){
 		
-		$query = $this->db->prepare("DELETE FROM $this->table WHERE id_concejal = ?");
+		$query = $this->db->prepare("DELETE FROM $this->table WHERE id = ?");
 		
 		return ($query->execute([$id]));
 	}
 	
-	function editar_concejal($id,$nombre,$periodo,$desc,$presidente){
+	function editar_persona($id,$nombre,$periodo,$desc,$presidente){
 		
 		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, periodo = ?, 'desc' = ? presidente = ? WHERE id = ?");
 		
@@ -63,19 +66,31 @@ class admin_model_concejales extends data_base_connect{
 		$query->execute();
 		
 		//pido el array con los datos de la respuesta (sé que solo hay uno, asique puedo usar fetch)
-		$response = $query->fetch(PDO::FETCH_ASSOC);
+		$response = $query->fetch(PDO::FETCH_OBJ);
 		
-		$this->editar_concejal($response->id_concejal,$response->nombre,$response->periodo,$response->desc,false); //false porque ya no es presidente
+		$this->editar_persona($response->id,$response->nombre,$response->periodo,$response->desc,false); //false porque ya no es presidente
 	}
 	
-	function obtener_concejales(){
+	function obtener_personaes(){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table");
 		
 		$query->execute();
 		
-		$response = $query->fetchAll();
+		$response = $query->fetchAll(PDO::FETCH_OBJ);
 	
 		return ($response);
+	}
+	
+	function obtener_uno($id){
+		
+		$query = $this->db->prepare("SELECT * FROM $this->table WHERE id = ?");
+		
+		$query->execute([$id]);
+		
+		$response = $query->fetch(PDO::FETCH_OBJ);
+		
+		return($response);
+		
 	}
 }
