@@ -1,7 +1,7 @@
 <?php
 
-require_once "app/model/admin.model.php";
-require_once "app/view/admin.view.php";
+require_once "app/Model/admin.model.php";
+require_once "app/View/admin.view.php";
 
 class admin_controller(){
 
