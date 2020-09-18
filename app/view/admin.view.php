@@ -6,23 +6,41 @@ class admin_view{
 		include 'templates/header.php';
 		//include 'templates/interfaz.admin.php';
 		//include 'templates/footer.php';
-		echo "<a class='btn btn-danger btn-sm' href='?action=admin/concejales'>Ver DB personas</a>";
+		echo "<a class='btn btn-danger btn-sm' href='admin/personas'>Ver DB personas</a>";
+		echo "<br><a class='btn btn-danger btn-sm' href='admin/relaciones'>Asignar personas a comisiones</a>";
+		echo "<br><a class='btn btn-danger btn-sm' href='admin/users'>Ver DB usuarios</a>";
+		echo "<br><a class='btn btn-danger btn-sm' href='admin/comisiones'>Ver DB comisiones</a>";
+
 	}
 	
-	function administrar_concejales($datos){
+	function administrar_personas($datos){
 		include 'templates/header.php';
-		echo "<h1> Administrador DB concejales </h1>";
+		echo "<h1> Administrador DB personas </h1>";
 		echo"<ul>";
-		foreach($datos as $concejal){
+		foreach($datos as $persona){
 				echo "
 				<li> 
-					<h2>$concejal[nombre]<h2>
-					<a class='btn btn-danger btn-sm' href='?action=admin/concejales/editar/$concejal[id_concejal]'>Editar</a>
+					<h2>$persona->nombre<h2>
+					<a class='btn btn-danger btn-sm' href='admin/personas/editar/$persona->id'>Editar</a>
 				</li>";
 		}
 		echo "</ul>";
 		
 		
 		//include 'templates/footer.php';
+	}
+	
+	function edicion($persona){
+		include 'templates/header.php';
+		echo "
+		<h1> Administrador personas => Editar: $persona->nombre </h1> 
+		
+		<h2>$persona->nombre<h2>
+		<h2>$persona->periodo<h2>
+		<h2>$persona->descripcion<h2>
+		<h2>$persona->foto<h2>";
+		echo ($persona->presidente) ? ("<h2>Es presidente</h2>") : ("<h2> No es presidente </h2>");
+		
+		include 'templates/form.edit.personas.php';
 	}
 }

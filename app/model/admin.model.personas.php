@@ -25,7 +25,7 @@ class admin_model_personas extends data_base_connect{
 		}
 		
 		// preparamos la consulta
-		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, 'desc', presidente) VALUES (?,?,?,?)");
+		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, descripcion, presidente) VALUES (?,?,?,?)");
 			//La consulta tiene que llevar el nombre de la tabla, sino no se ejecuta!
 			
 		//devolvemos el resultado de la ejecución (True/False)
@@ -37,14 +37,22 @@ class admin_model_personas extends data_base_connect{
 		
 		$query = $this->db->prepare("DELETE FROM $this->table WHERE id = ?");
 		
-		return ($query->execute([$id]));
+		$result = $query->execute([$id]);
+		
+		return($result);
 	}
 	
-	function editar_persona($id,$nombre,$periodo,$desc,$presidente){
+	function editar_persona($id,$nombre,$periodo,$desc,$presidente,$foto){
 		
-		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, periodo = ?, 'desc' = ? presidente = ? WHERE id = ?");
+		if( $presidente && ($this->comprobar_existe_presidente())){
+			$this->reemplazar_presidente();
+		}
 		
-		return ($query->execute([$nombre,$periodo,$desc,$presidente,$id]));
+		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, periodo = ?, descripcion = ?, presidente = ?, foto = ? WHERE id = ?");
+		
+		$result = $query->execute([$nombre,$periodo,$desc,$presidente,$foto,$id]);
+		
+		return($result);
 	}
 	
 	
@@ -68,10 +76,10 @@ class admin_model_personas extends data_base_connect{
 		//pido el array con los datos de la respuesta (sé que solo hay uno, asique puedo usar fetch)
 		$response = $query->fetch(PDO::FETCH_OBJ);
 		
-		$this->editar_persona($response->id,$response->nombre,$response->periodo,$response->desc,false); //false porque ya no es presidente
+		$this->editar_persona($response->id,$response->nombre,$response->periodo,$response->descripcion,false,$response->foto); //false porque ya no es presidente
 	}
 	
-	function obtener_personaes(){
+	function obtener_personas(){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table");
 		

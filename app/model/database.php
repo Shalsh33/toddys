@@ -19,4 +19,3 @@ class data_base_connect{
 	}
 	
 }
-?>
