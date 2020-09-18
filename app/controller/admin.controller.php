@@ -11,7 +11,7 @@ class admin_controller{
 	protected $view;
 
 	function __construct(){
-		$this->model_personas = new admin_model_personas();
+		$this->model_personas = new model_personas();
 		//$this->model_comisiones = new admin_model_comisiones();
 		//$this->model_relaciones = new admin_model_relaciones();
 		$this->view = new admin_view();
