@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-09-2020 a las 15:12:11
+-- Tiempo de generación: 19-09-2020 a las 00:57:01
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.6
 
@@ -24,53 +24,54 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `comisiones`
+-- Estructura de tabla para la tabla `comision`
 --
 
-CREATE TABLE `comisiones` (
-  `id_comision` int(11) NOT NULL,
-  `nombre_comision` varchar(30) NOT NULL,
+CREATE TABLE `comision` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
   `fecha_de_reunion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `comisiones`
+-- Volcado de datos para la tabla `comision`
 --
 
-INSERT INTO `comisiones` (`id_comision`, `nombre_comision`, `fecha_de_reunion`) VALUES
+INSERT INTO `comision` (`id`, `nombre`, `fecha_de_reunion`) VALUES
 (1, 'Hacienda', 'Lunes 11:00 hs'),
 (2, 'Turismo', '1° y 3° Martes 11:00 hs');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `concejales`
+-- Estructura de tabla para la tabla `persona`
 --
 
-CREATE TABLE `concejales` (
-  `id_concejal` int(11) NOT NULL,
+CREATE TABLE `persona` (
+  `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `periodo` varchar(50) NOT NULL,
-  `desc` varchar(350) NOT NULL,
+  `descripcion` varchar(350) NOT NULL,
   `foto` varchar(60) DEFAULT 'none.png',
   `presidente` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `concejales`
+-- Volcado de datos para la tabla `persona`
 --
 
-INSERT INTO `concejales` (`id_concejal`, `nombre`, `periodo`, `desc`, `foto`, `presidente`) VALUES
-(1, 'Persona 1', '2017 - 2021', '', 'asdd.png', 0),
-(2, 'Persona 2', '2019 - 2023', 'asd', 'asd.png', 1);
+INSERT INTO `persona` (`id`, `nombre`, `periodo`, `descripcion`, `foto`, `presidente`) VALUES
+(1, 'Martín Garate', '2019-2023', 'soy M.G.', 'garate.png', 1),
+(2, 'Persona 2', '2019 - 2023', 'asd', 'asd.png', 0),
+(3, 'Graciela Callegari', '2019-2023', 'Tía Grace', 'grace.png', 0);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `relaciones`
+-- Estructura de tabla para la tabla `persona_comision`
 --
 
-CREATE TABLE `relaciones` (
+CREATE TABLE `persona_comision` (
   `id_concejal` int(11) NOT NULL,
   `id_comision` int(11) NOT NULL,
   `cargo` varchar(30) NOT NULL
@@ -81,21 +82,21 @@ CREATE TABLE `relaciones` (
 --
 
 --
--- Indices de la tabla `comisiones`
+-- Indices de la tabla `comision`
 --
-ALTER TABLE `comisiones`
-  ADD PRIMARY KEY (`id_comision`);
+ALTER TABLE `comision`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `concejales`
+-- Indices de la tabla `persona`
 --
-ALTER TABLE `concejales`
-  ADD PRIMARY KEY (`id_concejal`);
+ALTER TABLE `persona`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `relaciones`
+-- Indices de la tabla `persona_comision`
 --
-ALTER TABLE `relaciones`
+ALTER TABLE `persona_comision`
   ADD KEY `id_concejal` (`id_concejal`),
   ADD KEY `id_comision` (`id_comision`);
 
@@ -104,27 +105,27 @@ ALTER TABLE `relaciones`
 --
 
 --
--- AUTO_INCREMENT de la tabla `comisiones`
+-- AUTO_INCREMENT de la tabla `comision`
 --
-ALTER TABLE `comisiones`
-  MODIFY `id_comision` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `comision`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `concejales`
+-- AUTO_INCREMENT de la tabla `persona`
 --
-ALTER TABLE `concejales`
-  MODIFY `id_concejal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `persona`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `relaciones`
+-- Filtros para la tabla `persona_comision`
 --
-ALTER TABLE `relaciones`
-  ADD CONSTRAINT `relaciones_ibfk_1` FOREIGN KEY (`id_concejal`) REFERENCES `concejales` (`id_concejal`),
-  ADD CONSTRAINT `relaciones_ibfk_2` FOREIGN KEY (`id_comision`) REFERENCES `comisiones` (`id_comision`);
+ALTER TABLE `persona_comision`
+  ADD CONSTRAINT `persona_comision_ibfk_1` FOREIGN KEY (`id_concejal`) REFERENCES `persona` (`id`),
+  ADD CONSTRAINT `persona_comision_ibfk_2` FOREIGN KEY (`id_comision`) REFERENCES `comision` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
