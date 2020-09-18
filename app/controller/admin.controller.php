@@ -1,6 +1,6 @@
 <?php
 
-require_once "app/Model/admin.model.personas.php";
+require_once "app/Model/model.personas.php";
 require_once "app/View/admin.view.php";
 
 class admin_controller{
