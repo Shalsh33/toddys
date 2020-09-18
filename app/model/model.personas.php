@@ -3,7 +3,7 @@
 include_once 'app/model/database.php';
 
 //El admin hereda atributos y funciones de db_conect
-class admin_model_personas extends data_base_connect{
+class model_personas extends data_base_connect{
 	
 	private $table;
 	
@@ -12,8 +12,8 @@ class admin_model_personas extends data_base_connect{
 		$this->table = "persona";
 		$host = "localhost";
 		$dbname = "bloque_de_todos";
-		$user = "root";
-		$pass = "";
+		$user = "admin";
+		$pass = "tod0s";
 		parent::__construct($host,$dbname,$user,$pass);
 	}
 	
