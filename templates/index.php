@@ -6,4 +6,5 @@
 		echo "<img src='/includes/img/$persona->foto' alt='$persona->nombre'/>
 				<h2 class='nombre'>$persona->nombre</h2>
 				<p>$persona->descripcion</p>";
-	
+	}
+	echo "</article>";
