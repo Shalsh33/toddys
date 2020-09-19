@@ -12,9 +12,10 @@ class model_personas extends data_base_connect{
 		$this->table = "persona";
 		$host = "localhost";
 		$dbname = "bloque_de_todos";
-		$user = "admin";
-		$pass = "tod0s";
-		parent::__construct($host,$dbname,$user,$pass);
+		$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
+		$user = "root";
+		$pass = "";
+		parent::__construct($dsn,$user,$pass);
 	}
 	
 	function insertar_persona($nombre,$periodo,$desc=null,$presidente){
