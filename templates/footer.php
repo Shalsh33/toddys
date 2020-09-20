@@ -2,7 +2,7 @@
 
 	<section id="logo">
 		
-		<a href="/inicio"> <img src="/includes/img/logo.png" alt="inicio" /></a>
+		<a href="index"> <img src="/includes/img/logo.png" alt="inicio" /></a>
 		
 	</section>
 	
