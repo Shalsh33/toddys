@@ -1,6 +1,6 @@
 <footer>
 
-	<section id="logo">
+	<section class="logo">
 		
 		<a href="index"> <img src="/includes/img/logo.png" alt="inicio" /></a>
 		
