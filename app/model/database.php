@@ -5,7 +5,7 @@ class data_base_connect{
 	protected $db;
 	
 	protected function __construct($dsn,$user,$pass){
-		$this->db = $this->connect($host,$dbname,$user,$pass);
+		$this->db = $this->connect($dsn,$user,$pass);
 	}
 	
 	private function connect($dsn,$user,$pass){

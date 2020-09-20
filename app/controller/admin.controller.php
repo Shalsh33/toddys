@@ -28,9 +28,10 @@ class admin_controller{
 	}
 	
 	function editar_persona($id){
-		$info = $this->model_personas->obtener_uno($id);
 		
-		$this->view->edicion($info);
+		($id) ? $info = $this->model_personas->obtener_uno($id) : $info = null;
+		
+		($info) ? $this->view->edicion($info) : $this -> error_id();
 	}
 	
 	function enviar_edit($id) {
