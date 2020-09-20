@@ -1,5 +1,8 @@
 <?php
+
 require_once 'app/controller/admin.controller.php';
+require_once 'app/controller/index.controller.php';
+
 
 // defino la base url para la construccion de links con urls semánticas
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
@@ -8,7 +11,7 @@ define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] 
 if (!empty($_GET['action'])) {
     $action = $_GET['action'];
 } else {
-    $action = 'admin'; // acción por defecto si no envían
+    $action = 'index'; // acción por defecto si no envían
 }
 
 // parsea la accion Ej: suma/1/2 --> ['suma', 1, 2]
@@ -17,29 +20,57 @@ $params = explode('/', $action);
 // determina que camino seguir según la acción
 switch ($params[0]) {
     case 'admin':
-		$controller = new admin_controller();
-		if (empty($params[1])){
-			$controller->init();
-		}
-		else{
-			switch($params[1]){
-				case 'personas':
-					if(empty($params[2])){
-						$controller->listar_personas();
-					} else{
-						switch($params[2]){
-							case 'editar':
-								$controller->editar_persona($params[3]);
-								break;
-							case 'update':
-								$controller->enviar_edit($params[3]);
-						}
-					}
-					break;
-			}
-		}
+		case_admin($params);
+		break;
+	case 'index':
+		$controller = new index_controller();
+		$controller -> init();
 		break;
     default:
         echo('404 Page not found');
         break;
+}
+
+function case_admin ($params){
+	$controller = new admin_controller();
+	
+	if (empty($params[1])){ //si no tengo más parámetros
+		$controller->init(); //inicio la página
+	}
+	else{
+		
+		switch($params[1]){ //sino, veo a que tabla se quiere acceder
+		
+			case 'personas':
+				if(empty($params[2])){ //Si no tengo otro parámetro,
+					$controller->listar_personas();//listo los elementos en la tabla persona
+				} 
+				else{
+					switch($params[2]){ //sino, vamos a analizar la acción
+						case 'edit': 
+							(!empty($params[3])) ? $controller->editar_persona($params[3]) : $controller -> editar_persona(null); 
+							//interfaz de edición (necesito un 3er párametro, si no está seteado, null)
+							break;
+							
+						case 'update':
+							$controller->enviar_edit($params[3]);
+							break;
+							
+						case 'delete':
+							$controller -> eliminar_persona($params[3]);
+							break;
+							
+						case 'add':
+							$controller -> agregar_persona();
+							break;
+							
+						default:
+							
+					}
+				}
+				break;
+		}
+	}
+	
+	
 }
