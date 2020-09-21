@@ -18,11 +18,11 @@ class model_personas extends data_base_connect{
 		parent::__construct($dsn,$user,$pass);
 	}
 	
-	function insertar_persona($nombre,$periodo,$desc=null,$presidente){
+	function insert_persona($nombre,$periodo,$desc=null,$presidente){
 		
 		//Si reemplazamos al presidente
-		if ( ($presidente) && ($self->comprobar_existe_presidente()) ){
-				$self->reemplazar_presidente();
+		if ( ($presidente) && ($self->check_presidente()) ){
+				$self->replace_presidente();
 		}
 		
 		// preparamos la consulta
@@ -34,7 +34,7 @@ class model_personas extends data_base_connect{
 		
 	}
 	
-	function borrar_persona($id){
+	function delete_persona($id){
 		
 		$query = $this->db->prepare("DELETE FROM $this->table WHERE id = ?");
 		
@@ -43,10 +43,10 @@ class model_personas extends data_base_connect{
 		return($result);
 	}
 	
-	function editar_persona($id,$nombre,$periodo,$desc,$presidente,$foto){
+	function edit_persona($id,$nombre,$periodo,$desc,$presidente,$foto){
 		
-		if( $presidente && ($this->comprobar_existe_presidente())){
-			$this->reemplazar_presidente();
+		if( $presidente && ($this->check_presidente())){
+			$this->replace_presidente();
 		}
 		
 		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, periodo = ?, descripcion = ?, presidente = ?, foto = ? WHERE id = ?");
@@ -57,7 +57,7 @@ class model_personas extends data_base_connect{
 	}
 	
 	
-	function comprobar_existe_presidente(){
+	private function check_presidente(){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table WHERE presidente");
 		
@@ -68,7 +68,7 @@ class model_personas extends data_base_connect{
 		return (!empty($response));
 	}
 	
-	private function reemplazar_presidente(){
+	private function replace_presidente(){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table WHERE presidente");
 		
@@ -77,10 +77,10 @@ class model_personas extends data_base_connect{
 		//pido el array con los datos de la respuesta (sé que solo hay uno, asique puedo usar fetch)
 		$response = $query->fetch(PDO::FETCH_OBJ);
 		
-		$this->editar_persona($response->id,$response->nombre,$response->periodo,$response->descripcion,false,$response->foto); //false porque ya no es presidente
+		$this->edit_persona($response->id,$response->nombre,$response->periodo,$response->descripcion,false,$response->foto); //false porque ya no es presidente
 	}
 	
-	function obtener_personas(){
+	function get_personas(){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table");
 		
@@ -91,7 +91,7 @@ class model_personas extends data_base_connect{
 		return ($response);
 	}
 	
-	function obtener_uno($id){
+	function get_one($id){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table WHERE id = ?");
 		
