@@ -1,0 +1,628 @@
+html, body{
+	margin: 0;
+}
+
+a{
+	text-decoration: none;
+}
+
+ul{
+	padding-inline-start: 0px; /*Se le saca el padding que tienen las listas por defecto*/
+	height: 100%;
+}
+li{
+	list-style-type: none;
+}
+
+
+h1, h2, h3, h4, h5, h6, p{
+	color:black;
+}
+
+nav {
+	display: flex;
+	justify-content: space-between;
+	background-color: rgba(0,0,0,0.9);
+	color:white;
+}
+
+.logo{
+	width: 50%;
+}
+.logo > a > img{
+	margin: 2% 4%;
+	height: 60px;
+}
+
+#links{
+	width: 50%;
+}
+
+#nav-links {
+	display: flex;
+	justify-content: space-around;	
+}
+
+
+
+
+
+
+/***********************************************Estilos generales*****************************************************************/
+
+html, body{
+	height: 100%;
+	scroll-behavior: smooth;
+	margin: 0;
+}
+a{
+	text-decoration: none;
+}
+h1{
+	margin-top: 40px;
+	text-align: center;
+	font-size: 22px;
+}
+ul{
+	padding-inline-start: 0px; /*Se le saca el padding que tienen las listas por defecto*/
+	height: 100%;
+	margin: 0;
+}
+li{
+	list-style-type: none;
+}
+article{
+	margin: 0 5%;
+}
+label {
+	display: none;
+}
+input, textarea, select{
+	padding: 10px 0px 10px 7px;
+	background-color: #fafafa;
+	border-color: #efefef;
+	border-width: 2px;
+	border-style: inset;
+}
+/*Estilo que permite sacar los botones de cambio de valor en un input tipo número*/
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/*Para navegadores que no permitan webkit, se usa moz*/
+input[type=number] { 
+    -moz-appearance:textfield;
+}
+
+/*******************************************************Clases*********************************************************************/
+
+/*Clases condicionales*/
+
+.fijo { 
+  	position: fixed;
+	top:0;
+}
+/*Rojo y verde alternan el color del aviso del captcha*/
+.rojo{
+	color:red;
+}
+.verde{
+	color:green;
+}
+/*Chico baja el tamaño de la fuernte para un aviso largo*/
+.chico{
+	font-size: 9px;
+}
+/*descuento cambia el color del fondo de la fila*/
+.descuento{
+	background-color: rgba(59,89,152,0.5);
+}
+.hidden{
+	visibility: hidden;
+}
+/*******************************************************Clases*********************************************************************/
+
+/*Portada*/
+
+header {
+	opacity: 0.9;
+}
+
+/*Barra de navegación*/
+
+#btn-barra{
+	position: fixed;
+	top: 25px;
+	right: 25px;
+	width: 35px;
+	height: 35px;
+}
+
+#nav{
+	height: 100%;
+	width: 40%;
+	transition: right 0.5s linear;
+	
+}
+.navshow{
+	position:fixed;
+	top:0;
+	right: 0;
+}
+.navhide{
+	position:fixed;
+	top:0;
+	right: -40%;
+}
+
+#nav .logochico {
+	display: none;
+}
+
+#nav a.nav{
+	color:white;
+	font-size:14px;
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+	text-align: center;
+	padding: 25px 0;
+	width: 100%;
+}
+
+
+
+#navLinks{
+	width: 100%;
+}
+#navLinks > ul{
+	margin-top: 50px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+
+/*contenido*/
+.tituloPpal{
+	font-size: 32px;
+}
+
+/*Index*/
+
+.video{
+	width: 300px;
+	height: 240px;
+	display: block;
+	margin: auto;
+}
+/*Diseño gráfico*/
+table{
+	border: solid 1px;
+	border-collapse: collapse;
+	width: 100%;
+}
+#contenido th{
+	border: solid 2px;
+}
+#contenido td{
+	border-bottom: solid 1px;
+	border-right: solid 1px;
+	border-left: solid 1px;
+	text-align: center;
+	padding: 10px;
+ }
+#carga > div{
+	margin: 10px 0;
+	
+}
+#carga input{
+	margin: 10px 0;
+	width: 90%;
+}
+#carga select{
+	width: 94%;
+	height: 40px;
+}
+#carga .condicionCarga{
+	display:grid;
+	grid-template-columns: 1fr 2fr;
+	grid-template-rows: repeat(2,25px);
+	margin-bottom: 20px;
+}
+#carga > div > #descuento{
+	width: auto;
+	grid-column: 1;
+	grid-row: 2;
+	margin-left: 25px;
+}
+#carga > div > p{
+	width: auto;
+	grid-column: 1;
+	grid-row: 1;
+	margin-block-start: 0;
+   	margin-block-end: 0;
+}
+#carga > div > #estatusCarga{
+	grid-column: 2;
+	grid-row: 1/ span 2;
+	margin-block-start: 0.5em;
+	text-align: center;
+}
+#carga .botones{
+	display: grid;
+	grid-template-areas: "add add3r"
+						 "clear erase"
+						 "reset ."
+}
+#carga .botones > button {
+	margin: 10px 5px;
+	height: 30px;
+}
+#add{
+	grid-area: add;
+}
+#add3r{
+	grid-area:add3r;
+}
+#clear{
+	grid-area:clear;
+}
+#erase{
+	grid-area:erase;
+}
+#eraseall{
+	grid-area:reset;
+}
+#contenido  .size{
+	width: 28%;
+}
+#contenido  .servicio{
+	text-align: left;
+	width: 50%;
+}
+#contenido .costo{
+	width: 22%;
+	padding: 5px;
+}
+#carga > #explicacion > p{
+	margin: 10px 0;
+}
+
+#popup{
+	position: fixed;
+	display:flex;
+	align-content: space-around
+}
+#popup > p{
+	flex-grow: 4;
+}
+#popup > button{
+	flex-grow: 1;
+}
+/*3D*/
+
+.destacado > p {
+	text-align: center;
+}
+.destacado img{
+	width: 100%;
+}
+.listaProd {
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-row-gap: 10px;
+	width: 100%;
+	height: 600px;
+}
+.listaProd li{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+.listaProd li>img{
+	max-height: 100%;
+	max-width: 50%;
+	display: block;
+	margin: auto;
+}
+
+/*contacto*/
+
+#contacto{
+	background:url("../img/portadavertical.png") no-repeat fixed center;
+	background-size: contain;
+	background-position: center;
+	margin-top: 30px;
+	min-height: 100%;
+}
+
+.fondoTransparente{ /*div para aplicarle una capa semitransparente a la foto de fondo*/
+	background-color: rgba(255,255,255,0.7);
+	height: inherit;
+}
+
+.divFormulario input, textarea{
+	margin: 5px 10%;
+	width: 80%;
+}
+.elemento-boton{
+	width: 80%;
+	margin: 5px 10%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.elemento-boton > button{
+	height: 40px;
+	width: 100px;
+}
+.elemento-boton > p{
+	margin-left: 10px;
+	font-size: 10px;
+	width: 50%;
+}
+textarea{
+	height: 100px;
+	resize: none;
+}
+
+.mapa{
+	width: 80%;
+	margin: 10% 10% 0 10%;
+	height: 40%;
+}
+
+
+/*footer*/
+footer{
+	margin: 10px 0 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color:rgba(0,0,0,0.9);
+	font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+}
+.logochico{
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.logochico img{
+	height: 60px;
+}
+footer .logochico p {
+	display: none;
+}
+footer p{
+	padding: 0px 10px;
+	color:white;
+}
+footer > p{
+	font-size: 10px;
+}
+
+
+
+
+@media (min-width: 1024px){
+	
+	/*css general*/
+	article{
+		margin: 0 3%;
+	}
+	/*clases generales*/
+	.repartir{
+		display: flex;
+		justify-content: space-between;
+	}
+	/*nav*/
+	#nav{
+		width: 100%;
+		height: auto;
+		align-items:center;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 25px;
+	}
+	#navLinks{
+		width:auto;
+		margin-right: 25px;
+	}
+	#navLinks ul{
+		flex-direction: row;
+		margin-top: 0;
+	}
+	#nav li{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+	#nav a.nav{
+		font-size:18px;
+		display: flex;
+		align-items:center;
+		width: auto;
+		transition: background-color 0.6s linear;
+	}
+	
+	#nav a.nav:hover{
+		background-color: #4B3F92;
+	}
+	
+	#btn-barra{
+		display:none;
+	}
+	
+	#nav .logochico{
+		display: block; 
+	}
+	
+	.logochico{
+		margin-left: 25px;
+		background: url("../img/logo_chico_over.png") no-repeat;
+		background-size: auto 40px;
+	}
+	.logochico a{
+		display: flex;
+	}
+	.logochico img{
+		opacity: 1;
+		transition: opacity 0.2s linear; /*Definimos la animación de fade-out que permite ver la imagen de fondo*/
+	}
+	.logochico img:hover{
+		 opacity: 0;
+	}
+	
+	.listanav{ /*Margen para la lista de la barra de nav*/
+	margin-right: 25px;
+	}
+	
+	/*contenido*/
+	#contenido{
+		display:grid;
+		grid-template-columns: 3fr 1fr 3fr;
+		grid-template-rows: 25px 150px auto;
+	}
+	.tituloPpal{
+		grid-column: 1 / span 3;
+		grid-row:2;
+	}
+	/*Index*/
+	#contenido > #nosotros{
+		grid-column: 1 / span 3;
+		grid-row: 3;
+		display: grid;
+		grid-template-columns: 3fr 1fr 3fr;
+	}
+	#contenido > #nosotros > div{
+		width: 100%;
+	}
+	#acerca{
+		grid-column: 1;
+	}
+	#reel{
+		grid-column: 3;
+	}
+	.video{
+		width: 480px;
+		height: 384px;
+	}
+	
+		/*Página de la tabla*/
+		#carga{
+			grid-column: 1;
+			grid-row:3;
+		}
+		#carga > div > input{
+			width: 40%;
+		}
+		#carga select{
+			width: auto;
+			margin: 10px 5px;
+		}
+		.condicionCarga{
+			grid-template-columns: 1fr 3fr;
+		}
+		#carga > div > #estatusCarga{
+			margin-block-start: 1em;
+		}
+		#contenido table{
+			grid-column: 3;
+			grid-row: 3;
+		}
+		#contenido  .servicio{
+			text-align: left;
+		}
+		#carga .botones > button{
+			margin: 0;
+		}
+		#carga .botones{
+			display: flex;
+		}
+		#explicacion{
+			margin-top: 20px;
+		}
+		
+		/*Pagina 3D*/
+		.destacado {
+			grid-column: 1;
+			grid-row:3;
+		}
+		.listaProd {
+			grid-column: 3;
+			grid-row:3;
+			display: grid;
+			height: auto;
+		}
+		.listaProd li{
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 100%;
+			margin: 10px 0;
+		}
+		.listaProd li>img{
+			max-height: 100%;
+			max-width: 50%;
+			display: block;
+			margin: auto; /*Centra la imagen*/
+		}
+		.listaProd li>p{
+			margin-right: 40px;
+			width: 40%;
+		}
+	
+	
+	/*contacto*/
+
+	.fondoTransparente{
+		display:flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.mapa{
+		width: 600px;
+		height: 400px;
+		margin: 25px;
+	}
+	.form {
+		width: 50%;
+	}
+	.divFormulario{
+		display: flex;
+		justify-content: space-around;
+	}
+	.divFormulario > input{
+		width: 40%;
+		margin: 5px;
+	}
+	.divFormulario > input.doble{
+		width: 90%;
+		margin: 5px 10px;
+	}
+	.divFormulario > textarea{
+		width: 90%;
+		margin: 5px 10px;
+		height: 300px;
+	}
+	.elemento-boton{
+		margin: 5px;
+		width: 30%;
+		flex-direction: column;
+	}
+	.elemento-boton > p{
+		margin: 5px 0;
+		width: 60%;
+		font-size: 14px;
+	}
+	.divFormulario > input.captcha{
+		width: 40%;
+		margin: 5px 10px;
+	}
+	
+	/*footer*/
+	footer .logochico p{
+		display: block;
+	}
+}
