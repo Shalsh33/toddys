@@ -14,7 +14,7 @@ class admin_view{
 		include 'templates/footer.php';
 	}
 	
-	function administrar_personas($datos){
+	function admin_personas($datos){
 		include 'templates/header.php';
 		include 'templates/nav.php';
 		echo "<h1> Administrador DB personas </h1>";
@@ -32,7 +32,7 @@ class admin_view{
 		include 'templates/footer.php';
 	}
 	
-	function edicion($persona){
+	function edit($persona){
 		include 'templates/header.php';
 		include 'templates/nav.php';
 		echo "
