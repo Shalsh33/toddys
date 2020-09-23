@@ -22,24 +22,30 @@ class admin_controller{
 	}
 	
 	function list_personas(){
-		$array_db = $this->model_personas->obtener_personas();
+		$array_db = $this->model_personas->get_personas();
 		
-		$this->view->administrar_personas($array_db);
+		$this->view->admin_personas($array_db);
 	}
 	
 	function edit_persona($id){
 		
-		($id) ? $info = $this->model_personas->obtener_uno($id) : $info = null;
+		($id) ? $info = $this->model_personas->get_one($id) : $info = null;
 		
-		($info) ? $this->view->edicion($info) : $this -> error_id();
+		($info) ? $this->view->edit($info) : $this -> error_id();
 	}
 	
 	function send_edit($id) {
 		
-		(isset($_POST['presidente']) ? $result = $this->model_personas->editar_persona($id, $_POST['nombre'], $_POST['periodo'], $_POST['descripcion'], true, $_POST['foto']); 
-									 : $result = $this->model_personas->editar_persona($id, $_POST['nombre'], $_POST['periodo'], $_POST['descripcion'], false, $_POST['foto']);
+		(isset($_POST['presidente']) ? $result = $this->model_personas->edit_persona($id, $_POST['nombre'], $_POST['periodo'], $_POST['descripcion'], true, $_POST['foto']); 
+									 : $result = $this->model_personas->edit_persona($id, $_POST['nombre'], $_POST['periodo'], $_POST['descripcion'], false, $_POST['foto']);
 		
 		$this->list_personas();
+	}
+	
+	function error_id(){
+		
+		
+		
 	}
 
 	
