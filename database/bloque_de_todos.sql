@@ -40,6 +40,10 @@ CREATE TABLE `comision` (
 INSERT INTO `comision` (`id`, `nombre`, `fecha_de_reunion`) VALUES
 (1, 'Hacienda', 'Lunes 11:00 hs'),
 (2, 'Turismo', '1° y 3° Martes 11:00 hs');
+(3, 'Legislación', '1º y 3º Miércoles 11:00 hs');
+(4, 'Familia', '2º y 4º Martes 11:00 hs');
+(5, 'Obras Públicas y Seguridad', '2º y 4º Miércoles 11:00 hs');
+(6, 'Acción Social y Medio Ambiente', '2º y 4º Jueves 11:00 hs');
 
 -- --------------------------------------------------------
 
@@ -51,7 +55,7 @@ CREATE TABLE `persona` (
   `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `periodo` varchar(50) NOT NULL,
-  `descripcion` varchar(350) NOT NULL,
+  `descripcion` varchar(350) DEFAULT 'No hay descripcion.',
   `foto` varchar(60) DEFAULT 'none.png',
   `presidente` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -62,7 +66,7 @@ CREATE TABLE `persona` (
 
 INSERT INTO `persona` (`id`, `nombre`, `periodo`, `descripcion`, `foto`, `presidente`) VALUES
 (1, 'Martín Garate', '2019-2023', 'soy M.G.', 'garate.png', 1),
-(2, 'Persona 2', '2019 - 2023', 'asd', 'asd.png', 0),
+(2, 'Tatiana Lescano', '2019 - 2023', 'Tati', 'tati.png', 0),
 (3, 'Graciela Callegari', '2019-2023', 'Tía Grace', 'grace.png', 0);
 
 -- --------------------------------------------------------
