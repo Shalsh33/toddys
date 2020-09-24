@@ -38,12 +38,31 @@ class admin_controller{
 		($info) ? $this->view->edit($info) : $this->view->error_id();
 	}
 	
-	function send_edit($id) {
+	function send_edit_persona($id) {
 		
 		(isset($_POST['presidente']) ? $result = $this->model_personas->edit_persona($id, $_POST['nombre'], $_POST['periodo'], $_POST['descripcion'], true, $_POST['foto']); 
 									 : $result = $this->model_personas->edit_persona($id, $_POST['nombre'], $_POST['periodo'], $_POST['descripcion'], false, $_POST['foto']);
 		
-		$this->list_personas();
+		header("Location:admin/personas");
+		//$this->list_personas();
+	}
+	
+	function add_persona(){
+		
+		$this->view->form_alta();
+		
+	}
+	
+	function send_form_persona(){
+		
+		$nombre = (isset($_POST['nombre']) ? $_POST['nombre'] : $this->error_missing_data();
+		$periodo = (isset($_POST['periodo']) ? $_POST['periodo'] :$this->error_missing_data();
+		$descripcion = (isset($_POST['descripcion']) ? $_POST['descripcion'] : null;
+		$presidente = (isset($_POST['presidente']) ? true : false;
+		$foto = (isset($_POST['foto']) ? $_POST['foto'] : null;
+		
+		$this->model_personas->insert_persona($nombre,$periodo,$descripcion,$presidente,$foto); 
+		
 	}
 
 	function list_comisiones(){

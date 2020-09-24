@@ -47,4 +47,11 @@ class admin_view{
 		include 'templates/form.edit.personas.php';
 		include 'templates/footer.php';
 	}
+	
+	function connection_error(){
+		
+		include 'templates/header.php';
+		include 'templates/nav.php';
+		
+	}
 }
