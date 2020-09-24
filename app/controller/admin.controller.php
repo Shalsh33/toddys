@@ -64,6 +64,15 @@ class admin_controller{
 		$this->model_personas->insert_persona($nombre,$periodo,$descripcion,$presidente,$foto); 
 		
 	}
+	
+	function delete_persona($id){
+		
+		$result = ($id) ? $this->model_personas->delete_persona($id) : null;
+		
+		$
+		
+		
+	}
 
 	function list_comisiones(){
 		
