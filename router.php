@@ -59,6 +59,10 @@ function case_admin ($params){
 							(!empty($params[3])) ? $controller->delete_persona($params[3]) : $controller->delete_persona(null);
 							break;
 							
+						case 'elim':
+							$controller->confirm_delete();
+							break;
+						
 						case 'add':
 							$controller->add_persona();
 							break;

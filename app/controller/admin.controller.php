@@ -67,10 +67,19 @@ class admin_controller{
 	
 	function delete_persona($id){
 		
-		$result = ($id) ? $this->model_personas->delete_persona($id) : null;
+		$persona = $this->model_personas->get_one($id);
 		
-		$
+		$this->view->confirm_delete($persona);
 		
+	}
+	
+	function confirm_delete(){
+		
+		$result = ($_POST['id']) ? $this->model_personas->delete_persona($_POST['id]') : null;
+		
+		($result) ? $this->view->action_done() : $this->view->error_param();
+		
+		header("Location:admin/personas");
 		
 	}
 
