@@ -80,7 +80,7 @@ class model_personas extends data_base_connect{
 		//pido el array con los datos de la respuesta (sé que solo hay uno, asique puedo usar fetch)
 		$response = $query->fetch(PDO::FETCH_OBJ);
 		
-		$query = $this -> db -> prepare("UPDATE $this->table SET presidente = ? WHERE id = ?");
+		$query = $this->db->prepare("UPDATE $this->table SET presidente = ? WHERE id = ?");
 		$result = $query->execute([false,$response->id]);
 		
 		return ($result);

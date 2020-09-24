@@ -22,7 +22,7 @@ class model_comisiones extends data_base_connect{
 		
 		//Si la comisión ya está ingresada
 		
-		$id = $this -> exist($nombre);
+		$id = $this->exist($nombre);
 		
 		if ($id){
 			return $id;
@@ -39,7 +39,7 @@ class model_comisiones extends data_base_connect{
 	
 	function delete_comision($id=null,$nombre=null){
 		
-		(! ($id) && $nombre) ? $id = $this -> exist($nombre) : (! $id) ? return "false" : $id = $id;  
+		(! ($id) && $nombre) ? $id = $this->exist($nombre) : (! $id) ? return "false" : $id = $id;  
 		
 		$query = $this->db->prepare("DELETE FROM $this->table WHERE id = ?");
 		

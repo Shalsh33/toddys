@@ -12,17 +12,17 @@ class index_controller {
 	
 	function __construct(){
 		
-		$this -> view = new index_view();
-		$this -> model_personas = new model_personas();
-		//$this -> model_relaciones = new model_relaciones();
+		$this->view = new index_view();
+		$this->model_personas = new model_personas();
+		//$this->model_relaciones = new model_relaciones();
 		
 	}
 	
 	function init(){
 		
-		$datos = $this -> model_personas -> obtener_personas();
+		$datos = $this->model_personas->obtener_personas();
 		
-		$this -> view -> main_page($datos);
+		$this->view->main_page($datos);
 			
 	}
 	
