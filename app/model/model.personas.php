@@ -18,7 +18,7 @@ class model_personas extends data_base_connect{
 		parent::__construct($dsn,$user,$pass);
 	}
 	
-	function insert_persona($nombre,$periodo,$desc=null,$presidente){
+	function insert_persona($nombre,$periodo,$desc=null,$presidente,$foto=null){
 		
 		//Si reemplazamos al presidente
 		if ( ($presidente) && ($self->check_presidente()) ){
@@ -26,11 +26,11 @@ class model_personas extends data_base_connect{
 		}
 		
 		// preparamos la consulta
-		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, descripcion, presidente) VALUES (?,?,?,?)");
+		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, descripcion, presidente, foto) VALUES (?,?,?,?,?)");
 			//La consulta tiene que llevar el nombre de la tabla, sino no se ejecuta!
 			
 		//devolvemos el resultado de la ejecución (True/False)
-		return ($query->execute([$nombre,$periodo,$desc,$presidente]));
+		return ($query->execute([$nombre,$periodo,$desc,$presidente,$foto]));
 		
 	}
 	
@@ -45,8 +45,11 @@ class model_personas extends data_base_connect{
 	
 	function edit_persona($id,$nombre,$periodo,$desc,$presidente,$foto){
 		
-		if( $presidente && ($this->check_presidente())){
-			$this->replace_presidente();
+		if($presidente && ($this->check_presidente())){
+			$result = $this->replace_presidente();
+			if (!($result)) {
+				return false;
+			}
 		}
 		
 		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, periodo = ?, descripcion = ?, presidente = ?, foto = ? WHERE id = ?");
@@ -62,7 +65,7 @@ class model_personas extends data_base_connect{
 		$query = $this->db->prepare("SELECT * FROM $this->table WHERE presidente");
 		
 		$query->execute();
-		$response = $query->fetchAll();
+		$response = $query->fetch(PDO::FETCH_OBJ);
 		
 		//Si hay presidente, devuelve True
 		return (!empty($response));
@@ -77,7 +80,10 @@ class model_personas extends data_base_connect{
 		//pido el array con los datos de la respuesta (sé que solo hay uno, asique puedo usar fetch)
 		$response = $query->fetch(PDO::FETCH_OBJ);
 		
-		$this->edit_persona($response->id,$response->nombre,$response->periodo,$response->descripcion,false,$response->foto); //false porque ya no es presidente
+		$query = $this -> db -> prepare("UPDATE $this->table SET presidente = ? WHERE id = ?");
+		$result = $query->execute([false,$response->id]);
+		
+		return ($result);
 	}
 	
 	function get_personas(){
@@ -100,6 +106,5 @@ class model_personas extends data_base_connect{
 		$response = $query->fetch(PDO::FETCH_OBJ);
 		
 		return($response);
-		
 	}
 }
