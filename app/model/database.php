@@ -17,4 +17,10 @@ class data_base_connect{
 		}
 	}
 	
+	protected function check_connection (){
+		
+		($this -> db) ? return true : return false;
+		
+	}
+	
 }
