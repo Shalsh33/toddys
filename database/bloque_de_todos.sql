@@ -39,10 +39,10 @@ CREATE TABLE `comision` (
 
 INSERT INTO `comision` (`id`, `nombre`, `fecha_de_reunion`) VALUES
 (1, 'Hacienda', 'Lunes 11:00 hs'),
-(2, 'Turismo', '1° y 3° Martes 11:00 hs');
-(3, 'Legislación', '1º y 3º Miércoles 11:00 hs');
-(4, 'Familia', '2º y 4º Martes 11:00 hs');
-(5, 'Obras Públicas y Seguridad', '2º y 4º Miércoles 11:00 hs');
+(2, 'Turismo', '1° y 3° Martes 11:00 hs'),
+(3, 'Legislación', '1º y 3º Miércoles 11:00 hs'),
+(4, 'Familia', '2º y 4º Martes 11:00 hs'),
+(5, 'Obras Públicas y Seguridad', '2º y 4º Miércoles 11:00 hs'),
 (6, 'Acción Social y Medio Ambiente', '2º y 4º Jueves 11:00 hs');
 
 -- --------------------------------------------------------
