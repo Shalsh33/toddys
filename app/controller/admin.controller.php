@@ -35,7 +35,7 @@ class admin_controller{
 		
 		($id) ? $info = $this->model_personas->get_one($id) : $info = null;
 		
-		($info) ? $this->view->edit($info) : $this->view->error_id();
+		($info) ? $this->view->edit($info) : $this->view->error_param();
 	}
 	
 	function send_edit_persona($id) {
@@ -55,8 +55,8 @@ class admin_controller{
 	
 	function send_form_persona(){
 		
-		$nombre = (isset($_POST['nombre']) ? $_POST['nombre'] : $this->error_missing_data();
-		$periodo = (isset($_POST['periodo']) ? $_POST['periodo'] :$this->error_missing_data();
+		$nombre = (isset($_POST['nombre']) ? $_POST['nombre'] : $this->view->error_param();
+		$periodo = (isset($_POST['periodo']) ? $_POST['periodo'] :$this->view->error_param();
 		$descripcion = (isset($_POST['descripcion']) ? $_POST['descripcion'] : null;
 		$presidente = (isset($_POST['presidente']) ? true : false;
 		$foto = (isset($_POST['foto']) ? $_POST['foto'] : null;

@@ -44,14 +44,36 @@ class admin_view{
 		<h2>$persona->foto<h2>";
 		echo ($persona->presidente) ? ("<h2>Es presidente</h2>") : ("<h2> No es presidente </h2>");
 		
-		include 'templates/form.edit.personas.php';
+		include 'templates/form.personas.php';
 		include 'templates/footer.php';
+	}
+	
+	function form_alta(){
+		
+		include 'templates/header.php';
+		include 'templates/nav.php';
+		include 'templates/form.personas.php';
+		include 'templates/footer.php';
+		include 'templates/redirect.php';
+		
+	}
+	
+	function error_param(){
+		
+		include 'templates/header.php';
+		include 'templates/nav.php';
+		echo '<h1>Parámetro mal especificado. Redireccionando a admin page</h1>';
+		include 'templates/footer.php';
+		include 'templates/redirect.php';
+		
 	}
 	
 	function connection_error(){
 		
 		include 'templates/header.php';
 		include 'templates/nav.php';
-		
+		echo '<h1>Db connection error. Redirecting to admin page</h1>';
+		include 'templates/footer.php';
+		include 'templates/redirect.php';
 	}
 }
