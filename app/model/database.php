@@ -19,7 +19,7 @@ class data_base_connect{
 	
 	function check_connection (){
 		
-		($this->db) ? return true : return false;
+		return ($this->db) ? true : false;
 		
 	}
 	

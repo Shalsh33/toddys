@@ -1,12 +1,12 @@
 <?php
 
-require_once('libs/smarty/Smarty.class.php');
+require_once('libs/Smarty.class.php');
 
 class admin_view{
 	
 	private $templateEngine;
 	
-	function __construct{
+	function __construct(){
 	
 		$this->templateEngine = new Smarty();
 		
@@ -15,12 +15,6 @@ class admin_view{
 	function main_page(){
 		$this->templateEngine->assign("titulo","Bloque de Todos Admin");
 		$this->templateEngine->display("templates/admin_main.tpl");
-		/*echo "<a class='btn btn-danger btn-sm' href='admin/personas'>Ver DB personas</a>";
-		echo "<br><a class='btn btn-danger btn-sm' href='admin/relaciones'>Asignar personas a comisiones</a>";
-		echo "<br><a class='btn btn-danger btn-sm' href='admin/users'>Ver DB usuarios</a>";
-		echo "<br><a class='btn btn-danger btn-sm' href='admin/comisiones'>Ver DB comisiones</a>";
-		echo "<br>";
-		include 'templates/footer.php';*/
 	}
 	
 	function admin_personas($datos){

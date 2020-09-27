@@ -1,6 +1,7 @@
 <?php
 
 require_once "app/Model/model.personas.php";
+require_once "app/Model/model.comisiones.php";
 require_once "app/View/admin.view.php";
 
 class admin_controller{
@@ -12,7 +13,7 @@ class admin_controller{
 
 	function __construct(){
 		$this->model_personas = new model_personas();
-		$this->model_comisiones = new admin_model_comisiones();
+		$this->model_comisiones = new model_comisiones();
 		//$this->model_relaciones = new admin_model_relaciones();
 		$this->view = new admin_view();
 	}
@@ -45,7 +46,7 @@ class admin_controller{
 		"nombre" => $_POST['nombre'],
 		"periodo" => $_POST['periodo'],
 		"descripcion" => $_POST['descripcion'],
-		"presidente" => isset($_POST['presidente'],
+		"presidente" => isset($_POST['presidente']),
 		"foto" => $_POST['foto']
 		
 		);
@@ -64,7 +65,7 @@ class admin_controller{
 	
 	function send_form_persona(){
 		
-		if (isset($_POST['nombre']) && isset($_POST['periodo']){
+		if (isset($_POST['nombre']) && isset($_POST['periodo'])){
 			$nombre = $_POST['nombre'];
 			$periodo = $_POST['periodo'];
 		} else {
@@ -72,9 +73,9 @@ class admin_controller{
 			die;
 		}
 			
-		$descripcion = (isset($_POST['descripcion']) ? $_POST['descripcion'] : null;
-		$presidente = (isset($_POST['presidente']);
-		$foto = (isset($_POST['foto']) ? $_POST['foto'] : null;
+		$descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : null;
+		$presidente = (isset($_POST['presidente']));
+		$foto = (isset($_POST['foto'])) ? $_POST['foto'] : null;
 		
 		$this->model_personas->insert_persona($nombre,$periodo,$descripcion,$presidente,$foto); 
 		$this->view->change_ready();
@@ -91,7 +92,7 @@ class admin_controller{
 	
 	function confirm_delete(){
 		
-		$result = ($_POST['id']) ? $this->model_personas->delete_persona($_POST['id]') : null;
+		$result = ($_POST['id']) ? $this->model_personas->delete_persona($_POST['id']) : null;
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		

@@ -39,7 +39,11 @@ class model_comisiones extends data_base_connect{
 	
 	function delete_comision($id=null,$nombre=null){
 		
-		(! ($id) && $nombre) ? $id = $this->exist($nombre) : (! $id) ? return "false" : $id = $id;  
+		if (! ($id || $nombre)){
+			return false;
+		} else if ($nombre) {
+			$id = $this->exist($nombre);
+		}
 		
 		$query = $this->db->prepare("DELETE FROM $this->table WHERE id = ?");
 		
@@ -65,7 +69,7 @@ class model_comisiones extends data_base_connect{
 		$query->execute([$nombre]);
 		$response = $query->fetch(PDO::FETCH_OBJ);
 		
-		(empty(response)) ? return null : return (response[id]);
+		return (empty(response)) ? null : (response[id]);
 	}
 	
 	function get_comisiones(){
