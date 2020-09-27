@@ -40,8 +40,17 @@ class admin_controller{
 	
 	function send_edit_persona($id) {
 		
-		(isset($_POST['presidente']) ? $result = $this->model_personas->edit_persona($id, $_POST['nombre'], $_POST['periodo'], $_POST['descripcion'], true, $_POST['foto']); 
-									 : $result = $this->model_personas->edit_persona($id, $_POST['nombre'], $_POST['periodo'], $_POST['descripcion'], false, $_POST['foto']);
+		$persona = array( 
+		
+		"nombre" => $_POST['nombre'],
+		"periodo" => $_POST['periodo'],
+		"descripcion" => $_POST['descripcion'],
+		"presidente" => (isset($_POST['presidente']),
+		"foto" => $_POST['foto']
+		
+		);
+		
+		$result = $this->model_personas->edit_persona($id,$persona);
 		
 		header("Location:admin/personas");
 		//$this->list_personas();
