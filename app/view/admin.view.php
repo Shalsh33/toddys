@@ -1,23 +1,33 @@
 <?php
 
+require_once('libs/smarty/Smarty.class.php');
+
 class admin_view{
 	
+	private $templateEngine;
+	
+	function __construct{
+	
+		$this->templateEngine = new Smarty();
+		
+	}
+	
 	function main_page(){
-		include 'templates/header.php';
-		include 'templates/nav.php';
-		//include 'templates/interfaz.admin.php';
-		echo "<a class='btn btn-danger btn-sm' href='admin/personas'>Ver DB personas</a>";
+		$this->templateEngine->assign("titulo","Bloque de Todos Admin");
+		$this->templateEngine->display("templates/admin_main.tpl");
+		/*echo "<a class='btn btn-danger btn-sm' href='admin/personas'>Ver DB personas</a>";
 		echo "<br><a class='btn btn-danger btn-sm' href='admin/relaciones'>Asignar personas a comisiones</a>";
 		echo "<br><a class='btn btn-danger btn-sm' href='admin/users'>Ver DB usuarios</a>";
 		echo "<br><a class='btn btn-danger btn-sm' href='admin/comisiones'>Ver DB comisiones</a>";
 		echo "<br>";
-		include 'templates/footer.php';
+		include 'templates/footer.php';*/
 	}
 	
 	function admin_personas($datos){
-		include 'templates/header.php';
-		include 'templates/nav.php';
-		echo "<h1> Administrador DB personas </h1>";
+		
+		$this->templateEngine->assign("datos",$datos);
+		$this->templateEngine->display("templates/admin_personas.tpl");
+		/*echo "<h1> Administrador DB personas </h1>";
 		echo"<ul>";
 		foreach($datos as $persona){
 				echo "
@@ -26,10 +36,7 @@ class admin_view{
 					<a class='btn btn-danger btn-sm' href='admin/personas/editar/$persona->id'>Editar</a>
 				</li>";
 		}
-		echo "</ul>";
-		
-		
-		include 'templates/footer.php';
+		echo "</ul>";*/
 	}
 	
 	function edit($persona){
