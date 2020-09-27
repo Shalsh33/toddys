@@ -13,7 +13,6 @@ class admin_view{
 	}
 	
 	function main_page(){
-		$this->templateEngine->assign("titulo","Bloque de Todos Admin");
 		$this->templateEngine->display("templates/admin_main.tpl");
 	}
 	
