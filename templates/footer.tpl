@@ -13,3 +13,5 @@
 	</section>
 
 </footer>
+
+<script type="module" src="/includes/js/index.js">
