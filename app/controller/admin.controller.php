@@ -45,7 +45,7 @@ class admin_controller{
 		"nombre" => $_POST['nombre'],
 		"periodo" => $_POST['periodo'],
 		"descripcion" => $_POST['descripcion'],
-		"presidente" => (isset($_POST['presidente']),
+		"presidente" => isset($_POST['presidente'],
 		"foto" => $_POST['foto']
 		
 		);
