@@ -1,3 +1,5 @@
+{include file='header.tpl'}
+
 <h1> Administrador DB personas </h1>
 <ul>
 	{foreach from=$datos item=persona}
@@ -7,3 +9,5 @@
 		</li>
 	{/foreach}
 </ul>
+
+{include file='footer.tpl'}
