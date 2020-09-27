@@ -64,13 +64,20 @@ class admin_controller{
 	
 	function send_form_persona(){
 		
-		$nombre = (isset($_POST['nombre']) ? $_POST['nombre'] : $this->view->error_param();
-		$periodo = (isset($_POST['periodo']) ? $_POST['periodo'] : $this->view->error_param();
+		if (isset($_POST['nombre']) && isset($_POST['periodo']){
+			$nombre = $_POST['nombre'];
+			$periodo = $_POST['periodo'];
+		} else {
+			$this->view->error_param();
+			die;
+		}
+			
 		$descripcion = (isset($_POST['descripcion']) ? $_POST['descripcion'] : null;
 		$presidente = (isset($_POST['presidente']);
 		$foto = (isset($_POST['foto']) ? $_POST['foto'] : null;
 		
 		$this->model_personas->insert_persona($nombre,$periodo,$descripcion,$presidente,$foto); 
+		$this->view->change_ready();
 		
 	}
 	
