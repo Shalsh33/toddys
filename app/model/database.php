@@ -13,7 +13,7 @@ class data_base_connect{
 			$connection = new PDO($dsn, $user, $pass);
 			return $connection;
 		}catch (PDOException $error) {
-			return NULL;
+			return null;
 		}
 	}
 	

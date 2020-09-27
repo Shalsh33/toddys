@@ -2,7 +2,7 @@
 
 include_once 'app/model/database.php';
 
-//El admin hereda atributos y funciones de db_conect
+//El model hereda atributos y funciones de db_conect
 class model_comisiones extends data_base_connect{
 	
 	private $table;

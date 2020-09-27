@@ -43,7 +43,7 @@ class model_personas extends data_base_connect{
 		return($result);
 	}
 	
-	function edit_persona($id,$nombre,$periodo,$desc,$presidente,$foto){
+	function edit_persona($id,$persona){
 		
 		if($presidente && ($this->check_presidente())){
 			$result = $this->replace_presidente();
@@ -54,7 +54,7 @@ class model_personas extends data_base_connect{
 		
 		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, periodo = ?, descripcion = ?, presidente = ?, foto = ? WHERE id = ?");
 		
-		$result = $query->execute([$nombre,$periodo,$desc,$presidente,$foto,$id]);
+		$result = $query->execute([$persona['nombre'],$persona['periodo'],$persona['descripcion'],$persona['presidente'],$persona['foto'],$id]);
 		
 		return($result);
 	}
