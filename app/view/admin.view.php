@@ -12,22 +12,14 @@ class admin_view extends view{
 		
 		$this->templateEngine->assign("datos",$datos);
 		$this->templateEngine->display("templates/admin_personas.tpl");
+		
 	}
 	
 	function edit($persona){
-		include 'templates/header.php';
-		include 'templates/nav.php';
-		echo "
-		<h1> Administrador personas => Editar: $persona->nombre </h1> 
-		
-		<h2>$persona->nombre<h2>
-		<h2>$persona->periodo<h2>
-		<h2>$persona->descripcion<h2>
-		<h2>$persona->foto<h2>";
-		echo ($persona->presidente) ? ("<h2>Es presidente</h2>") : ("<h2> No es presidente </h2>");
-		
-		include 'templates/form.personas.php';
-		include 'templates/footer.php';
+	
+		$this->templateEngine->assign("persona",$persona);
+		$this->templateEngine->display("templates/edit_personas.tpl");
+	
 	}
 	
 	function form_alta(){
