@@ -16,7 +16,7 @@
 
 		</footer>
 
-		<script type="module" src="includes/js/index.js"></script>
+		<script type="module" src="includes/js/main.js"></script>
 
 	</body>
 
