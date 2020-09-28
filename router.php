@@ -11,7 +11,7 @@ define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] 
 if (!empty($_GET['action'])) {
     $action = $_GET['action'];
 } else {
-    $action = 'index'; // acción por defecto si no envían
+    $action = 'inicio'; // acción por defecto si no envían
 }
 
 // parsea la accion Ej: suma/1/2 --> ['suma', 1, 2]
@@ -22,9 +22,13 @@ switch ($params[0]) {
     case 'admin':
 		case_admin($params);
 		break;
-	case 'index':
+	case 'inicio':
 		$controller = new index_controller();
 		$controller->init();
+		break;
+	case 'comisiones':
+		$controller = new index_controller();
+		$controller->comisiones();
 		break;
     default:
         echo('404 Page not found');

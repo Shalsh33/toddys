@@ -97,6 +97,32 @@ class model_personas extends data_base_connect{
 		return ($response);
 	}
 	
+	function get_personas_extended(){
+		
+		$query = $this->db->prepare("SELECT * FROM $this->table");
+		
+		$query->execute();
+		
+		$response = $query->fetchAll(PDO::FETCH_OBJ);
+		
+		for($i=0;$i<count($response);$i++){
+			
+			$persona = $response[$i];
+			
+			$query = $this->db->prepare("SELECT comision.nombre FROM `persona` INNER JOIN persona_comision ON persona.id = persona_comision.id_persona 
+			INNER JOIN comision ON persona_comision.id_comision = comision.id WHERE persona.id = ?;"); //recibo las comisiones de las cuales son parte las personas
+			
+			$query->execute([$persona->id]);
+			
+			$comisiones = $query->fetchAll(PDO::FETCH_OBJ);
+			
+			$persona->comisiones = $comisiones;
+			
+		}
+	
+		return ($response);
+	}
+	
 	function get_one($id){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table WHERE id = ?");
