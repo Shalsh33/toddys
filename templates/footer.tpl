@@ -14,4 +14,4 @@
 
 </footer>
 
-<script type="module" src="includes/js/index.js">
+<script type="module" src="includes/js/index.js"></script>
