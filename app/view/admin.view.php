@@ -1,16 +1,8 @@
 <?php
 
-require_once('libs/Smarty.class.php');
+require_once 'app/view/view.php';
 
-class admin_view{
-	
-	private $templateEngine;
-	
-	function __construct(){
-	
-		$this->templateEngine = new Smarty();
-		
-	}
+class admin_view extends view{
 	
 	function main_page(){
 		$this->templateEngine->display("templates/admin_main.tpl");
