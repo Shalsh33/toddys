@@ -52,7 +52,7 @@ function case_admin ($params){
 							break;
 						
 						case 'update':
-							(!empty($params[3])) ? $controller->send_edit_persona($params[3]) : $controller->send_edit_persona(null);
+							$controller->send_edit_persona();
 							break;
 							
 						case 'delete':
