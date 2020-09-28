@@ -32,3 +32,5 @@
 			</nav> <!--Fin de la barra de navegación-->
 			
 		</header>
+		
+		<article id="contenido">
