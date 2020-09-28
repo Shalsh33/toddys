@@ -4,7 +4,7 @@ require_once 'libs/Smarty.class.php';
 
 class view{
 	
-	private $templateEngine;
+	protected $templateEngine;
 	
 	function __construct(){
 	

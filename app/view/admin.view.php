@@ -30,7 +30,7 @@ class admin_view extends view{
 		
 	}
 	
-	function confirm_delete(){
+	function confirm_delete($persona){
 		
 		$this->templateEngine->assign("persona",$persona);
 		$this->templateEngine->assign("action","borrar");
