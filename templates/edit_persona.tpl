@@ -1,7 +1,8 @@
 {include file='header.tpl'}
 
-<h1> Administrador personas => Editar: {$persona->nombre} </h1> 
-<h2>{$persona->nombre}<h2>
+<h1> Administrador personas => Editar: {$persona->nombre} </h1>
+ 
+<h2><span>{$persona->id}</span>_{$persona->nombre}<h2>
 <h2>{$persona->periodo}<h2>
 <h2>{$persona->descripcion}<h2>
 <h2>{$persona->foto}<h2>

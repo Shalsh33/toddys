@@ -39,22 +39,21 @@ class admin_controller{
 		($info) ? $this->view->edit($info) : $this->view->error_param();
 	}
 	
-	function send_edit_persona($id) {
+	function send_edit_persona() {
 		
-		$persona = array( 
-		
+		$id = $_POST['id'];
+		$persona = array(
 		"nombre" => $_POST['nombre'],
 		"periodo" => $_POST['periodo'],
 		"descripcion" => $_POST['descripcion'],
 		"presidente" => isset($_POST['presidente']),
 		"foto" => $_POST['foto']
-		
 		);
 		
-		$result = $this->model_personas->edit_persona($id,$persona);
+		$update = $this->model_personas->edit_persona($id,$persona);
 		
-		header("Location:admin/personas");
-		//$this->list_personas();
+		($update) ? $this->view->action_done() : $this->view->error_param();
+		
 	}
 	
 	function add_persona(){
