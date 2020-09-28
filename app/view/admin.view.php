@@ -18,17 +18,23 @@ class admin_view extends view{
 	function edit($persona){
 	
 		$this->templateEngine->assign("persona",$persona);
-		$this->templateEngine->display("templates/edit_personas.tpl");
+		$this->templateEngine->assign("action","editar");
+		$this->templateEngine->display("templates/abm_personas.tpl");
 	
 	}
 	
 	function form_alta(){
 		
-		include 'templates/header.php';
-		include 'templates/nav.php';
-		include 'templates/form.personas.php';
-		include 'templates/footer.php';
-		include 'templates/redirect.php';
+		$this->templateEngine->assign("action","agregar");
+		$this->templateEngine->display("templates/abm_personas.tpl");
+		
+	}
+	
+	function confirm_delete(){
+		
+		$this->templateEngine->assign("persona",$persona);
+		$this->templateEngine->assign("action","borrar");
+		$this->templateEngine->display("templates/abm_personas.tpl");
 		
 	}
 	
@@ -41,20 +47,6 @@ class admin_view extends view{
 		
 	}
 	
-	function confirm_delete(){
-		include 'templates/header.php';
-		include 'templates/nav.php';
-		
-		echo "
-		<h1> Administrador personas => Borrar: $persona->nombre </h1> 
-		
-		<h2>$persona->nombre<h2>
-		<h2>$persona->periodo<h2>
-		<h2>$persona->descripcion<h2>
-		<h2>$persona->foto<h2>";
-		echo ($persona->presidente) ? ("<h2>Es presidente</h2>") : ("<h2> No es presidente </h2>");
-		echo "<h1>Está usted seguro de querer eliminar la persona y todas sus participaciones en comisiones? (Esta acción no se puede deshacer)</h1>";
-	}
 	
 	function error_param(){
 		
