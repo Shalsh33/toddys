@@ -6,9 +6,9 @@ function initScripts(){
 	
 
 	nav();
-	captcha();
+	//captcha();
 	
-	function captcha(){
+	/*function captcha(){
 	
 		//elementos en caché
 		let enviar = document.querySelector("#Enviar"); //Botón de enviar
@@ -119,7 +119,7 @@ function initScripts(){
 		}
 	}
 	
-	
+	*/
 	function nav(){
 
 		let query = window.matchMedia("(min-width: 1024px)");
@@ -128,14 +128,14 @@ function initScripts(){
 		let logochico = document.querySelector(".logochico");
 		
 		let links = document.querySelectorAll(".nav");
-		let container = document.querySelector("#contenido");
+		//let container = document.querySelector("#contenido");
 		
 		links.forEach( link =>{
 			if (link.id){
 				link.addEventListener("click", (e) =>{
 					partialRender(link.id);
-					let state = { index : link.id};
-					window.history.pushState(state,'',`${link.id}`);
+					//let state = { index : link.id};
+					//window.history.pushState(state,'',`${link.id}`);
 				});
 			}
 		});

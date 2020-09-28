@@ -3,8 +3,8 @@ import initScripts from './scripts.js';
 
 document.addEventListener("DOMContentLoaded", (e) =>{
 	
-	init(e);
-	
+	//init(e);
+	initScripts();
 	
 	async function init(e){
 		e.preventDefault();
