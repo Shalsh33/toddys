@@ -18,7 +18,7 @@ class model_personas extends data_base_connect{
 		parent::__construct($dsn,$user,$pass);
 	}
 	
-	function insert_persona($nombre,$periodo,$desc=null,$presidente,$foto=null){
+	function insert_persona($nombre,$periodo,$desc=null,$presidente,$foto="none.png"){
 		
 		//Si reemplazamos al presidente
 		if ( ($presidente) && ($self->check_presidente()) ){
