@@ -131,7 +131,7 @@ function initScripts(){
 		links.forEach( link =>{
 			link.addEventListener("click", (e) =>{
 			partialRender(link.id);
-			let state = { link.id};
+			let state = {inicio : link.id};
 			window.history.pushState(state,'',`${link.id}`);
 				});
 			}
