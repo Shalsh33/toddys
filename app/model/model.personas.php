@@ -1,14 +1,17 @@
 <?php
 
 include_once 'app/model/database.php';
+require_once 'app/model/model.relaciones.php';
 
 //El admin hereda atributos y funciones de db_conect
 class model_personas extends data_base_connect{
 	
 	private $table;
+	private $relaciones;
 	
 	function __construct(){
 		//Defino El host, los datos de la db y la tabla que vamos a usar
+		$this->relaciones = new model_relaciones();
 		$this->table = "persona";
 		$host = "localhost";
 		$dbname = "bloque_de_todos";
@@ -28,13 +31,19 @@ class model_personas extends data_base_connect{
 		// preparamos la consulta
 		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, descripcion, presidente, foto) VALUES (?,?,?,?,?)");
 			//La consulta tiene que llevar el nombre de la tabla, sino no se ejecuta!
+		
+		$result = $query->execute([$nombre,$periodo,$desc,$presidente,$foto])
 			
 		//devolvemos el resultado de la ejecución (True/False)
-		return ($query->execute([$nombre,$periodo,$desc,$presidente,$foto]));
+		return ($result);
 		
 	}
 	
 	function delete_persona($id){
+		
+		$this->relaciones->drop_persona($id); //para no generar un error de foreing key, primero se debe borrar las relaciones (si hubiere)
+		
+		//y luego procedo a borrar a la persona
 		
 		$query = $this->db->prepare("DELETE FROM $this->table WHERE id = ?");
 		
