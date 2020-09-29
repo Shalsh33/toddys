@@ -6,12 +6,8 @@ document.addEventListener("DOMContentLoaded", (e) =>{
 	init(e);
 	
 	async function init(e){
-		let asd = document.querySelectorAll("nav");
-		console.log(asd);
 		initScripts();
-		console.log(asd);
 		cargaContenido();	
-		console.log(asd);
 
 	}
 	
@@ -22,12 +18,10 @@ document.addEventListener("DOMContentLoaded", (e) =>{
 
 		if (window.location.search !== ""){
 			url = window.location.search.substr(1);
-			console.log(url);
 			contenido = await fetch(url);
 		}
 		else{
 			contenido = await fetch("personas");
-			console.log("personas");
 		}
 		if (contenido.ok){
 			let text = await contenido.text();
