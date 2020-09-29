@@ -13,7 +13,7 @@
 			<nav id="nav" class="navhide"> <!--Se define la barra de navegación-->
 		
 				<div class="logochico"> <!--El primer div va a llevar el logo-->
-					<a href= "index"> 
+					<a href= "inicio"> 
 						<img src="includes/img/logo.png" alt="inicio"/>
 					</a> 
 				</div> <!--Fin del div logo-->
@@ -22,7 +22,7 @@
 				
 				<section id="navLinks"> <!--Div para la lista de navegación-->
 					<ul> <!--Se define la lista para la barra de navegación-->
-						<a class="nav" href="index"><li>Inicio</li></a>
+						<a class="nav" href="inicio"><li>Inicio</li></a>
 						<a class="nav" href="comisiones"><li>Comisiones</li></a>
 						<a class="nav" href="contacto"><li>Contacto</li></a>
 						<a class="nav" href="admin"><li>Soy miembro</li></a>
@@ -33,28 +33,3 @@
 			
 		</header>
 		
-		<article id="contenido">
-		
-		</article>
-
-		<footer>
-
-			<section class="logo">
-				
-				<a href="index"> <img src="/includes/img/logo.png" alt="inicio" /></a>
-				
-			</section>
-			
-			<section id="developer">
-			
-				<p> Desarrollado por <span>BlasM</span> </p>
-
-			</section>
-
-		</footer>
-
-		<script type="module" src="includes/js/main.js"></script>
-
-	</body>
-
-</html>
