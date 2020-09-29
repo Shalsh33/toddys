@@ -134,7 +134,6 @@ function initScripts(){
 			let state = {inicio : link.id};
 			window.history.pushState(state,'',`${link.id}`);
 				});
-			}
 		});
 
 		if(query.matches){
