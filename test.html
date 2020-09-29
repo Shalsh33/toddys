@@ -1,20 +1,19 @@
 <html>
 	<head>
-		<!--base href="<?=BASE_URL?>"-->
+		<base href="{BASE_URL}">
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title> Bloque de todos </title>
 		<link rel="stylesheet" href="includes/css/style.css">
+		<title> Bloque de Todos </title>
 	</head>
-	<body>
 	
+	<body>
 		<header>
-			
-			
+		
 			<nav id="nav" class="navhide"> <!--Se define la barra de navegación-->
 		
 				<div class="logochico"> <!--El primer div va a llevar el logo-->
-					<a href= "index"> 
+					<a href= "inicio"> 
 						<img src="includes/img/logo.png" alt="inicio"/>
 					</a> 
 				</div> <!--Fin del div logo-->
@@ -23,43 +22,48 @@
 				
 				<section id="navLinks"> <!--Div para la lista de navegación-->
 					<ul> <!--Se define la lista para la barra de navegación-->
-						<a class="nav" href="index"><li>Inicio</li></a>
+						<a class="nav" href="inicio"><li>Inicio</li></a>
 						<a class="nav" href="comisiones"><li>Comisiones</li></a>
-						<a class="nav" href="admin"><li>Soy miembro</li></a>
 						<a class="nav" href="contacto"><li>Contacto</li></a>
+						<a class="nav" href="admin"><li>Soy miembro</li></a>
 					</ul>
 				</section><!-- fin de la sección de links-->
 
 			</nav> <!--Fin de la barra de navegación-->
 			
-</header>
-	
-	
-	<article id="main">
-	
-		<section class="presidente">
-		<img class="img-persona" src="includes/img/foto" alt="nombre"/>
-				<h2 class="nombre">$persona-nombre</h2>
-				<p>$persona-descripcion</p>";
-		</section>
-	</article>
-	
+		</header>
 		
-		<footer>
+		
+		<article id="contenido">
 
-	<section class="logo">
-		
-		<a href="index"> <img src="/includes/img/logo.png" alt="inicio" /></a>
-		
+	<h1 class="tituloPpal">Miembros del Bloque</h1>
+
+		<section class="presidente"> 
+		<h2 class="nombre">{$persona->nombre}</h2>
+	<img class="img-persona" src="includes/img/{$persona->foto}" alt="{$persona->nombre}"/>
+		<p class="desc">Descripción no disponible.</p>
+	<div class="relaciones">
+		<h2> <a href=comisiones>Comisiones:</a> </h2>
+		<p> <a href=comisiones/{$comision->{$comision->nombre}</a>,</p>
+	</div>
 	</section>
-	
-	<section id="developer">
-	
-		<p> Desarrollado por <span>BlasM</span> </p>
+</article>
 
-	</section>
 
-</footer>
-		
-	</body>
-		</html>
+<footer>
+
+			<section class="logo">
+				
+				<a href="inicio"> <img src="includes/img/logo.png" alt="inicio" /></a>
+				
+			</section>
+			
+			<section id="developer">
+			
+				<p> Desarrollado por TuVieja </p>
+
+			</section>
+
+		</footer>
+
+		<script type="module" src="includes/js/main.js"></script>
