@@ -1,7 +1,4 @@
-{include file="header.tpl"}
-<article id="contenido">
-
-	<h1 class="tituloPpal">Miembros del Bloque</h1>
+<h1 class="tituloPpal">Miembros del Bloque</h1>
 {foreach from=$datos item=persona}
 	{if $persona->presidente} 
 		<section class="presidente"> 
@@ -22,5 +19,3 @@
 	</div>
 	</section>
 {/foreach}
-</article>
-{include file="footer.tpl"}

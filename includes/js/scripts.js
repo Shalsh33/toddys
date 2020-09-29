@@ -128,14 +128,13 @@ function initScripts(){
 		let logochico = document.querySelector(".logochico");
 		
 		let links = document.querySelectorAll(".nav");
-		//let container = document.querySelector("#contenido");
+		let container = document.querySelector("#contenido");
 		
 		links.forEach( link =>{
-			if (link.id){
-				link.addEventListener("click", (e) =>{
-					partialRender(link.id);
-					//let state = { index : link.id};
-					//window.history.pushState(state,'',`${link.id}`);
+			link.addEventListener("click", (e) =>{
+			partialRender(link.id);
+			let state = { link.id};
+			window.history.pushState(state,'',`${link.id}`);
 				});
 			}
 		});
@@ -172,7 +171,7 @@ function initScripts(){
 				let contenido = await peticion.text();
 				container.innerHTML = contenido;
 			}
-			history.replaceState(null, null, ' ');
+			history.replaceState(null, null, link);
 		}
 				
 		function toggleMenu() {

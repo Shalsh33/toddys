@@ -21,6 +21,12 @@ class index_controller {
 	
 	function init(){
 		
+		$this->view->init();
+		
+	}
+	
+	function personas(){
+		
 		$datos = $this->model_personas->get_personas_extended();
 		
 		$this->view->main_page($datos);

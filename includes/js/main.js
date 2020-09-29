@@ -3,23 +3,19 @@ import initScripts from './scripts.js';
 
 document.addEventListener("DOMContentLoaded", (e) =>{
 	
-	//init(e);
-	initScripts();
+	init(e);
 	
 	async function init(e){
 		e.preventDefault();
 		let page = document.querySelector("body");
-		page.innerHTML = "<h1> loading </h1>";
 		try{
-			let index = await fetch("index");
+			let index = await fetch("inicio");
 			if (index.ok){
 				let texto = await index.text();
-				
 				page.innerHTML = texto;
 					
 				initScripts();
-				cargaContenido();
-				
+				cargaContenido();	
 			}
 			else{
 				page.innerHTML = "<h1> Error </h1>";
@@ -34,19 +30,18 @@ document.addEventListener("DOMContentLoaded", (e) =>{
 	async function cargaContenido(){
 		let container = document.querySelector("#contenido");
 		let contenido;
-		let url = " ";
+		let url = "";
 
 		if (window.location.search !== ""){
 			url = window.location.search.substr(1);
-			contenido = await fetch(url+"#contenido");
+			contenido = await fetch(url);
 		}
 		else{
-			contenido = await fetch("index");
+			contenido = await fetch("personas");
 		}
 		if (contenido.ok){
 			let text = await contenido.text();
 			container.innerHTML = text;
-			container.scrollIntoView( {behavior: "smooth"} );
 			history.replaceState(null, null, url);
 		}
 	}
