@@ -6,24 +6,12 @@ document.addEventListener("DOMContentLoaded", (e) =>{
 	init(e);
 	
 	async function init(e){
-		e.preventDefault();
-		let page = document.querySelector("body");
-		try{
-			let index = await fetch("inicio");
-			if (index.ok){
-				let texto = await index.text();
-				page.innerHTML = texto;
-					
-				initScripts();
-				cargaContenido();	
-			}
-			else{
-				page.innerHTML = "<h1> Error </h1>";
-			}
-		}
-		catch (error){
-
-		}
+		let asd = document.querySelectorAll("nav");
+		console.log(asd);
+		initScripts();
+		console.log(asd);
+		cargaContenido();	
+		console.log(asd);
 
 	}
 	
@@ -34,10 +22,12 @@ document.addEventListener("DOMContentLoaded", (e) =>{
 
 		if (window.location.search !== ""){
 			url = window.location.search.substr(1);
+			console.log(url);
 			contenido = await fetch(url);
 		}
 		else{
 			contenido = await fetch("personas");
+			console.log("personas");
 		}
 		if (contenido.ok){
 			let text = await contenido.text();

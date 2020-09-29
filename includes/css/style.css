@@ -330,14 +330,6 @@ table{
 
 /*contacto*/
 
-#contacto{
-	background:url("../img/portadavertical.png") no-repeat fixed center;
-	background-size: contain;
-	background-position: center;
-	margin-top: 30px;
-	min-height: 100%;
-}
-
 .fondoTransparente{ /*div para aplicarle una capa semitransparente a la foto de fondo*/
 	background-color: rgba(255,255,255,0.7);
 	height: inherit;

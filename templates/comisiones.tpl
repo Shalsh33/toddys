@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+
 <article id="contenido">
 <h1 class="tituloPpal">Comisiones HCD Tres Arroyos</h1>
 {foreach from=$datos item=comision}
@@ -10,4 +10,3 @@
 	</section>
 {/foreach}
 </article>
-{include file="footer.tpl"}
