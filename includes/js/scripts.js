@@ -6,9 +6,8 @@ function initScripts(){
 	
 
 	nav();
-	//captcha();
 	
-	/*function captcha(){
+	function captcha(){
 	
 		//elementos en caché
 		let enviar = document.querySelector("#Enviar"); //Botón de enviar
@@ -119,7 +118,6 @@ function initScripts(){
 		}
 	}
 	
-	*/
 	function nav(){
 
 		let query = window.matchMedia("(min-width: 1024px)");
@@ -170,6 +168,9 @@ function initScripts(){
 			if (peticion.ok){
 				let contenido = await peticion.text();
 				container.innerHTML = contenido;
+				if (id == 'contacto'){
+					captcha();
+				}
 			}
 			history.replaceState(null, null, link);
 		}
