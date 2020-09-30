@@ -4,17 +4,24 @@ require_once 'app/view/view.php';
 
 class index_view extends view{
 	
-	function main_page($datos){
+	function personas($datos){
 		
 		$this->templateEngine->assign("datos",$datos);
 		$this->templateEngine->display("templates/personas.tpl");
 		
 	}
 	
-	function comisiones_page($datos){
+	function comisiones($datos){
 		
 		$this->templateEngine->assign("datos",$datos);
 		$this->templateEngine->display("templates/comisiones.tpl");
+		
+	}
+	
+	function comision($datos){
+		
+		$this->templateEngine->assign("datos",$datos);
+		$this->templateEngine->display("templates/comision.tpl");
 		
 	}
 	

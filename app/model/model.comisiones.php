@@ -1,14 +1,17 @@
 <?php
 
 include_once 'app/model/database.php';
+require_once 'app/model/model.relaciones.php';
 
 //El model hereda atributos y funciones de db_conect
 class model_comisiones extends data_base_connect{
 	
 	private $table;
+	private $relaciones;
 	
 	function __construct(){
 		//Defino El host, los datos de la db y la tabla que vamos a usar
+		$this->relaciones = new model_relaciones();
 		$this->table = "comision";
 		$host = "localhost";
 		$dbname = "bloque_de_todos";
@@ -18,32 +21,20 @@ class model_comisiones extends data_base_connect{
 		parent::__construct($dsn,$user,$pass);
 	}
 	
-	function insert_comision($nombre,$fecha){
+	function insert($nombre,$fecha){
 		
-		//Si la comisión ya está ingresada
-		
-		$id = $this->exist($nombre);
-		
-		if ($id){
-			return $id;
-		}
 		// preparamos la consulta
 		$query = $this->db->prepare("INSERT INTO $this->table (nombre, fecha) VALUES (?,?)");
-			//La consulta tiene que llevar el nombre de la tabla, sino no se ejecuta!
-			
+		
 		//devolvemos el resultado de la ejecución (True/False)
 		$result = $query->execute([$nombre,$fecha]); 
 		return ($result);
 		
 	}
 	
-	function delete_comision($id=null,$nombre=null){
+	function delete_comision($id){
 		
-		if (! ($id || $nombre)){
-			return false;
-		} else if ($nombre) {
-			$id = $this->exist($nombre);
-		}
+		$this->relaciones->drop_comision($id);
 		
 		$query = $this->db->prepare("DELETE FROM $this->table WHERE id = ?");
 		
@@ -52,7 +43,7 @@ class model_comisiones extends data_base_connect{
 		return($result);
 	}
 	
-	function edit_comision($id,$nombre,$fecha){
+	function edit($id,$nombre,$fecha){
 		
 		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, fecha = ? WHERE id = ?");
 		
@@ -60,19 +51,8 @@ class model_comisiones extends data_base_connect{
 		
 		return($result);
 	}
-	
-	
-	function exist($nombre){
 		
-		$query = $this->db->prepare("SELECT * FROM $this->table WHERE nombre = ?");
-		
-		$query->execute([$nombre]);
-		$response = $query->fetch(PDO::FETCH_OBJ);
-		
-		return (empty(response)) ? null : (response[id]);
-	}
-	
-	function get_comisiones(){
+	function get_all(){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table");
 		
@@ -83,7 +63,7 @@ class model_comisiones extends data_base_connect{
 		return ($response);
 	}
 	
-	function get_comisiones_extended(){
+	function get_all_extended(){ //recibe las comisiones y los miembros de cada una
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table");
 		
@@ -91,16 +71,9 @@ class model_comisiones extends data_base_connect{
 		
 		$response = $query->fetchAll(PDO::FETCH_OBJ);
 		
-		for($i=0;$i<count($response);$i++){
+		foreach($response as $comision){
 			
-			$comision = $response[$i];
-			
-			$query = $this->db->prepare("SELECT persona.nombre FROM $this->table INNER JOIN persona_comision ON $this->table.id = persona_comision.id_comision 
-			INNER JOIN persona ON persona_comision.id_persona = persona.id WHERE $this->table.id = ?;"); //recibo las personas que son parte de la comision
-			
-			$query->execute([$comision->id]);
-			
-			$personas = $query->fetchAll(PDO::FETCH_OBJ);
+			$personas = $this->relaciones->get_personas($comision->id);
 			
 			$comision->personas = $personas;
 			
@@ -117,6 +90,8 @@ class model_comisiones extends data_base_connect{
 		$query->execute([$id]);
 		
 		$response = $query->fetch(PDO::FETCH_OBJ);
+		
+		$response->personas = $this->relaciones->get_personas($response->id);
 		
 		return($response);
 		

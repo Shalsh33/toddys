@@ -21,7 +21,7 @@ class model_personas extends data_base_connect{
 		parent::__construct($dsn,$user,$pass);
 	}
 	
-	function insert_persona($nombre,$periodo,$desc=null,$presidente,$foto="none.png"){
+	function insert($nombre,$periodo,$desc=null,$presidente,$foto="none.png"){
 		
 		//Si reemplazamos al presidente
 		if ( ($presidente) && ($self->check_presidente()) ){
@@ -41,7 +41,7 @@ class model_personas extends data_base_connect{
 	
 	function delete_persona($id){
 		
-		$this->relaciones->drop_persona($id); //para no generar un error de foreing key, primero se debe borrar las relaciones (si hubiere)
+		$this->relaciones->drop_persona($id); //para no generar un error de foreing key, primero se debe borrar las relaciones (si las hay)
 		
 		//y luego procedo a borrar a la persona
 		
@@ -52,7 +52,7 @@ class model_personas extends data_base_connect{
 		return($result);
 	}
 	
-	function edit_persona($id,$persona){
+	function edit($id,$persona){
 		
 		if($presidente && ($this->check_presidente())){
 			$result = $this->replace_presidente();
@@ -95,7 +95,7 @@ class model_personas extends data_base_connect{
 		return ($result);
 	}
 	
-	function get_personas(){
+	function get_all(){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table");
 		
@@ -106,7 +106,7 @@ class model_personas extends data_base_connect{
 		return ($response);
 	}
 	
-	function get_personas_extended(){
+	function get_all_extended(){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table");
 		

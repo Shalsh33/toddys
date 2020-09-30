@@ -1,12 +1,11 @@
 // JavaScript Document
-export default initScripts;
+export default initScript;
 
 
-function initScripts(){
+function navScript(){
 	
 
 	nav();
-	//captcha();
 	
 	/*function captcha(){
 	
@@ -126,19 +125,6 @@ function initScripts(){
 		let btnMenu = document.querySelector("#btn-barra");
 		let nav = document.querySelector("#nav");
 		let logochico = document.querySelector(".logochico");
-		
-		let links = document.querySelectorAll(".nav");
-		//let container = document.querySelector("#contenido");
-		
-		links.forEach( link =>{
-			if (link.id){
-				link.addEventListener("click", (e) =>{
-					partialRender(link.id);
-					//let state = { index : link.id};
-					//window.history.pushState(state,'',`${link.id}`);
-				});
-			}
-		});
 
 		if(query.matches){
 			nav.classList.remove("navhide");
@@ -164,16 +150,6 @@ function initScripts(){
 				window.removeEventListener("scroll", fijar);
 			}
 		});
-
-		async function partialRender(id){
-			let link = id;
-			let peticion = await fetch(link);
-			if (peticion.ok){
-				let contenido = await peticion.text();
-				container.innerHTML = contenido;
-			}
-			history.replaceState(null, null, ' ');
-		}
 				
 		function toggleMenu() {
 			let escondida = nav.classList.toggle("navhide");
@@ -188,6 +164,4 @@ function initScripts(){
 
 
 	}
-
-	
 }

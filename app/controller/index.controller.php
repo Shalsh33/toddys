@@ -19,11 +19,11 @@ class index_controller {
 		
 	}
 	
-	function init(){
+	function personas(){
 		
 		$datos = $this->model_personas->get_personas_extended();
 		
-		$this->view->main_page($datos);
+		$this->view->personas($datos);
 			
 	}
 	
@@ -31,7 +31,15 @@ class index_controller {
 		
 		$datos = $this->model_comisiones->get_comisiones_extended();
 		
-		$this->view->comisiones_page($datos);
+		$this->view->comisiones($datos);
+		
+	}
+	
+	function comision($id){
+		
+		$comision = $this->model_comisiones->get_one($id);
+		
+		$this->view->comision($comision);
 		
 	}
 	

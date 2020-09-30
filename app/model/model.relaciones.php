@@ -18,7 +18,7 @@ class model_relaciones extends data_base_connect{
 		parent::__construct($dsn,$user,$pass);
 	}
 	
-	function insert_relacion($id_persona,$id_comision,$cargo){
+	function insert($id_persona,$id_comision,$cargo){
 		
 		$query = $this->db->prepare("INSERT INTO $this->table (id_persona, id_comision, cargo) VALUES (?, ?, ?) ");
 		
@@ -66,6 +66,19 @@ class model_relaciones extends data_base_connect{
 		
 		return ($result);
 		
+	}
+	
+	function get_personas($id_comision){
+		
+		$query = $this->db->prepare("SELECT persona.nombre FROM $this->table INNER JOIN persona ON 
+		$this->table.id_persona = persona.id WHERE $this->table.id_comision = ?;"); //recibo las personas que son parte de la comision
+		
+		$query->execute([$id_comision]); 
+		
+		$personas = $query->fetchAll(PDO::FETCH_OBJ);
+		
+		return ($personas);
+	
 	}
 	
 }

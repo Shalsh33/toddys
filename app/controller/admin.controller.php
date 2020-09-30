@@ -14,7 +14,7 @@ class admin_controller{
 	function __construct(){
 		$this->model_personas = new model_personas();
 		$this->model_comisiones = new model_comisiones();
-		//$this->model_relaciones = new admin_model_relaciones();
+		$this->model_relaciones = new model_relaciones();
 		$this->view = new admin_view();
 	}
 	
@@ -25,7 +25,7 @@ class admin_controller{
 	function list_personas(){
 		
 		if ($this->model_personas->check_connection()){
-			$array_db = $this->model_personas->get_personas();
+			$array_db = $this->model_personas->get_all();
 			$this->view->admin_personas($array_db);
 		} else {
 			$this->view->connection_error();
