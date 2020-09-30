@@ -1,5 +1,5 @@
 // JavaScript Document
-export default initScript;
+export default navScript;
 
 
 function navScript(){
