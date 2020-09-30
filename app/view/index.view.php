@@ -25,4 +25,10 @@ class index_view extends view{
 		
 	}
 	
+	function connection_error(){
+		
+		$this->templateEngine->display("templates/connection_error.tpl");
+		
+	}
+	
 }

@@ -20,16 +20,19 @@ class index_controller {
 	}
 	
 	function personas(){
-		
-		$datos = $this->model_personas->get_personas_extended();
-		
-		$this->view->personas($datos);
+		if($this->model_personas->check_connection()){
+			$datos = $this->model_personas->get_all_extended();
+			
+			$this->view->personas($datos);
+		} else {
+			$this->view->connection_error();
+		}
 			
 	}
 	
 	function comisiones(){
 		
-		$datos = $this->model_comisiones->get_comisiones_extended();
+		$datos = $this->model_comisiones->get_all_extended();
 		
 		$this->view->comisiones($datos);
 		

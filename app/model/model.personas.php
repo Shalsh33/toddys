@@ -32,7 +32,7 @@ class model_personas extends data_base_connect{
 		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, descripcion, presidente, foto) VALUES (?,?,?,?,?)");
 			//La consulta tiene que llevar el nombre de la tabla, sino no se ejecuta!
 		
-		$result = $query->execute([$nombre,$periodo,$desc,$presidente,$foto])
+		$result = $query->execute([$nombre,$periodo,$desc,$presidente,$foto]);
 			
 		//devolvemos el resultado de la ejecución (True/False)
 		return ($result);
