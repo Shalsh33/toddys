@@ -24,7 +24,7 @@ switch ($params[0]) {
 		break;
 	case 'inicio':
 		$controller = new index_controller();
-		$controller->init();
+		$controller->personas();
 		break;
 	case 'comisiones':
 		$controller = new index_controller();
