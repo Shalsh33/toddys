@@ -1,4 +1,0 @@
-La redirección (header tatata) es funcion del controller?
-valor de retorno predeterminado de funciones php
-
-SELECT comision.nombre FROM `persona` INNER JOIN persona_comision ON persona.id = persona_comision.id_concejal INNER JOIN comision ON persona_comision.id_comision = comision.id WHERE persona.id = ?;
