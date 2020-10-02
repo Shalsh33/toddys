@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", (e) =>{
 		let container = document.querySelector("#contenido");
 		let contenido;
 		let url = "";
-
+		
 		if (window.location.search !== ""){
 			url = window.location.search.substr(1);
 			contenido = await fetch(url);

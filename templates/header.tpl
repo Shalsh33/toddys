@@ -22,10 +22,10 @@
 				
 				<section id="navLinks"> <!--Div para la lista de navegación-->
 					<ul> <!--Se define la lista para la barra de navegación-->
-						<a class="nav"id="inicio" href="#"><li>Inicio</li></a>
-						<a class="nav" id="comisiones" href="#"><li>Comisiones</li></a>
-						<a class="nav" id="contacto" href="#"><li>Contacto</li></a>
-						<a class="nav" id="admin" href="#"><li>Soy miembro</li></a>
+						<a class="nav"id="inicio" href=""><li>Inicio</li></a>
+						<a class="nav" id="comisiones" href=""><li>Comisiones</li></a>
+						<a class="nav" id="contacto" href=""><li>Contacto</li></a>
+						<a class="nav" id="admin" href=""><li>Soy miembro</li></a>
 					</ul>
 				</section><!-- fin de la sección de links-->
 
