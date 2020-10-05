@@ -54,7 +54,7 @@ class model_personas extends data_base_connect{
 	
 	function edit($id,$persona){
 		
-		if($presidente && ($this->check_presidente())){
+		if($persona['presidente'] && ($this->check_presidente())){
 			$result = $this->replace_presidente();
 			if (!($result)) {
 				return false;
