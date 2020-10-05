@@ -36,15 +36,18 @@ class index_controller {
 	
 	function comisiones(){
 		
-		$datos = $this->model_comisiones->get_all_extended();
 		
-		$this->view->comisiones($datos);
+			$datos = $this->model_comisiones->get_all_extended();
+			
+			$this->view->comisiones($datos);
+		
+		
 		
 	}
 	
-	function comision($id){
+	function comision($nombre){
 		
-		$comision = $this->model_comisiones->get_one($id);
+		$comision = $this->model_comisiones->get_one_by_name($nombre);
 		
 		$this->view->comision($comision);
 		

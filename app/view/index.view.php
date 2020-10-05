@@ -24,9 +24,9 @@ class index_view extends view{
 		
 	}
 	
-	function comision($datos){
+	function comision($comision){
 		
-		$this->templateEngine->assign("datos",$datos);
+		$this->templateEngine->assign("comision",$comision);
 		$this->templateEngine->display("templates/comision.tpl");
 		
 	}

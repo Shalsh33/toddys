@@ -1,4 +1,4 @@
-<script type="text/javascript" src="includes/js/check.js"></script>
+<script type="module" src="includes/js/check.js"></script><!--
 	<h1 class="tituloPpal">Miembros del Bloque</h1>
 	
 	{foreach from=$datos item=persona}
@@ -17,7 +17,7 @@
 		{/if}
 		<div class="relaciones">
 			<h2> <a href=comisiones>Comisiones:</a> </h2>
-			<p> {foreach from=$persona->comisiones item=comision} <a href=comisiones/{$comision->nombre}>{$comision->nombre}</a>,{/foreach} </p>
+			<p> {foreach from=$persona->comisiones item=comision} <a href=comisiones?{$comision->nombre}>{$comision->nombre}</a>,{/foreach} </p>
 		</div>
 		</section>
 	{/foreach}

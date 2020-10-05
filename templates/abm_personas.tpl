@@ -1,4 +1,4 @@
-<script type="text/javascript" src="includes/js/check.js"></script>
+<script type="module" src="includes/js/check.js"></script><!--
 <article id="abm">
 	<h1> Administrador personas => {$action}</h1>
 	 

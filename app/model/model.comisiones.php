@@ -96,4 +96,20 @@ class model_comisiones extends data_base_connect{
 		return($response);
 		
 	}
+	
+	function get_one_by_name($name){
+		
+		
+		$query = $this->db->prepare("SELECT * FROM $this->table WHERE nombre = ?");
+
+		$query->execute([$name]);
+		
+		$response = $query->fetch(PDO::FETCH_OBJ);
+	
+		$comision_id = $response->id;
+		$response->personas = $this->relaciones->get_personas($comision_id);
+		
+		return($response);
+		
+	}
 }

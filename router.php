@@ -8,15 +8,17 @@ require_once 'app/controller/index.controller.php';
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
 
-$action = (empty($_GET['action'])) ? 'inicio' : $_GET['action'];
+$action = (empty($_GET['action'])) ? 'header' : $_GET['action'];
 
 $params = explode('/', $action);
 
 $controller = new index_controller();
-$controller->index();
 
 // determina que camino seguir según la acción
 switch ($params[0]) {
+	case 'header':
+		$controller->index();
+		break;
     case 'admin':
 		case_admin($params);
 		break;
@@ -24,7 +26,11 @@ switch ($params[0]) {
 		$controller->personas();
 		break;
 	case 'comisiones':
-		$controller->comisiones();
+		if (empty($params[1])){
+			$controller->comisiones();
+		} else {
+			$controller->comision($params[1]);
+		}
 		break;
     default:
         echo('404 Page not found');

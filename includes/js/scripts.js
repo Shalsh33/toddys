@@ -166,9 +166,9 @@ function navScript(){
 			let peticion = await fetch(link);
 			if (peticion.ok){
 				let contenido = await peticion.text();
-				contenido.slice((contenido.indexOf('\n')));
+				contenido = contenido.substr((contenido.indexOf('\n')));
 				container.innerHTML = contenido;
-				if (id == 'contacto'){
+				if (link == 'contacto'){
 					captcha();
 				}
 			}
