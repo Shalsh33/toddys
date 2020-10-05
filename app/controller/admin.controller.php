@@ -14,7 +14,7 @@ class admin_controller{
 	function __construct(){
 		$this->model_personas = new model_personas();
 		$this->model_comisiones = new model_comisiones();
-		//$this->model_relaciones = new admin_model_relaciones();
+		$this->model_relaciones = new model_relaciones();
 		$this->view = new admin_view();
 	}
 	
@@ -25,7 +25,7 @@ class admin_controller{
 	function list_personas(){
 		
 		if ($this->model_personas->check_connection()){
-			$array_db = $this->model_personas->get_personas();
+			$array_db = $this->model_personas->get_all();
 			$this->view->admin_personas($array_db);
 		} else {
 			$this->view->connection_error();
@@ -42,15 +42,16 @@ class admin_controller{
 	function send_edit_persona() {
 		
 		$id = $_POST['id'];
+		$presidente = (isset($_POST['presidente'])) ? true : false;
 		$persona = array(
 		"nombre" => $_POST['nombre'],
 		"periodo" => $_POST['periodo'],
 		"descripcion" => $_POST['descripcion'],
-		"presidente" => isset($_POST['presidente']),
+		"presidente" => $presidente,
 		"foto" => $_POST['foto']
 		);
 		
-		$update = $this->model_personas->edit_persona($id,$persona);
+		$update = $this->model_personas->edit($id,$persona);
 		
 		($update) ? $this->view->action_done() : $this->view->error_param();
 		

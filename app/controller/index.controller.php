@@ -2,7 +2,6 @@
 	
 require_once "app/model/model.personas.php";
 require_once "app/model/model.comisiones.php";
-
 require_once "app/view/index.view.php";
 	
 class index_controller {
@@ -16,11 +15,11 @@ class index_controller {
 		$this->view = new index_view();
 		$this->model_personas = new model_personas();
 		$this->model_comisiones = new model_comisiones();
-		
 	}
 	
-	function init(){
+	function index(){
 		
+<<<<<<< HEAD
 		$this->view->init();
 		
 	}
@@ -28,16 +27,39 @@ class index_controller {
 	function personas(){
 		
 		$datos = $this->model_personas->get_personas_extended();
+=======
+		$this->view->index();
+>>>>>>> master
 		
-		$this->view->main_page($datos);
+	}
+	
+	function personas(){
+		if($this->model_personas->check_connection()){
+			$datos = $this->model_personas->get_all_extended();
+			
+			$this->view->personas($datos);
+		} else {
+			$this->view->connection_error();
+		}
 			
 	}
 	
 	function comisiones(){
 		
-		$datos = $this->model_comisiones->get_comisiones_extended();
 		
-		$this->view->comisiones_page($datos);
+			$datos = $this->model_comisiones->get_all_extended();
+			
+			$this->view->comisiones($datos);
+		
+		
+		
+	}
+	
+	function comision($nombre){
+		
+		$comision = $this->model_comisiones->get_one_by_name($nombre);
+		
+		$this->view->comision($comision);
 		
 	}
 	

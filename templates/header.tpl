@@ -33,9 +33,17 @@
 			
 		</header>
 		
+<<<<<<< HEAD
 		<article id="contenido">
 		
 		</article>
+=======
+			<article id="contenido">
+			
+			</article>
+		
+		
+>>>>>>> master
 		
 		<footer>
 
@@ -51,6 +59,7 @@
 
 			</section>
 
+<<<<<<< HEAD
 		</footer>
 
 		<script type="module" src="includes/js/main.js"></script>
@@ -58,3 +67,11 @@
 		</body>
 		
 		</html>
+=======
+</footer>
+
+<script type="module" src="includes/js/main.js"></script>
+
+</body>
+</html>
+>>>>>>> master

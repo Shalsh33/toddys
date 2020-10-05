@@ -1,14 +1,17 @@
 <?php
 
 include_once 'app/model/database.php';
+require_once 'app/model/model.relaciones.php';
 
 //El admin hereda atributos y funciones de db_conect
 class model_personas extends data_base_connect{
 	
 	private $table;
+	private $relaciones;
 	
 	function __construct(){
 		//Defino El host, los datos de la db y la tabla que vamos a usar
+		$this->relaciones = new model_relaciones();
 		$this->table = "persona";
 		$host = "localhost";
 		$dbname = "bloque_de_todos";
@@ -18,7 +21,7 @@ class model_personas extends data_base_connect{
 		parent::__construct($dsn,$user,$pass);
 	}
 	
-	function insert_persona($nombre,$periodo,$desc=null,$presidente,$foto="none.png"){
+	function insert($nombre,$periodo,$desc=null,$presidente,$foto="none.png"){
 		
 		//Si reemplazamos al presidente
 		if ( ($presidente) && ($self->check_presidente()) ){
@@ -28,13 +31,19 @@ class model_personas extends data_base_connect{
 		// preparamos la consulta
 		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, descripcion, presidente, foto) VALUES (?,?,?,?,?)");
 			//La consulta tiene que llevar el nombre de la tabla, sino no se ejecuta!
+		
+		$result = $query->execute([$nombre,$periodo,$desc,$presidente,$foto]);
 			
 		//devolvemos el resultado de la ejecución (True/False)
-		return ($query->execute([$nombre,$periodo,$desc,$presidente,$foto]));
+		return ($result);
 		
 	}
 	
 	function delete_persona($id){
+		
+		$this->relaciones->drop_persona($id); //para no generar un error de foreing key, primero se debe borrar las relaciones (si las hay)
+		
+		//y luego procedo a borrar a la persona
 		
 		$query = $this->db->prepare("DELETE FROM $this->table WHERE id = ?");
 		
@@ -43,9 +52,9 @@ class model_personas extends data_base_connect{
 		return($result);
 	}
 	
-	function edit_persona($id,$persona){
+	function edit($id,$persona){
 		
-		if($presidente && ($this->check_presidente())){
+		if($persona['presidente'] && ($this->check_presidente())){
 			$result = $this->replace_presidente();
 			if (!($result)) {
 				return false;
@@ -86,7 +95,7 @@ class model_personas extends data_base_connect{
 		return ($result);
 	}
 	
-	function get_personas(){
+	function get_all(){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table");
 		
@@ -97,7 +106,7 @@ class model_personas extends data_base_connect{
 		return ($response);
 	}
 	
-	function get_personas_extended(){
+	function get_all_extended(){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table");
 		

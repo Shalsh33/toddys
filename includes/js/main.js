@@ -1,7 +1,8 @@
 // JavaScript Document
-import initScripts from './scripts.js';
+import navScript from './scripts.js';
 
 document.addEventListener("DOMContentLoaded", (e) =>{
+<<<<<<< HEAD
 	
 	init(e);
 	
@@ -30,5 +31,12 @@ document.addEventListener("DOMContentLoaded", (e) =>{
 		}
 	}
 	
+=======
+	navScript();
+	fetch('inicio').then(response => response.text()).then(html => {
+		html = html.substr(html.indexOf('\n'));
+		document.querySelector("#contenido").innerHTML = html
+	});
+>>>>>>> master
 });
 
