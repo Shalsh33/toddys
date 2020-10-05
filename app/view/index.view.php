@@ -3,6 +3,12 @@
 require_once 'app/view/view.php';
 
 class index_view extends view{
+
+	function index(){
+		
+		$this->templateEngine->display("templates/header.tpl");
+		
+	}
 	
 	function personas($datos){
 		

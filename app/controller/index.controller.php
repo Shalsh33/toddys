@@ -2,7 +2,6 @@
 	
 require_once "app/model/model.personas.php";
 require_once "app/model/model.comisiones.php";
-
 require_once "app/view/index.view.php";
 	
 class index_controller {
@@ -16,6 +15,11 @@ class index_controller {
 		$this->view = new index_view();
 		$this->model_personas = new model_personas();
 		$this->model_comisiones = new model_comisiones();
+	}
+	
+	function index(){
+		
+		$this->view->index();
 		
 	}
 	

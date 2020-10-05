@@ -1,6 +1,4 @@
-{include file='header.tpl'}
-
-<article id="contenido">
+<script type="text/javascript" src="includes/js/check.js"></script>
 	<section>
 		<a href='admin/personas'>Ver DB personas</a>
 	</section>
@@ -14,6 +12,4 @@
 		<a href='admin/comisiones'>Ver DB comisiones</a>
 	</section>
 	
-</article>
 
-{include file='footer.tpl'}

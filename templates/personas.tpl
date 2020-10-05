@@ -1,7 +1,4 @@
-{include file="header.tpl"}
-
-<article id="contenido">
-
+<script type="text/javascript" src="includes/js/check.js"></script>
 	<h1 class="tituloPpal">Miembros del Bloque</h1>
 	
 	{foreach from=$datos item=persona}
@@ -24,7 +21,3 @@
 		</div>
 		</section>
 	{/foreach}
-
-</article>
-
-{include file="footer.tpl"}

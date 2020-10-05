@@ -131,9 +131,9 @@ function navScript(){
 		links.forEach( link =>{
 			link.addEventListener("click", (e) =>{
 				e.preventDefault();
-				partialRender(link.id);
-				let state = {inicio : link.id};
-				window.history.pushState(state,'',`${link.id}`);
+				partialRender(link.href);
+				let state = {inicio : link.href};
+				window.history.pushState(state,'',`${link.href}`);
 					});
 		});
 
@@ -162,12 +162,11 @@ function navScript(){
 			}
 		});
 
-		async function partialRender(id){
-			let link = id;
+		async function partialRender(link){
 			let peticion = await fetch(link);
 			if (peticion.ok){
 				let contenido = await peticion.text();
-				contenido.slice((indexOf('\n')));
+				contenido.slice((contenido.indexOf('\n')));
 				container.innerHTML = contenido;
 				if (id == 'contacto'){
 					captcha();

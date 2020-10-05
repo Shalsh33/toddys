@@ -1,4 +1,4 @@
-{include file='header.tpl'}
+<script type="text/javascript" src="includes/js/check.js"></script>
 <article id="contenido">
 <h1> Administrador DB personas </h1>
 <ul>
@@ -11,4 +11,3 @@
 </ul>
 </article>
 <script type="text/javascript" src ="includes/js/form_edit.js"></script>
-{include file='footer.tpl'}
