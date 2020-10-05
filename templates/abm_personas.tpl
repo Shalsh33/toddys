@@ -1,17 +1,17 @@
-{include file="header.php"}
+{include file="header.tpl"}
 
 <article id="contenido">
 	<h1> Administrador personas => {$action}</h1>
 	 
 	{if $action eq "agregar"} 
 
-		<form>
+		<form method="post">
 			<input type='text' name='nombre' placeholder='nombre'></input>
 			<input type='text' name='periodo' placeholder='periodo'></input>
 			<input type='text' name='descripcion' placeholder='descripcion'></input>
 			<input type='text' name='foto' placeholder='foto'></input>
 			<input type='checkbox' name='presidente'></input>
-			<button type='button' id="add">Enviar</button>
+			<button type='submit' id="send">Enviar</button>
 		</form>
 
 	{else}
@@ -29,23 +29,27 @@
 		
 		{if $action eq "editar"}
 		
-			<form>
-				<input type='text' name='nombre' placeholder='nombre'></input>
-				<input type='text' name='periodo' placeholder='periodo'></input>
-				<input type='text' name='descripcion' placeholder='descripcion'></input>
-				<input type='text' name='foto' placeholder='foto'></input>
-				<input type='checkbox' name='presidente'></input>
-				<button type='button' id="update_{$persona->id}">Enviar</button>
+			<form method="post">
+				<input type='text' name ='id' id='id' value="{$persona->id}" readonly></input>
+				<input type='text' name='nombre' placeholder='nombre' value="{$persona->nombre}"></input>
+				<input type='text' name='periodo' placeholder='periodo' value="{$persona->periodo}"></input>
+				<input type='text' name='descripcion' placeholder='descripcion' value="{$persona->descripcion}"></input>
+				<input type='text' name='foto' placeholder='foto' value="{$persona->foto}"></input>
+				<input type='checkbox' name='presidente' {if $persona->presidente} checked {/if}></input>
+				<button type='submit' id="update_{$persona->id}">Enviar</button>
 			</form>
 			
 		{else}
 		
 			<h1>Está usted seguro de querer eliminar la persona y todas sus participaciones en comisiones? (Esta acción no se puede deshacer)</h1>
-			<button type='button' id="delete_{$persona->id}">Eliminar</button>
+			<form method="post">
+				<input type='text' name ='id' id='id' value="{$persona->id}-{$persona->nombre} readonly></input>
+				<button type='submit' id="elim_{$persona->id}">Eliminar</button>
+			</form>
 			
 		{/if}
 		
 	{/if}
 </article>
-
-{include file="footer.php"}
+<script type="text/javascript" src="includes/js/abm_personas.js"></script>
+{include file="footer.tpl"}

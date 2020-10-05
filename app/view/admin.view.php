@@ -40,29 +40,25 @@ class admin_view extends view{
 	
 	function action_done(){
 		
-		include 'templates/header.php';
-		include 'templates/nav.php';
+		
 		echo '<h1>Cambio realizado con èxito. Redireccionando a admin page</h1>';
-		include 'templates/footer.php';
+		
 		
 	}
 	
 	
 	function error_param(){
 		
-		include 'templates/header.php';
-		include 'templates/nav.php';
+		
 		echo '<h1>Parámetro mal especificado. Redireccionando a admin page</h1>';
-		include 'templates/footer.php';
+		
 		
 	}
 	
 	function connection_error(){
 		
-		include 'templates/header.php';
-		include 'templates/nav.php';
+		
 		echo '<h1>Db connection error. Redirecting to admin page</h1>';
-		include 'templates/footer.php';
-		include 'templates/redirect.php';
+		
 	}
 }

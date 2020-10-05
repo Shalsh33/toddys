@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 			body: data,
 		}) . then(response => response.text()) .then(html => {form.innerHTML= html;});
 		
+		setTimeout(function() {
+			
+			window.location.replace("admin/personas");
+
+			
+		},3000);
+		
 	});
 	
 });
