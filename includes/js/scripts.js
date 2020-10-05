@@ -7,8 +7,6 @@ function navScript(){
 
 	nav();
 	
-<<<<<<< HEAD
-=======
 	function captcha(){
 	
 		//elementos en caché
@@ -120,7 +118,7 @@ function navScript(){
 		}
 	}
 	
->>>>>>> master
+
 	function nav(){
 
 		let query = window.matchMedia("(min-width: 1024px)");
@@ -133,18 +131,11 @@ function navScript(){
 		
 		links.forEach( link =>{
 			link.addEventListener("click", (e) =>{
-<<<<<<< HEAD
-			partialRender(link.id);
-			let state = {inicio : link.id};
-			window.history.pushState(state,'',`${link.id}`);
-				});
-=======
 				e.preventDefault();
 				partialRender(link.href);
 				let state = {inicio : link.href};
 				window.history.pushState(state,'',`${link.href}`);
 					});
->>>>>>> master
 		});
 
 		if(query.matches){
@@ -178,11 +169,8 @@ function navScript(){
 				let contenido = await peticion.text();
 				contenido = contenido.substr((contenido.indexOf('\n')));
 				container.innerHTML = contenido;
-<<<<<<< HEAD
-				if (id == 'contacto'){
-=======
 				if (link == 'contacto'){
->>>>>>> master
+
 					captcha();
 				}
 			}

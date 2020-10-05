@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-
-
-=======
 <script type="module" src="includes/js/check.js"></script><!--
->>>>>>> master
+
 <h1 class="tituloPpal">Comisiones HCD Tres Arroyos</h1>
 {foreach from=$datos item=comision}
 	<section class="comision"> 
@@ -13,7 +9,4 @@
 	<p> {foreach from=$comision->personas item=persona} {$persona->nombre},{/foreach} </p>
 	</section>
 {/foreach}
-<<<<<<< HEAD
 
-=======
->>>>>>> master

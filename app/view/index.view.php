@@ -10,17 +10,14 @@ class index_view extends view{
 		
 	}
 	
-<<<<<<< HEAD
 	function init(){
 		
 		$this->templateEngine->display("templates/header.tpl");
 		
 	}
 	
-	function main_page($datos){
-=======
 	function personas($datos){
->>>>>>> master
+
 		
 		$this->templateEngine->assign("datos",$datos);
 		$this->templateEngine->display("templates/personas.tpl");

@@ -19,19 +19,11 @@ class index_controller {
 	
 	function index(){
 		
-<<<<<<< HEAD
+
 		$this->view->init();
 		
 	}
-	
-	function personas(){
-		
-		$datos = $this->model_personas->get_personas_extended();
-=======
-		$this->view->index();
->>>>>>> master
-		
-	}
+
 	
 	function personas(){
 		if($this->model_personas->check_connection()){

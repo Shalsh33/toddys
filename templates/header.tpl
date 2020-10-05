@@ -22,10 +22,10 @@
 				
 				<section id="navLinks"> <!--Div para la lista de navegación-->
 					<ul> <!--Se define la lista para la barra de navegación-->
-						<a class="nav"id="inicio" href=""><li>Inicio</li></a>
-						<a class="nav" id="comisiones" href=""><li>Comisiones</li></a>
-						<a class="nav" id="contacto" href=""><li>Contacto</li></a>
-						<a class="nav" id="admin" href=""><li>Soy miembro</li></a>
+						<a class="nav" href="inicio"><li>Inicio</li></a>
+						<a class="nav" href="comisiones"><li>Comisiones</li></a>
+						<a class="nav" href="contacto"><li>Contacto</li></a>
+						<a class="nav" href="admin"><li>Soy miembro</li></a>
 					</ul>
 				</section><!-- fin de la sección de links-->
 
@@ -33,17 +33,12 @@
 			
 		</header>
 		
-<<<<<<< HEAD
+
 		<article id="contenido">
 		
 		</article>
-=======
-			<article id="contenido">
-			
-			</article>
-		
-		
->>>>>>> master
+
+
 		
 		<footer>
 
@@ -59,7 +54,7 @@
 
 			</section>
 
-<<<<<<< HEAD
+
 		</footer>
 
 		<script type="module" src="includes/js/main.js"></script>
@@ -67,11 +62,4 @@
 		</body>
 		
 		</html>
-=======
-</footer>
 
-<script type="module" src="includes/js/main.js"></script>
-
-</body>
-</html>
->>>>>>> master
