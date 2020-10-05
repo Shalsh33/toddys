@@ -7,7 +7,7 @@ function navScript(){
 
 	nav();
 	
-	/*function captcha(){
+	function captcha(){
 	
 		//elementos en caché
 		let enviar = document.querySelector("#Enviar"); //Botón de enviar
@@ -118,13 +118,24 @@ function navScript(){
 		}
 	}
 	
-	*/
 	function nav(){
 
 		let query = window.matchMedia("(min-width: 1024px)");
 		let btnMenu = document.querySelector("#btn-barra");
 		let nav = document.querySelector("#nav");
 		let logochico = document.querySelector(".logochico");
+		
+		let links = document.querySelectorAll(".nav");
+		let container = document.querySelector("#contenido");
+		
+		links.forEach( link =>{
+			link.addEventListener("click", (e) =>{
+				e.preventDefault();
+				partialRender(link.id);
+				let state = {inicio : link.id};
+				window.history.pushState(state,'',`${link.id}`);
+					});
+		});
 
 		if(query.matches){
 			nav.classList.remove("navhide");
@@ -150,6 +161,20 @@ function navScript(){
 				window.removeEventListener("scroll", fijar);
 			}
 		});
+
+		async function partialRender(id){
+			let link = id;
+			let peticion = await fetch(link);
+			if (peticion.ok){
+				let contenido = await peticion.text();
+				contenido.slice((indexOf('\n')));
+				container.innerHTML = contenido;
+				if (id == 'contacto'){
+					captcha();
+				}
+			}
+			history.replaceState(null, null, link);
+		}
 				
 		function toggleMenu() {
 			let escondida = nav.classList.toggle("navhide");
@@ -164,4 +189,6 @@ function navScript(){
 
 
 	}
+
+	
 }
