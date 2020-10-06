@@ -118,12 +118,7 @@ class model_personas extends data_base_connect{
 			
 			$persona = $response[$i];
 			
-			$query = $this->db->prepare("SELECT comision.nombre FROM `persona` INNER JOIN persona_comision ON persona.id = persona_comision.id_persona 
-			INNER JOIN comision ON persona_comision.id_comision = comision.id WHERE persona.id = ?;"); //recibo las comisiones de las cuales son parte las personas
-			
-			$query->execute([$persona->id]);
-			
-			$comisiones = $query->fetchAll(PDO::FETCH_OBJ);
+			$comisiones = $this->relaciones->get_comisiones($persona->id);
 			
 			$persona->comisiones = $comisiones;
 			

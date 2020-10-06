@@ -16,6 +16,23 @@ class admin_controller{
 		$this->model_comisiones = new model_comisiones();
 		$this->model_relaciones = new model_relaciones();
 		$this->view = new admin_view();
+		$this->check_session();
+	}
+	
+	function check_session(){
+		
+		session_start();
+		if (! isset($_SESSION['user'])){
+			header('location: ' . BASE_URL . 'login');
+			die();
+		}
+		
+	}
+	
+	function check_permissions(){
+		
+		session_start();
+		
 	}
 	
 	function init(){

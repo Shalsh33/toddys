@@ -81,4 +81,18 @@ class model_relaciones extends data_base_connect{
 	
 	}
 	
+	
+	function get_comisiones($id_persona){
+		
+		$query = $this->db->prepare("SELECT comision.nombre FROM $this->table INNER JOIN comision ON 
+		$this->table.id_comision = comision.id WHERE $this->table.id_persona = ?;"); //recibo las personas que son parte de la comision
+		
+		$query->execute([$id_persona]); 
+		
+		$comisiones = $query->fetchAll(PDO::FETCH_OBJ);
+		
+		return ($comisiones);
+	
+	}
+	
 }
