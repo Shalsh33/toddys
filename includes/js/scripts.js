@@ -135,7 +135,10 @@ function navScript(){
 
 		let logout = document.querySelector("#logout");
 		
+		console.log(logout);
+		
 		if (logout){
+			console.log("asd");
 			logout.addEventListener("click", function (e){
 					e.preventDefault();
 					fetch(this.href);
