@@ -1,17 +1,18 @@
 <?php
 	
-
+require_once "app/controller/controller.php";
 require_once "app/model/model.users.php";
 require_once "app/view/auth.view.php";
 	
-class auth_controller {
+class auth_controller extends controller {
 	
 	protected $view;
 	protected $model;
 	
 	function __construct(){
 		
-		$this->view = new auth_view();
+		$sesion = $this->sesion();
+		$this->view = ($sesion) ? new auth_view($sesion, $this->username()) : new auth_view($sesion);
 		$this->model = new model_users();
 		$this->check_session();
 		
