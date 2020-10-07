@@ -56,6 +56,14 @@ class auth_controller {
 			
 	}
 	
+	function logout(){
+		
+		session_start();
+		session_destroy();
+		header("Refresh:0");
+		
+	}
+	
 	function create_session($data){
 		
 		session_start();

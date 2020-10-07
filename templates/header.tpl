@@ -27,7 +27,7 @@
 						<a class="nav" href="contacto"><li>Contacto</li></a>
 						<a class="nav" href="login"><li>Soy miembro</li></a>
 						{if $sesion} 
-							<li> Logueado como {$user} - <a class="nav" href="logout">desconectarse</a><li>
+							<li> Logueado como {$user} - <a class="nav" id="logout" href="logout">desconectarse</a><li>
 						{else}
 							<li> Bienvenido, {$user}</li>
 						{/if}

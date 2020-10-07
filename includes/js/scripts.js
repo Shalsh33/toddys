@@ -133,6 +133,14 @@ function navScript(){
 			btnMenu.addEventListener("click", toggleMenu);
 		}
 
+		let logout = document.querySelector("#logout");
+		
+		if (logout){
+			logout.addEventListener("click", function (e){
+					e.preventDefault();
+					fetch(this.href);
+			});
+		}
 
 		window.addEventListener("resize", () =>{
 			if (query.matches){
