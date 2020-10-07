@@ -141,7 +141,8 @@ function navScript(){
 			console.log("asd");
 			logout.addEventListener("click", function (e){
 					e.preventDefault();
-					fetch(this.href);
+					console.log("click");
+					fetch("logout");
 			});
 		}
 
