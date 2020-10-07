@@ -6,9 +6,11 @@ class view{
 	
 	protected $templateEngine;
 	
-	function __construct(){
+	function __construct($sesion, $user = "invitado"){
 	
 		$this->templateEngine = new Smarty();
+		$this->templateEngine->assign("sesion",$sesion);
+		$this->templateEngine->assign("user",$user);
 		
 	}
 	

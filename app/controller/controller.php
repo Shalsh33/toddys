@@ -2,11 +2,20 @@
 
 class controller{
 	
-	function __construct(){
+	protected function sesion(){
 		
 		session_start();
-		define('SESSION', $_SESSION);
+		
+		return ($_SESSION) ? true : false;
+		
+	}
 	
+	protected function username(){
+		
+		session_start();
+		
+		return ($_SESSION['username']);
+		
 	}
 	
 	
