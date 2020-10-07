@@ -14,7 +14,7 @@ class controller{
 		
 		session_start();
 		
-		return ($_SESSION['username']);
+		return ($_SESSION['user']);
 		
 	}
 	
