@@ -26,6 +26,7 @@
 						<a class="nav" href="comisiones"><li>Comisiones</li></a>
 						<a class="nav" href="contacto"><li>Contacto</li></a>
 						<a class="nav" href="login"><li>Soy miembro</li></a>
+						
 					</ul>
 				</section><!-- fin de la sección de links-->
 
