@@ -1,10 +1,11 @@
 <?php
 
+require_once "app/controller/controller.php";
 require_once "app/Model/model.personas.php";
 require_once "app/Model/model.comisiones.php";
 require_once "app/View/admin.view.php";
 
-class admin_controller{
+class admin_controller extends controller{
 
 	protected $model_personas;
 	protected $model_comisiones;
@@ -12,11 +13,14 @@ class admin_controller{
 	protected $view;
 
 	function __construct(){
+		
+		$sesion = $this->sesion();
+		$this->view = ($sesion) ? new admin_view($sesion, $this->username()) : new admin_view($sesion);
 		$this->model_personas = new model_personas();
 		$this->model_comisiones = new model_comisiones();
 		$this->model_relaciones = new model_relaciones();
-		$this->view = new admin_view();
 		$this->check_session();
+		
 	}
 	
 	function check_session(){
