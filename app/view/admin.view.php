@@ -38,6 +38,13 @@ class admin_view extends view{
 		
 	}
 	
+	function admin_comisiones($datos){
+		
+		$this->templateEngine->assign("datos",$datos);
+		$this->templateEngine->display("templates/admin_comisiones.tpl");
+		
+	}
+	
 	function action_done(){
 		
 		

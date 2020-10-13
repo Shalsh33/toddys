@@ -141,7 +141,7 @@ class admin_controller extends controller{
 	function list_comisiones(){
 		
 		if ($this->model_comisiones->check_connection()){
-			$array_db = $this->model_comisiones->get();
+			$array_db = $this->model_comisiones->get_all();
 			$this->view->admin_comisiones($array_db);
 		} else {
 			$this->view->connection_error();
