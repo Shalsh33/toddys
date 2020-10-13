@@ -15,7 +15,7 @@ class admin_view extends view{
 		
 	}
 	
-	function edit($persona){
+	function edit_persona($persona){
 	
 		$this->templateEngine->assign("persona",$persona);
 		$this->templateEngine->assign("action","editar");
@@ -23,7 +23,7 @@ class admin_view extends view{
 	
 	}
 	
-	function form_alta(){
+	function form_alta_persona(){
 		
 		$this->templateEngine->assign("action","agregar");
 		$this->templateEngine->display("templates/abm_personas.tpl");

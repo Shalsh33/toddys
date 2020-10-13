@@ -24,7 +24,7 @@ class model_comisiones extends data_base_connect{
 	function insert($nombre,$fecha){
 		
 		// preparamos la consulta
-		$query = $this->db->prepare("INSERT INTO $this->table (nombre, fecha) VALUES (?,?)");
+		$query = $this->db->prepare("INSERT INTO $this->table (nombre, fecha_de_reunion) VALUES (?,?)");
 		
 		//devolvemos el resultado de la ejecución (True/False)
 		$result = $query->execute([$nombre,$fecha]); 
@@ -43,11 +43,11 @@ class model_comisiones extends data_base_connect{
 		return($result);
 	}
 	
-	function edit($id,$nombre,$fecha){
+	function edit($id,$comision){
 		
-		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, fecha = ? WHERE id = ?");
+		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, fecha_de_reunion = ? WHERE id = ?");
 		
-		$result = $query->execute([$nombre,$fecha,$id]);
+		$result = $query->execute([$comision['nombre'],$comision['fecha'],$id]);
 		
 		return($result);
 	}

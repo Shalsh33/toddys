@@ -25,11 +25,11 @@
 						<a class="nav" href="inicio"><li>Inicio</li></a>
 						<a class="nav" href="comisiones"><li>Comisiones</li></a>
 						<a class="nav" href="contacto"><li>Contacto</li></a>
-						<a class="nav" href="login"><li>Soy miembro</li></a>
+						<a class="nav" href="admin"><li>Soy miembro</li></a>
 						{if $sesion} 
-							<li> Logueado como {$user} - <a class="nav" id="logout" href="logout">desconectarse</a><li>
+							 <a class="nav" id="logout" href="logout"><li> <div> Logueado como {$user} </div> Desconectarse<li></a>
 						{else}
-							<li> Bienvenido, {$user}</li>
+							<a class="nav" href="login"><li><div> Bienvenido {$user}</div> Loguearse</li></a>
 						{/if}
 						
 					</ul>

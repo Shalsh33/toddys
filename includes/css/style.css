@@ -297,34 +297,6 @@ table{
 #popup > button{
 	flex-grow: 1;
 }
-/*3D*/
-
-.destacado > p {
-	text-align: center;
-}
-.destacado img{
-	width: 100%;
-}
-.listaProd {
-	display: grid;
-	grid-template-columns: 100%;
-	grid-template-rows: 1fr 1fr 1fr 1fr;
-	grid-row-gap: 10px;
-	width: 100%;
-	height: 600px;
-}
-.listaProd li{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
-}
-.listaProd li>img{
-	max-height: 100%;
-	max-width: 50%;
-	display: block;
-	margin: auto;
-}
 
 /*contacto*/
 
@@ -480,6 +452,17 @@ footer > p{
 	margin-right: 25px;
 	}
 	
+	/*Login*/
+	
+	#login{
+		display:flex;
+		flex-direction:column;
+		margin-top: 50px;
+		align-items: center;
+	}
+	.login{
+		width: auto;
+	}
 	/*contenido*/
 	#contenido{
 		display:grid;

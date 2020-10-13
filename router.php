@@ -21,18 +21,13 @@ $params = explode('/', $action);
 // determina que camino seguir según la acción
 switch ($params[0]) {
 	case 'login':
+		$controller = new auth_controller();
 		if (empty($params[1])){
-			$controller = new auth_controller();
 			$controller->init();
-			break;
 		} else {
-			switch($params[1]){
-				case 'send':
-					$controller = new auth_controller();
-					$controller->login();
-					break;
-			}
+			$controller->login();
 		}
+		break;
 	case 'logout':
 		$controller = new auth_controller();
 		$controller->logout();

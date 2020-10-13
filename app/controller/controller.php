@@ -4,15 +4,18 @@ class controller{
 	
 	protected function sesion(){
 		
-		session_start();
+		/*$status = session_status();
 		
-		return ($_SESSION) ? true : false;
+		return ($status == PHP_SESSION_ACTIVE) ? true : false;*/
+		if (!isset($_SESSION)){
+			session_start();
+		}
+		
+		return (isset($_SESSION['user'])) ? true : false;
 		
 	}
 	
 	protected function username(){
-		
-		session_start();
 		
 		return ($_SESSION['user']);
 		

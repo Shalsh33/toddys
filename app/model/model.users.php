@@ -18,7 +18,6 @@ class model_users extends data_base_connect {
 	function get($user){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table WHERE user = ?");
-		echo("SELECT * FROM $this->table WHERE user = ?");
 		$query->execute([$user]);
 		
 		$result = $query->fetch(PDO::FETCH_OBJ);

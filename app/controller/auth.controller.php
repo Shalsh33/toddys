@@ -11,17 +11,15 @@ class auth_controller extends controller {
 	
 	function __construct(){
 		
-		$sesion = $this->sesion();
-		$this->view = ($sesion) ? new auth_view($sesion, $this->username()) : new auth_view($sesion);
+		$this->view = new auth_view(false);
 		$this->model = new model_users();
-		$this->check_session();
+		
 		
 	}
 	
 	function check_session(){
 		
-		session_start();
-		if (isset($_SESSION['user'])){
+		if ( ($this->sesion()) && (isset($_SESSION['user'])) ){
 			header('location: ' . BASE_URL . 'admin');
 			die();
 		}
@@ -30,18 +28,20 @@ class auth_controller extends controller {
 	
 	function init(){
 		
+		$this->check_session();
 		$this->view->init();
 		
 	}
 	
 	function login(){
 		
+		$this->check_session();
+		
 		if (isset($_POST['user']) && isset($_POST['pass'])){
 			
 			$user = $_POST['user'];
 			$pass = $_POST['pass'];
 			$login_data = $this->model->get($user);
-			var_dump(login_data);
 			
 			if ($login_data && password_verify($pass,$login_data->pass)){
 				$this->create_session($login_data);
@@ -60,29 +60,30 @@ class auth_controller extends controller {
 	function logout(){
 		
 		session_start();
+		$_SESSION = array();
 		session_destroy();
-		header("Refresh:0");
 		
 	}
 	
-	function create_session($data){
+	private function create_session($data){
 		
 		session_start();
 		$_SESSION['user'] = $data->user;
 		$_SESSION['permissions'] = $data->role;
-		var_dump($_SESSION);
-		header(BASE_URL . '/admin');
+		header("location: " . BASE_URL . "admin");
 		
 	}
 	
 	function login_error(){
 		
+		$this->check_session();
 		$this->view->init(true);
 		
 	}
 	
 	function alta_user(){
 		
+		$this->check_session();
 		$this->view->alta_user();
 		
 	}

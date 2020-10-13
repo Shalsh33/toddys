@@ -1,11 +1,9 @@
+{include file="templates/header.tpl"}
 
-
-<article id="contenido">
-	{if $error}
-		<h1 class="tituloPpal">El usuario o la contraseña ingresados son incorrectos</h1>
-	{/if}
+<article id="login">
 	
-	<form action="login/send" method="post">
+	
+	<form class="login" action="login/send" method="post">
 	
 		<label for="user">Usuario</label>
 		<input type="text" name="user" placeholder="Usuario">
@@ -16,7 +14,11 @@
 	
 	</form>
 	
-	<!--script type="text/javascript" src="includes/js/login.js"></script-->
+	{if $error}
+		<h1 class="rojo">El usuario o la contraseña ingresados son incorrectos</h1>
+	{/if}
+	
 
 </article>
 
+{include file="templates/footer.tpl"}
