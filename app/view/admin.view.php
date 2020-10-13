@@ -4,10 +4,30 @@ require_once 'app/view/view.php';
 
 class admin_view extends view{
 	
+	/* Generales */
 	function main_page(){
 		$this->templateEngine->display("templates/admin_main.tpl");
 	}
 	
+	function action_done(){
+		
+		echo '<h1>Cambio realizado con èxito. Redireccionando a admin page</h1>';
+	
+	}
+	
+	function error_param(){
+		
+		echo '<h1>Parámetro mal especificado. Redireccionando a admin page</h1>';
+		
+	}
+	
+	function connection_error(){
+		
+		echo '<h1>Db connection error. Redirecting to admin page</h1>';
+
+	}
+	
+	/* Personas */
 	function admin_personas($datos){
 		
 		$this->templateEngine->assign("datos",$datos);
@@ -38,6 +58,7 @@ class admin_view extends view{
 		
 	}
 	
+	/* Comisiones */
 	function admin_comisiones($datos){
 		
 		$this->templateEngine->assign("datos",$datos);
@@ -45,27 +66,29 @@ class admin_view extends view{
 		
 	}
 	
-	function action_done(){
+	function edit_comision($comision){
+	
+		$this->templateEngine->assign("comision",$comision);
+		$this->templateEngine->assign("action","editar");
+		$this->templateEngine->display("templates/abm_comisiones.tpl");
+	
+	}
+	
+	function form_alta_comision(){
 		
-		
-		echo '<h1>Cambio realizado con èxito. Redireccionando a admin page</h1>';
-		
+		$this->templateEngine->assign("action","agregar");
+		$this->templateEngine->display("templates/abm_comisiones.tpl");
 		
 	}
 	
-	
-	function error_param(){
+	function confirm_delete_comision($comision){
 		
-		
-		echo '<h1>Parámetro mal especificado. Redireccionando a admin page</h1>';
-		
-		
-	}
-	
-	function connection_error(){
-		
-		
-		echo '<h1>Db connection error. Redirecting to admin page</h1>';
+		$this->templateEngine->assign("comision",$comision);
+		$this->templateEngine->assign("action","borrar");
+		$this->templateEngine->display("templates/abm_comisiones.tpl");
 		
 	}
+	
+	/*Relaciones*/
+	
 }
