@@ -23,7 +23,7 @@ class admin_controller extends controller{
 		
 	}
 	
-	function check_session(){
+	private function check_session(){
 		
 		
 		if (! ($this->sesion()) ){
@@ -33,7 +33,7 @@ class admin_controller extends controller{
 		
 	}
 	
-	function check_permissions($nivel){
+	private function check_permissions($nivel){
 		
 		switch ($nivel){
 			
@@ -44,7 +44,7 @@ class admin_controller extends controller{
 				return ($_SESSION['permissions'] == "super admin");
 				break;
 			default:
-				return false;
+				return true;
 				break;
 			
 		}
@@ -80,12 +80,9 @@ class admin_controller extends controller{
 	
 	function list_personas(){
 		
-		if ($this->model_personas->check_connection()){
-			$array_db = $this->model_personas->get_all();
-			$this->view->admin_personas($array_db);
-		} else {
-			$this->view->connection_error();
-		}
+		$array_db = $this->model_personas->get_all();
+		$this->view->admin_personas($array_db);
+		
 	}
 	
 	function edit_persona($id){
@@ -93,12 +90,16 @@ class admin_controller extends controller{
 		$persona = ($id) ? $this->model_personas->get_one($id) : null;
 		
 		if ($persona) {
+			
 			$comisiones = $this->model_comisiones->get_all();
 			$relaciones = $this->model_relaciones->get_relaciones_persona($id);
 			$this->set_status($comisiones,$relaciones);
-			$this->view->edit_persona($persona,$comisiones); 		
+			$this->view->edit_persona($persona,$comisiones); 
+			
 		} else {
+			
 			$this->view->error_param();
+		
 		}
 	}
 	
@@ -149,7 +150,7 @@ class admin_controller extends controller{
 			
 		$descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : null;
 		$presidente = (isset($_POST['presidente']));
-		$foto = (isset($_POST['foto'])) ? $_POST['foto'] : null;
+		$foto = (isset($_POST['foto'])) ? $_POST['foto'] : 'none.png';
 		
 		$this->model_personas->insert_persona($nombre,$periodo,$descripcion,$presidente,$foto); 
 		$this->view->change_ready();
@@ -174,8 +175,7 @@ class admin_controller extends controller{
 		
 	}
 
-	/*comisiones*/
-
+	/*Comisiones*/
 	function list_comisiones(){
 		
 		if ($this->model_comisiones->check_connection()){
@@ -202,8 +202,15 @@ class admin_controller extends controller{
 			"fecha" => $_POST['fecha']
 		);
 		
-		$update = $this->model_comisiones->edit($id,$comision);
+		if (! $this->model_comisiones->equal($comision,$id)){
 		
+			$update = $this->model_comisiones->edit($id,$comision);
+			if (!$update) {
+				$this->view->error_param(); 
+				die;
+			}
+
+		}
 		($update) ? $this->view->action_done() : $this->view->error_param();
 		
 	}
@@ -248,7 +255,6 @@ class admin_controller extends controller{
 	}
 	
 	/*Usuarios*/
-	
 	//Se necesitan permisos nivel 2 o superior
 	function list_users(){
 		
