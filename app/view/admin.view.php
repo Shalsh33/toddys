@@ -35,10 +35,11 @@ class admin_view extends view{
 		
 	}
 	
-	function edit_persona($persona){
+	function edit_persona($persona,$comisiones){
 	
 		$this->templateEngine->assign("persona",$persona);
 		$this->templateEngine->assign("action","editar");
+		$this->templateEngine->assign("comisiones",$comisiones);
 		$this->templateEngine->display("templates/abm_personas.tpl");
 	
 	}
@@ -50,7 +51,7 @@ class admin_view extends view{
 		
 	}
 	
-	function confirm_delete($persona){
+	function confirm_delete_personas($persona){
 		
 		$this->templateEngine->assign("persona",$persona);
 		$this->templateEngine->assign("action","borrar");
@@ -66,10 +67,11 @@ class admin_view extends view{
 		
 	}
 	
-	function edit_comision($comision){
+	function edit_comision($comision,$personas){
 	
 		$this->templateEngine->assign("comision",$comision);
 		$this->templateEngine->assign("action","editar");
+		$this->templateEngine->assign("personas",$personas);
 		$this->templateEngine->display("templates/abm_comisiones.tpl");
 	
 	}
@@ -89,6 +91,7 @@ class admin_view extends view{
 		
 	}
 	
-	/*Relaciones*/
+	/*Users*/
+	
 	
 }

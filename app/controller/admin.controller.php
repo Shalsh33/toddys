@@ -3,6 +3,7 @@
 require_once "app/controller/controller.php";
 require_once "app/Model/model.personas.php";
 require_once "app/Model/model.comisiones.php";
+require_once "app/model/model.users.php";
 require_once "app/View/admin.view.php";
 
 class admin_controller extends controller{
@@ -10,6 +11,7 @@ class admin_controller extends controller{
 	protected $model_personas;
 	protected $model_comisiones;
 	protected $model_relaciones;
+	protected $model_users;
 	protected $view;
 
 	function __construct(){
@@ -19,9 +21,13 @@ class admin_controller extends controller{
 		$this->model_personas = new model_personas();
 		$this->model_comisiones = new model_comisiones();
 		$this->model_relaciones = new model_relaciones();
-		
-		
+		$this->model_users = new model_users();
+		if (! ($this->model_comisiones->check_connection() && $this->model_personas->check_connection() && $this->model_relaciones->check_connection())){
+			$this->view->connection_error();
+			header('refresh:5;url=inicio');
+		}
 	}
+	
 	
 	private function check_session(){
 		
@@ -44,7 +50,7 @@ class admin_controller extends controller{
 				return ($_SESSION['permissions'] == "super admin");
 				break;
 			default:
-				return true;
+				return false;
 				break;
 			
 		}
@@ -72,6 +78,12 @@ class admin_controller extends controller{
 			
 		}
 		
+		
+	}
+	
+	private redirect($location){
+		
+		header('refresh:5;url=admin/$location');
 		
 	}
 	
@@ -128,7 +140,7 @@ class admin_controller extends controller{
 		$update = $this->model_relaciones->set_comisiones($comisiones,$id);
 		
 		($update) ? $this->view->action_done() : $this->view->error_param();
-		
+		$this->redirect("personas");
 	}
 	
 	function add_persona(){
@@ -154,14 +166,14 @@ class admin_controller extends controller{
 		
 		$this->model_personas->insert_persona($nombre,$periodo,$descripcion,$presidente,$foto); 
 		$this->view->change_ready();
-		
+		$this->redirect("personas");
 	}
 	
 	function delete_persona($id){
 		
 		$persona = $this->model_personas->get_one($id);
 		
-		$this->view->confirm_delete($persona);
+		$this->view->confirm_delete_persona($persona);
 		
 	}
 	
@@ -170,28 +182,36 @@ class admin_controller extends controller{
 		$result = ($_POST['id']) ? $this->model_personas->delete_persona($_POST['id']) : null;
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
+		$this->redirect("personas");
 		
-		//header("Location:admin/personas");
 		
 	}
 
 	/*Comisiones*/
 	function list_comisiones(){
 		
-		if ($this->model_comisiones->check_connection()){
-			$array_db = $this->model_comisiones->get_all();
-			$this->view->admin_comisiones($array_db);
-		} else {
-			$this->view->connection_error();
-		}
+		$array_db = $this->model_comisiones->get_all();
+		$this->view->admin_comisiones($array_db);
 		
 	}
 	
 	function edit_comision($id){
 		
-		($id) ? $info = $this->model_comisiones->get_one($id) : $info = null;
+		 $comision = ($id) ? $this->model_comisiones->get_one($id) : null;
 		
-		($info) ? $this->view->edit_comision($info) : $this->view->error_param();
+		if ($comision) {
+			
+			$personas = $this->model_personas->get_all();
+			$relaciones = $this->model_relaciones->get_relaciones_comision($id);
+			$this->set_status($personas,$relaciones);
+			$this->view->edit_comision($comision,$personas); 
+			
+		} else {
+			
+			$this->view->error_param();
+		
+		}
+		
 	}
 	
 	function send_edit_comision() {
@@ -212,6 +232,8 @@ class admin_controller extends controller{
 
 		}
 		($update) ? $this->view->action_done() : $this->view->error_param();
+		
+		$this->redirect("comisiones");
 		
 	}
 	
@@ -234,6 +256,7 @@ class admin_controller extends controller{
 		
 		$this->model_comisiones->insert_comision($nombre,$fecha); 
 		$this->view->change_ready();
+		$this->redirect("comisiones");
 		
 	}
 	
@@ -251,7 +274,7 @@ class admin_controller extends controller{
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
-		//header("Location:admin/comisiones");	
+		$this->redirect("comisiones");	
 	}
 	
 	/*Usuarios*/
@@ -279,9 +302,9 @@ class admin_controller extends controller{
 	
 	function delete_user($id){
 		
-		$persona = $this->model_personas->get_one($id);
+		$persona = $this->model_users->get_one($id);
 		
-		$this->view->confirm_delete($persona);
+		$this->view->confirm_delete_user($persona);
 		
 	}
 	
@@ -291,7 +314,7 @@ class admin_controller extends controller{
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
-		//header("Location:admin/users");
+		$this->redirect("users");
 		
 	}
 	
@@ -303,10 +326,5 @@ class admin_controller extends controller{
 	
 	/*Relaciones*/
 	
-	function admin_relaciones(){
-		
-		
-		
-	}
 	
 }
