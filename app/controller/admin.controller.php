@@ -81,7 +81,7 @@ class admin_controller extends controller{
 		
 	}
 	
-	private redirect($location){
+	private function redirect($location){
 		
 		header('refresh:5;url=admin/$location');
 		
