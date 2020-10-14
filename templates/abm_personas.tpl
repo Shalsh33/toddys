@@ -36,6 +36,10 @@
 				<input type='text' name='descripcion' placeholder='descripcion' value="{$persona->descripcion}"></input>
 				<input type='text' name='foto' placeholder='foto' value="{$persona->foto}"></input>
 				<input type='checkbox' name='presidente' {if $persona->presidente} checked {/if}></input>
+				<p>Comisiones: </p>
+				{foreach from=$comisiones item=comision}
+					<input type='checkbox' name='comisiones[]' value={$comision->id} {if $comision->checked}checked{/if}>{$comision->nombre}</input>
+				{/foreach}
 				<button type='submit' id="update_{$persona->id}">Enviar</button>
 			</form>
 			

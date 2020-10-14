@@ -21,7 +21,11 @@
 			<form method="post">
 				<input type='text' name ='id' id='id' value="{$comision->id}" readonly></input>
 				<input type='text' name='nombre' placeholder='nombre' value="{$comision->nombre}"></input>
-				input type='text' name='fecha' placeholder='fecha de reunion' value="{$comision->fecha_de_reunion}"></input>
+				<input type='text' name='fecha' placeholder='fecha de reunion' value="{$comision->fecha_de_reunion}"></input>
+				<p>Personas: </p>
+				{foreach from=$personas item=persona}
+					<input type='checkbox' name='personas[]' value={$persona->id} {if $persona->checked}checked{/if}>{$persona->nombre}</input>
+				{/foreach}
 				<button type='submit' id="update_{$comision->id}">Enviar</button>
 			</form>
 			
