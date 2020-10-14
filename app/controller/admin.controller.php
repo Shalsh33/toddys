@@ -55,6 +55,26 @@ class admin_controller extends controller{
 		$this->view->main_page();
 	}
 	
+	private function set_status($array_ppal,$array_sec){
+		
+		foreach($array_sec as $selected){
+			
+			foreach($array_ppal as $item){
+				
+				if ($selected->id == $item ->id){
+					
+					$item->selected = true;
+					break;
+
+				} 
+				
+			}
+			
+		}
+		
+		
+	}
+	
 	
 	/*Acciones personas*/
 	
@@ -70,9 +90,16 @@ class admin_controller extends controller{
 	
 	function edit_persona($id){
 		
-		($id) ? $info = $this->model_personas->get_one($id) : $info = null;
+		$persona = ($id) ? $this->model_personas->get_one($id) : null;
 		
-		($info) ? $this->view->edit_persona($info) : $this->view->error_param();
+		if ($persona) {
+			$comisiones = $this->model_comisiones->get_all();
+			$relaciones = $this->model_relaciones->get_relaciones_persona($id);
+			$this->set_status($comisiones,$relaciones);
+			$this->view->edit_persona($persona,$comisiones); 		
+		} else {
+			$this->view->error_param();
+		}
 	}
 	
 	function send_edit_persona() {
@@ -87,7 +114,17 @@ class admin_controller extends controller{
 			"foto" => $_POST['foto']
 		);
 		
-		$update = $this->model_personas->edit($id,$persona);
+		if (! $this->model_personas->equal($persona,$id)){
+		
+			$update = $this->model_personas->edit($id,$persona);
+			if (!$update){
+				$this->view->error_param(); die;
+			}
+		} 
+		
+		$comisiones = $_POST['comisiones'];
+		
+		$update = $this->model_relaciones->set_comisiones($comisiones,$id);
 		
 		($update) ? $this->view->action_done() : $this->view->error_param();
 		
@@ -95,7 +132,8 @@ class admin_controller extends controller{
 	
 	function add_persona(){
 		
-		$this->view->form_alta_persona();
+		$comisiones = $this->model_comisiones->get_all();
+		$this->view->form_alta_persona($comisiones);
 		
 	}
 	

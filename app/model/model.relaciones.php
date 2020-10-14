@@ -18,17 +18,17 @@ class model_relaciones extends data_base_connect{
 		parent::__construct($dsn,$user,$pass);
 	}
 	
-	function insert($id_persona,$id_comision,$cargo){
+	private function insert($id_persona,$id_comision){
 		
-		$query = $this->db->prepare("INSERT INTO $this->table (id_persona, id_comision, cargo) VALUES (?, ?, ?) ");
+		$query = $this->db->prepare("INSERT INTO $this->table (id_persona, id_comision) VALUES (?, ?) ");
 		
-		$result = $query->execute([$id_persona,$id_comision,$cargo]);
+		$result = $query->execute([$id_persona,$id_comision]);
 		
 		return ($result);
 		
 	}
 	
-	function delete_relacion($id_persona,$id_comision){
+	private function delete_relacion($id_persona,$id_comision){
 		
 		$query = $this->db->prepare("DELETE FROM $this->table WHERE id_persona = ? AND id_comision = ? ");
 		
@@ -36,6 +36,88 @@ class model_relaciones extends data_base_connect{
 		
 		return ($result);
 		
+	}
+	
+	private function not_in($array,$item,$index=null){
+		
+		foreach ($array as $element){
+			
+			var_dump($element);
+			var_dump($item);
+			var_dump($index);
+			
+			if ($index && $element[$index] == $item){
+				
+				return false;
+				
+			} elseif ($element == $item){
+				
+				return false;
+				
+			}
+			
+		}
+		
+		return true;
+		
+	}
+	
+	function set_comisiones($comisiones,$id_persona){
+		
+		$all = $this->get_comisiones($id_persona);
+		
+		foreach($comisiones as $comision){
+			
+			if ($this->not_in($all,$comision,'id')){ //Cuando tenga internet -> buscar si php tiene esta función
+				$insert = $this->insert($id_persona,$comision);
+				if (!$insert){
+					return false;
+					}
+			}
+			
+		}
+		
+		foreach($all as $comision){
+			
+			if($this->not_in($comisiones,$comision['id'])){
+				$delete = $this->delete_relacion($id_persona,$comision['id'])
+				if(!$delete){
+					return false;
+				}
+			}
+			
+		}
+		
+		return true;
+	}
+	
+	function set_personas($personas,$id_comision){
+		
+		$all = $this->get_personas($id_comision);
+		
+		foreach($personas as $persona){
+			
+			if ($this->not_in($all,$persona,'id')){ //Cuando tenga internet -> buscar si php tiene esta función
+				$insert = $this->insert($persona,$id_comision);
+				if (!$insert){
+					return false;
+					}
+			}
+			
+		}
+		
+		foreach($all as $persona){
+			
+			if($this->not_in($personas,$persona['id'])){
+				$delete = $this->delete_relacion($persona['id'],$id_comision)
+				if(!$delete){
+					return false;
+				}
+			}
+			
+		}
+		
+		return true;
 	}
 	
 	function drop_persona($id){
@@ -58,19 +140,9 @@ class model_relaciones extends data_base_connect{
 		
 	}
 	
-	function edit($id_persona,$id_comision,$cargo){
-		
-		$query = $this->db->prepare("UPDATE $this->table SET cargo = ? WHERE id_persona = ? AND id_comision = ? ");
-		
-		$result = $query->execute([$cargo,$id_persona,$id_comision]);
-		
-		return ($result);
-		
-	}
-	
 	function get_personas($id_comision){
 		
-		$query = $this->db->prepare("SELECT persona.nombre FROM $this->table INNER JOIN persona ON 
+		$query = $this->db->prepare("SELECT persona.nombre, persona.id FROM $this->table INNER JOIN persona ON 
 		$this->table.id_persona = persona.id WHERE $this->table.id_comision = ?;"); //recibo las personas que son parte de la comision
 		
 		$query->execute([$id_comision]); 
@@ -84,7 +156,7 @@ class model_relaciones extends data_base_connect{
 	
 	function get_comisiones($id_persona){
 		
-		$query = $this->db->prepare("SELECT comision.nombre FROM $this->table INNER JOIN comision ON 
+		$query = $this->db->prepare("SELECT comision.nombre, comision.id FROM $this->table INNER JOIN comision ON 
 		$this->table.id_comision = comision.id WHERE $this->table.id_persona = ?;"); //recibo las personas que son parte de la comision
 		
 		$query->execute([$id_persona]); 
@@ -94,5 +166,32 @@ class model_relaciones extends data_base_connect{
 		return ($comisiones);
 	
 	}
+
+	function get_relaciones_persona($id){
+		
+		$query = $this->db->prepare("SELECT comision.nombre FROM persona INNER JOIN $this->table ON $this->table.id_persona = persona.id
+		INNER JOIN comision ON $this->table.id_comision = comision.id WHERE persona.id = ?"); //recibo las comisiones de una persona
+		
+		$query->execute([$id]);
+		
+		$comisiones = $query->fetchALL(PDO:FETCH_OBJ);
+		
+		return ($comisiones);
+		
+	}
+	
+	function get_relaciones_comision($id){
+		
+		$query = $this->db->prepare("SELECT persona.nombre FROM comision INNER JOIN $this->table ON $this->table.id_comision = comision.id
+		INNER JOIN persona ON $this->table.id_persona = persona.id WHERE comision.id = ?"); //recibo las personas de una comisión
+		
+		$query->execute([$id]);
+		
+		$personas = $query->fetchALL(PDO:FETCH_OBJ);
+		
+		return ($personas);
+		
+	}
+	
 	
 }
