@@ -20,5 +20,6 @@
 		</section>
 	{/foreach}
 
+<section id="emergente" class="hidden"></section>
 </article>
 <script type="text/javascript" src="includes/js/persona.js"></script>

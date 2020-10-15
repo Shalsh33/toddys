@@ -507,12 +507,14 @@ footer > p{
 		background-color: rgba(0,0,0,0.8);
 		box-shadow: 10px 10px 5px -2px rgba(0,0,0,0.65);
 	}
-#contenido > section.emergente{
+#contenido > section #emergente{
 		display:grid;
 		grid-template-columns: 2fr 3fr;
 		grid-template-rows: 1fr 1fr 1fr;
 		grid-gap:10px;
-	position: fixed;
+		position: fixed;
+		top:0;
+		left:0;
 }
 	#contenido > section > *{
 		

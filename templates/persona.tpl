@@ -1,4 +1,5 @@
-<section class="emergente"> 
+<article id="contenido">
+	<section id="emergente">
 		{if $persona->presidente} 
 			<h2 class="nombre">Presidente del Bloque: {$persona->nombre}</h2>
 		{else} 
@@ -13,8 +14,5 @@
 			<p class="desc">Descripción no disponible.</p>
 		{/if}
 		
-		<div class="relaciones">
-			<h2> <a href=comisiones>Comisiones:</a> </h2>
-			<p> {foreach from=$persona->comisiones item=comision} <a href=comisiones/{$comision->nombre}>{$comision->nombre}</a>,{/foreach} </p>
-		</div>
-</section>
+	</section>
+</article>
