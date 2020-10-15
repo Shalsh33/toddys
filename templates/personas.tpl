@@ -1,4 +1,4 @@
-
+{include file="templates/header.tpl"}
 
 <article id="contenido">
 

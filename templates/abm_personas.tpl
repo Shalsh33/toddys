@@ -1,4 +1,4 @@
-
+{include file="templates/header.tpl"}
 
 <article>
 	<h1 class="tituloPpal"> Administrador personas => {$action}</h1>

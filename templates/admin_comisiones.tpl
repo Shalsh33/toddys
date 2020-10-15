@@ -1,4 +1,4 @@
-
+{include file="templates/header.tpl"}
 <article id="contenido">
 <h1 class="tituloPpal"> Administrador DB comisiones </h1>
 

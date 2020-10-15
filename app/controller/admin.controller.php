@@ -89,7 +89,7 @@ class admin_controller extends controller{
 	
 	private function redirect($location){
 		
-		header('refresh:3;url='.BASE_URL.'admin/'.$location);
+		header('refresh:3;url= '. BASE_URL .'admin/' . $location);
 		
 	}
 	

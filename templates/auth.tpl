@@ -1,4 +1,4 @@
-
+{include file="templates/header.tpl"}
 
 <article id="login">
 	
@@ -13,10 +13,10 @@
 		<button type="submit">Entrar</button>
 	
 	</form>
-	<p> 
+	<h2> 
 	¿No tienes una cuenta? 
 	<a href="registro"><button type="button">¡Registrate!</button></a>
-	</p>
+	</h2>
 	
 	{if $error}
 		<h1 class="rojo">El usuario o la contraseña ingresados son incorrectos</h1>

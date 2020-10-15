@@ -11,7 +11,6 @@ class view{
 		$this->templateEngine = new Smarty();
 		$this->templateEngine->assign("sesion",$sesion);
 		$this->templateEngine->assign("user",$user);
-		$this->templateEngine->display("templates/header.tpl");
 		
 	}
 	
