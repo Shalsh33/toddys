@@ -28,6 +28,12 @@ class admin_view extends view{
 
 	}
 	
+	function denied(){
+		
+		echo'<h1>Buen intento, pero no podés estar acá <a href="'.BASE_URL.'admin">Volvé</a></h1>';
+		
+	}
+	
 	/* Personas */
 	function admin_personas($datos){
 		
@@ -52,7 +58,7 @@ class admin_view extends view{
 		
 	}
 	
-	function confirm_delete_personas($persona){
+	function confirm_delete_persona($persona){
 		
 		$this->templateEngine->assign("persona",$persona);
 		$this->templateEngine->assign("action","borrar");
@@ -103,7 +109,7 @@ class admin_view extends view{
 	
 	function confirm_delete_user($user){
 		
-		$this->templateEngine->assign("user",$user);
+		$this->templateEngine->assign("usuario",$user);
 		$this->templateEngine->assign("action","borrar");
 		$this->templateEngine->display("templates/abm_users.tpl");
 		
@@ -111,7 +117,7 @@ class admin_view extends view{
 	
 	function change_permissions($user){
 		
-		$this->templateEngine->assign("user",$user);
+		$this->templateEngine->assign("usuario",$user);
 		$this->templateEngine->assign("action","edit");
 		$this->templateEngine->display("templates/abm_users.tpl");
 		

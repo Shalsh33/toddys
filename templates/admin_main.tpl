@@ -16,7 +16,7 @@
 		{/if}
 	{else}
 		<h2> ¿Estás perdido chiquitín? ¡Contacta con un administrador! </h2>
-	{/if]
+	{/if}
 	
 </article>
 

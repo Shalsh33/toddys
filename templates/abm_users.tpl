@@ -8,12 +8,12 @@
 	{if $action eq "registro"}
 		<form>
 		<div>
-			<label for="username">Ingrese su usuario:</label>
-			<input type="text" name="username" placeholder="username"></input>
+			<label for="user">Ingrese su usuario:</label>
+			<input type="text" id="user" name="user" placeholder="username"></input>
 		</div>
 		<div>
 			<label for="email">Su Email generado:</label>
-			<input type="email" name="email" placeholder="user@todos.com.ar" readonly></input>
+			<input type="email" id= "email" name="email" placeholder="user@todos.com.ar" readonly></input>
 		</div>
 		<div>
 			<label for="password">Ingrese su contraseña:</label>
@@ -21,16 +21,16 @@
 		</div>
 			<button type='submit' id="{$action}">Registrarse</button>
 		</form>
-	{else if $action eq "editar"}
+	{else if $action eq "edit"}
 	
-		<form method="post">
-			<input type='text' name='email' value="{$user->email}" readonly></input>
-			<input type='select'>
-				<option name="usuario" {if user->role eq "usuario"} selected>usuario</option>
-				<option name="admin" {if user->role eq "admin"} selected>admin</option>
-				<option name="super admin" {if user->role eq "super admin"} selected>super admin</option>
-			</input>
-			<button type='submit' id="update_{$user->id}">Enviar</button>
+		<form method="post" id="usuario">
+			<input type='text' name='email' value="{$usuario->email}" readonly></input>
+			<select form="usuario" name="role">
+				<option value="usuario" {if $usuario->role eq "usuario"} selected {/if}>usuario</option>
+				<option value="admin" {if $usuario->role eq "admin"} selected {/if}>admin</option>
+				<option value="super admin" {if $usuario->role eq "super admin"} selected {/if}>super admin</option>
+			</select>
+			<button type='submit' id="update_{$usuario->id}">Enviar</button>
 		</form>
 		
 		
@@ -38,8 +38,8 @@
 	
 		<h1>¿Está usted seguro de querer eliminar el usuario? (Esta acción no se puede deshacer)</h1>
 		<form>
-			<input type="text" name="id" id="id" value="{$user->id} readonly></input>
-			<button type='submit' id="elim/{$user->id}>Banhammer</button>
+			<input type="text" name="id" id="id" value="{$usuario->id}" readonly></input>
+			<button type='submit' id="elim/{$usuario->id}">Banhammer</button>
 		</form>
 		
 		

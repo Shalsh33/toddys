@@ -147,7 +147,7 @@ function case_admin ($params){
 						case 'permissions':
 							(!empty($params[3])) ? $controller->change_permissions($params[3]) : $controller->change_permissions(null);
 							break;
-						case 'send':
+						case 'update':
 							$controller->set_permissions();
 							break;
 						default:

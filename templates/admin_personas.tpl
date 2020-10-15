@@ -17,7 +17,7 @@
 			<div class="persona"> 
 				<h2>{$persona->nombre}<h2>
 				<a href='admin/personas/edit/{$persona->id}'>Editar</a>
-				<a href='admin/comisiones/delete/{$persona->id}'>Eliminar</a>
+				<a href='admin/personas/delete/{$persona->id}'>Eliminar</a>
 			</div>
 		{/foreach}
 </article>

@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 
-<article id="contenido">
+<article>
 	<h1 class="tituloPpal"> Administrador personas => {$action}</h1>
 
 	<h2>Nombre: <span>{$persona->id}</span>_{$persona->nombre}<h2>

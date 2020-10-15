@@ -18,7 +18,6 @@ class admin_controller extends controller{
 		
 		$this->check_session();
 		$this->view = new admin_view(true, $this->username());
-		$this->check_permissions(1);
 		$this->model_personas = new model_personas();
 		$this->model_comisiones = new model_comisiones();
 		$this->model_relaciones = new model_relaciones();
@@ -97,6 +96,7 @@ class admin_controller extends controller{
 	/*Página principal*/
 	
 	function init(){
+		$level = 0;
 		switch($_SESSION['permissions']){
 			case 'usuario':
 				$level = 0;
@@ -331,11 +331,11 @@ class admin_controller extends controller{
 		
 		$this->check_permissions(2);
 		
-		$result = ($_POST['email']) ? $this->model_users->delete_user($_POST['email']) : null;
+		$result = ($_POST['id']) ? $this->model_users->delete_user($_POST['id']) : null;
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
-		$this->redirect("users");
+		$this->redirect("users",1);
 		
 	}
 	
@@ -352,7 +352,7 @@ class admin_controller extends controller{
 		
 		$this->check_permissions(2);
 		
-		$result = ($_POST['email']) ? $this->model_users->edit($_POST['email'],$_POST['permissions']) : null;
+		$result = ($_POST['email']) ? $this->model_users->edit($_POST['email'],$_POST['role']) : null;
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		

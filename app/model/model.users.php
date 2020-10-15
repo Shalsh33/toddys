@@ -47,7 +47,7 @@ class model_users extends data_base_connect {
 	
 	function add($user,$pass,$email,$role){
 		
-		$query = $this->db->prepare("INSERT INTO $this->table (user, pass, role) VALUES (?,?,?,?)");
+		$query = $this->db->prepare("INSERT INTO $this->table (user, pass, email, role) VALUES (?,?,?,?)");
 		$result = $query->execute([$user,$pass,$email,$role]);
 		
 		return ($result);
@@ -63,10 +63,10 @@ class model_users extends data_base_connect {
 		
 	}
 	
-	function delete_user($email){
+	function delete_user($id){
 		
-		$query = $this->db->prepare("DELETE FROM $this->table WHERE email = ? ");
-		$result = $query->execute([$email]);
+		$query = $this->db->prepare("DELETE FROM $this->table WHERE id = ? ");
+		$result = $query->execute([$id]);
 		
 		return ($result);
 		
