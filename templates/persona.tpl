@@ -1,5 +1,4 @@
-<article id="contenido">
-	<section id="emergente">
+
 		{if $persona->presidente} 
 			<h2 class="nombre">Presidente del Bloque: {$persona->nombre}</h2>
 		{else} 
@@ -14,5 +13,3 @@
 			<p class="desc">Descripción no disponible.</p>
 		{/if}
 		
-	</section>
-</article>

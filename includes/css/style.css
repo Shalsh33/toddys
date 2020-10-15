@@ -122,6 +122,19 @@ input[type=number] {
 .flex{
 	display:flex;
 }
+
+#emergente{
+		display:grid;
+		grid-template-columns: 2fr 3fr;
+		grid-template-rows: 1fr 1fr 1fr;
+		grid-gap:10px;
+		position: fixed;
+		top:100;
+		left:20;
+		width:80%;
+		height:80%;
+		margin:auto;
+	}
 /*******************************************************Clases*********************************************************************/
 
 /*Portada*/
@@ -507,15 +520,6 @@ footer > p{
 		background-color: rgba(0,0,0,0.8);
 		box-shadow: 10px 10px 5px -2px rgba(0,0,0,0.65);
 	}
-#contenido > section #emergente{
-		display:grid;
-		grid-template-columns: 2fr 3fr;
-		grid-template-rows: 1fr 1fr 1fr;
-		grid-gap:10px;
-		position: fixed;
-		top:0;
-		left:0;
-}
 	#contenido > section > *{
 		
 		color: white;

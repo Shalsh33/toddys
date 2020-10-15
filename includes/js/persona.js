@@ -11,22 +11,12 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 		
 		persona.addEventListener("click", (e)=>{
 			
-			window.location.href = `personas/${persona.id}`;
-		});
-		
-	});
-	presidente.addEventListener("click", (e)=>{
-			
-			window.location.href = `personas/${presidente.id}`;
-		});
-
-			
-			/*fetch(`personas/${persona.id}`).then(response => response.text()).then (html =>{
+			fetch(`personas/${persona.id}`).then(response => response.text()).then (html =>{
 				
 				emergente.innerHTML= html;
 				emergente.classList.remove("hidden");
 				emergente.classList.add("visible");
-				window.addEventListener("click",clickOutEmergente);
+				window.addEventListener("click",clickEmergente);
 				
 			});
 		
@@ -40,23 +30,21 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 				emergente.innerHTML= html;
 				emergente.classList.remove("hidden");
 				emergente.classList.add("visible");
-				window.addEventListener("click",clickOutEmergente);
+				window.addEventListener("click",clickEmergente);
 				
 			});
 		
 	});
 	
 	
-	let clickOutEmergente = function(e){
-		if (!(emergente.contains(e.target))){
+	let clickEmergente = function(e){
 			ocultarEmergente();
-		} 
 	};
 	
 	function ocultarEmergente(){
-		div.classList.remove("visible");
-		div.classList.add("hidden");
-		window.removeEventListener("click",clickOutDiv);
-	}*/
+		emergente.classList.remove("visible");
+		emergente.classList.add("hidden");
+		window.removeEventListener("click",clickEmergente);
+	}
 	
 });
