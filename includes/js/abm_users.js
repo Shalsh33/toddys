@@ -17,11 +17,14 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 				method: 'post',
 				body: data,
 			}) . then(response => response.text()) .then(html => {form.innerHTML= html;});
+			
+			setTimeout( ()=>{ window.location.href = "admin/users";},3000);
 		} else {
 			fetch(`registro/${action[0]}`, {
 				method: 'post',
 				body: data,
 			}) . then(response => response.text()) .then(html => {form.innerHTML= html;});
+			setTimeout( ()=>{ window.location.href = "login";},3000);
 		}
 	
 });

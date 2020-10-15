@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 			body: data,
 		}) . then(response => response.text()) .then(html => {form.innerHTML= html;});
 	
+		setTimeout( ()=>{ window.location.href = "admin/comisiones";},3000);
 });
 
 });

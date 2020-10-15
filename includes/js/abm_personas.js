@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 			method: 'post',
 			body: data,
 		}) . then(response => response.text()) .then(html => {form.innerHTML= html;});
-
+		
+		setTimeout( ()=>{ window.location.href = "admin/personas";},3000);
 		
 	});
 	
