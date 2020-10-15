@@ -1,4 +1,4 @@
-{include file='header.tpl'}
+
 
 <article id="contenido">
 	{if $level > 0}
@@ -20,4 +20,3 @@
 	
 </article>
 
-{include file='footer.tpl'}

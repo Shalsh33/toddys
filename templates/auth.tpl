@@ -1,4 +1,4 @@
-{include file="templates/header.tpl"}
+
 
 <article id="login">
 	
@@ -25,4 +25,3 @@
 
 </article>
 
-{include file="templates/footer.tpl"}

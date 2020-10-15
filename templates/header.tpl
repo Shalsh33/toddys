@@ -24,7 +24,6 @@
 					<ul> <!--Se define la lista para la barra de navegación-->
 						<a class="nav" href="inicio"><li>Inicio</li></a>
 						<a class="nav" href="comisiones"><li>Comisiones</li></a>
-						<a class="nav" href="contacto"><li>Contacto</li></a>
 						<a class="nav" href="admin"><li>Soy miembro</li></a>
 						{if $sesion} 
 							 <a class="nav" id="logout" href="logout"><li> <div> Logueado como {$user} </div> Desconectarse<li></a>
@@ -38,4 +37,22 @@
 			</nav> <!--Fin de la barra de navegación-->
 			
 		</header>
+		
+		<footer>
+
+			<section class="logo">
+				
+				<a href="inicio"> <img src="includes/img/logo.png" alt="inicio" /></a>
+				
+			</section>
+			
+			<section id="developer">
+			
+				<p> Desarrollado por TuVieja </p>
+
+			</section>
+
+</footer>
+
+<script type="module" src="includes/js/main.js"></script>
 		

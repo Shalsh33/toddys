@@ -1,4 +1,4 @@
-{include file='header.tpl'}
+
 <article id="contenido">
 	<h1 class="tituloPpal"> Administrador DB Usuarios </h1>
 		{foreach from=$datos item=usuario}
@@ -10,4 +10,3 @@
 		{/foreach}
 </article>
 
-{include file='footer.tpl'}

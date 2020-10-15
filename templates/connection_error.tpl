@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+
 
 <article id="contenido">
 
@@ -6,4 +6,3 @@
 
 </article>
 
-{include file="footer.tpl"}

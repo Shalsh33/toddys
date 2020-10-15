@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+
 
 <article>
 	<h1 class="tituloPpal"> Administrador usuarios => {$action}</h1> 
@@ -47,4 +47,3 @@
 		
 </article>
 <script type="text/javascript" src="includes/js/abm_users.js"></script>
-{include file="footer.tpl"}

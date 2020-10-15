@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+
 
 <article>
 	<h1 class="tituloPpal"> Administrador personas => {$action}</h1>
@@ -42,4 +42,3 @@
 	{/if}
 </article>
 <script type="text/javascript" src="includes/js/abm_personas.js"></script>
-{include file="footer.tpl"}

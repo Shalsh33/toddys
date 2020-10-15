@@ -1,4 +1,4 @@
-{include file='header.tpl'}
+
 <article id="contenido">
 	<h1 class="tituloPpal"> Administrador DB personas </h1>
 <div>
@@ -23,4 +23,3 @@
 </article>
 
 <script type="text/javascript" src="includes/js/abm_personas.js"></script>
-{include file='footer.tpl'}
