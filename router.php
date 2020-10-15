@@ -44,8 +44,9 @@ switch ($params[0]) {
 		case_admin($params);
 		break;
 	case 'inicio':
+	case 'personas':
 		$controller = new index_controller();
-		$controller->personas();
+		(empty($params[1])) ? $controller->personas() : $controller->persona($params[1]);
 		break;
 	case 'comisiones':
 		$controller = new index_controller();
