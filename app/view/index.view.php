@@ -11,6 +11,13 @@ class index_view extends view{
 		
 	}
 	
+	function persona($persona){
+		
+		$this->templateEngine->assign("persona",$persona);
+		$this->templateEngine->display("templates/persona.tpl");
+		
+	}
+	
 	function comisiones($datos){
 		
 		$this->templateEngine->assign("datos",$datos);
@@ -18,9 +25,9 @@ class index_view extends view{
 		
 	}
 	
-	function comision($datos){
+	function comision($comision){
 		
-		$this->templateEngine->assign("datos",$datos);
+		$this->templateEngine->assign("comision",$comision);
 		$this->templateEngine->display("templates/comision.tpl");
 		
 	}

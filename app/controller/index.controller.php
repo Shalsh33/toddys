@@ -17,19 +17,28 @@ class index_controller extends controller{
 		$this->view = ($sesion) ? new index_view($sesion,$this->username()) : new index_view($sesion);
 		$this->model_personas = new model_personas();
 		$this->model_comisiones = new model_comisiones();
-		
+		if(!$this->model_personas->check_connection() || !$this->model_comisiones->check_connection()){
+			$this->view->connection_error();
+		}
 		
 	}
 	
 	function personas(){
-		if($this->model_personas->check_connection()){
+		
 			$datos = $this->model_personas->get_all_extended();
 			
 			$this->view->personas($datos);
-		} else {
-			$this->view->connection_error();
-		}
+		
 			
+			
+	}
+	
+	function persona($id){
+		
+		$persona = $this->model_personas->get_one($id);
+		
+		$this->view->persona($persona);
+		
 	}
 	
 	function comisiones(){
@@ -40,12 +49,12 @@ class index_controller extends controller{
 		
 	}
 	
-	function comision($id){
+	/*function comision($id){
 		
 		$comision = $this->model_comisiones->get_one($id);
 		
 		$this->view->comision($comision);
 		
-	}
+	}*/
 	
 }
