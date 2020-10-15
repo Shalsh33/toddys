@@ -9,7 +9,7 @@
 		<form>
 		<div>
 			<label for="user">Ingrese su usuario:</label>
-			<input type="text" id="user" name="user" placeholder="username"></input>
+			<input type="text" id="user" name="user" placeholder="username" required></input>
 		</div>
 		<div>
 			<label for="email">Su Email generado:</label>
@@ -17,7 +17,7 @@
 		</div>
 		<div>
 			<label for="password">Ingrese su contraseña:</label>
-			<input type="password" name="password" placeholder="******"> </input>
+			<input type="password" name="password" placeholder="******" required> </input>
 		</div>
 			<button type='submit' id="{$action}">Registrarse</button>
 		</form>

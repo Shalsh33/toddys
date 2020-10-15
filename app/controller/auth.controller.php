@@ -90,7 +90,7 @@ class auth_controller extends controller {
 	
 	function send_form(){
 		
-		if (isset($_POST['user']) && isset($_POST['password'])){
+		if (isset($_POST['user']) && isset($_POST['password']) && !empty($_POST['user']) && !empty($_POST['password'])){
 			$user = $_POST['user'];
 			$pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
 			$email = $_POST['email'];
@@ -98,8 +98,10 @@ class auth_controller extends controller {
 			
 			$query = $this->model->add($user,$pass,$email,$role);
 			($query) ? $this->view->success() : $this->view->fail();
+			header('refresh:3;url='.BASE_URL.'login');
 		} else{
 			$this->view->fail();
+			header('refresh:2;url='.BASE_URL.'registro');
 		}
 	}
 	

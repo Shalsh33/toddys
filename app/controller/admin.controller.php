@@ -87,9 +87,9 @@ class admin_controller extends controller{
 		}	
 	}
 	
-	private function redirect($location,$time=3){
+	private function redirect($location){
 		
-		header('refresh:$time;url=admin/$location');
+		header('refresh:3;url='.BASE_URL.'admin/'.$location);
 		
 	}
 	
@@ -197,7 +197,12 @@ class admin_controller extends controller{
 		
 		$persona = $this->model_personas->get_one($id);
 		
-		$this->view->confirm_delete_persona($persona);
+		if ($persona){ 
+			$this->view->confirm_delete_persona($persona);
+		} else {
+			$this->view->error_param();
+			$this->redirect("personas");
+		}
 		
 	}
 	
@@ -206,7 +211,7 @@ class admin_controller extends controller{
 		$result = ($_POST['id']) ? $this->model_personas->delete_persona($_POST['id']) : null;
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
-		$this->redirect("personas",1);
+		$this->redirect("personas");
 		
 		
 	}
@@ -293,7 +298,12 @@ class admin_controller extends controller{
 		
 		$comision = $this->model_comisiones->get_one($id);
 		
-		$this->view->confirm_delete_comision($comision);
+		if ($comision){ 
+			$this->view->confirm_delete_comision($comision);
+		} else {
+			$this->view->error_param();
+			$this->redirect("comisiones");
+		}
 		
 	}
 	
@@ -303,7 +313,7 @@ class admin_controller extends controller{
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
-		$this->redirect("comisiones",1);	
+		$this->redirect("comisiones");	
 	}
 	
 	/*Usuarios*/
@@ -323,7 +333,12 @@ class admin_controller extends controller{
 		
 		$user = $this->model_users->get_one($id);
 		
-		$this->view->confirm_delete_user($user);
+		if ($user){ 
+			$this->view->confirm_delete_user($user);
+		} else {
+			$this->view->error_param();
+			$this->redirect("users");
+		}
 		
 	}
 	
@@ -335,7 +350,7 @@ class admin_controller extends controller{
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
-		$this->redirect("users",1);
+		$this->redirect("users");
 		
 	}
 	
