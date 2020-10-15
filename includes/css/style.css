@@ -72,9 +72,6 @@ li{
 article{
 	margin: 0 5%;
 }
-label {
-	display: none;
-}
 input, textarea, select{
 	padding: 10px 0px 10px 7px;
 	background-color: #fafafa;
@@ -118,6 +115,9 @@ input[type=number] {
 }
 .hidden{
 	visibility: hidden;
+}
+.flex{
+	display:flex;
 }
 /*******************************************************Clases*********************************************************************/
 
@@ -486,7 +486,7 @@ footer > p{
 		grid-row:2 / span 1;
 		display: grid;
 		grid-template-columns: 2fr 3fr;
-		grid-template-rows: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
 		grid-gap:10px;
 	}
 	#contenido > .persona{
@@ -495,7 +495,7 @@ footer > p{
 		grid-row:span 1;
 		display:grid;
 		grid-template-columns: 2fr 3fr;
-		grid-template-rows: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
 		grid-gap:10px;
 	}
 	#contenido > section{
@@ -504,6 +504,13 @@ footer > p{
 		background-color: rgba(0,0,0,0.8);
 		box-shadow: 10px 10px 5px -2px rgba(0,0,0,0.65);
 	}
+#contenido > section.emergente{
+		display:grid;
+		grid-template-columns: 2fr 3fr;
+		grid-template-rows: 1fr 1fr 1fr;
+		grid-gap:10px;
+	position: fixed;
+}
 	#contenido > section > *{
 		
 		color: white;
@@ -521,11 +528,11 @@ footer > p{
 	}
 	#contenido > section > .desc{
 		grid-column: 2;
-		grid-row: 2;
+		grid-row: 3;
 	}
 	#contenido > section > .relaciones{
 		grid-column: 2;
-		grid-row: 3;
+		grid-row: 2;
 	}
 	#contenido > section > .relaciones > * > *{
 		color: white;

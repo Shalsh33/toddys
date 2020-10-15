@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 		let action = button.id.split('_');
 		if (action[0] != "send"){
 			let id = document.querySelector("#id");
-			id.value = action[1];
+			if (id.value != action[1]){
+				action[0] = ""; //No hago acción, pues se modificó algún valor del html
+			}
 		}
 		const data = new URLSearchParams(new FormData(this));
 		
@@ -21,13 +23,7 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 			method: 'post',
 			body: data,
 		}) . then(response => response.text()) .then(html => {form.innerHTML= html;});
-		
-		setTimeout(function() {
-			
-			window.location.replace("admin/personas");
 
-			
-		},3000);
 		
 	});
 	

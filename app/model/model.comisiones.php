@@ -96,4 +96,15 @@ class model_comisiones extends data_base_connect{
 		return($response);
 		
 	}
+	
+	function equal($comision,$id){
+		
+		$compare = $this->get_one($id);
+		
+		if ($comision['nombre'] == $compare->nombre && $comision['fecha'] == $compare->fecha_de_reunion){
+			return true;
+		}
+		return false;
+		
+	}
 }

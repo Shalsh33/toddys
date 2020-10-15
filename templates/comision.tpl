@@ -1,4 +1,3 @@
-<script type="module" src="includes/js/check.js"></script><!--
 <h1 class="tituloPpal">{$comision->nombre}</h1>
 	<section class="comision"> 
 	<p>{$comision->fecha_de_reunion}</p>

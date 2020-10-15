@@ -137,4 +137,16 @@ class model_personas extends data_base_connect{
 		
 		return($response);
 	}
+	
+	function equal($persona,$id){
+		
+		$compare = $this->get_one($id);
+		
+		if ($persona['nombre'] == $compare->nombre && $persona['periodo'] == $compare->periodo && $persona['descripcion'] == $compare->descripcion && $persona['foto'] == $compare->foto && ($persona['presidente'] == $compare->presidente) ){
+			return true;
+		}
+		return false;
+		
+	}
+	
 }

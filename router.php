@@ -28,6 +28,14 @@ switch ($params[0]) {
 			$controller->login();
 		}
 		break;
+	case 'registro':
+		$controller = new auth_controller();
+		if (empty($params[1])){
+			$controller->alta_user();
+		} else {
+			$controller->send_form();
+		}
+		break;
 	case 'logout':
 		$controller = new auth_controller();
 		$controller->logout();
@@ -45,6 +53,7 @@ switch ($params[0]) {
 		break;
     default:
         echo('404 Page not found');
+		header('refresh:2;url=inicio');
         break;
 }
 
@@ -77,11 +86,7 @@ function case_admin ($params){
 							break;
 							
 						case 'elim':
-							$controller->confirm_delete();
-							break;
-						
-						case 'add':
-							$controller->add_persona();
+							$controller->confirm_delete_persona();
 							break;
 							
 						case 'send':
@@ -90,41 +95,70 @@ function case_admin ($params){
 							
 						default:
 							echo("Acción no reconocida.");
+							header('refresh:2;url=admin/personas');
 							
 					}
 				}
 				break;
 			case 'comisiones':
-			 if (empty($params[2])){
-				 $controller->list_comisiones();
-			 } else {
-				 switch($params[3]){
-					 case 'edit':
+				if (empty($params[2])){
+					$controller->list_comisiones();
+				} else {
+				 switch($params[2]){
+					case 'edit':
 						(!empty($params[3])) ? $controller->edit_comision($params[3]) : $controller->edit_comision(null); 
 							//interfaz de edición (necesito un 3er párametro, si no está seteado, null)
-							break;
+						break;
 						
-						case 'update':
-							(!empty($params[3])) ? $controller->send_edit_comision($params[3]) : $controller->send_edit_comision(null);
-							break;
-							
-						case 'delete':
-							(!empty($params[3])) ? $controller->delete_comision($params[3]) : $controller->delete_comision(null);
-							break;
-							
-						case 'add':
-							$controller->add_comision();
-							break;
-							
-						case 'send':
-							$controller->send_form_comision();
-							break;
-							
-						default:
-							echo("Acción no reconocida.");
+					case 'update':
+						$controller->send_edit_comision();
+						break;
+						
+					case 'delete':
+						(!empty($params[3])) ? $controller->delete_comision($params[3]) : $controller->delete_comision(null);
+						break;
+					
+					case 'elim':
+						$controller->confirm_delete_comision();
+						break;
+					
+					case 'send':
+						$controller->send_form_comision();
+						break;
+						
+					default:
+						echo("Acción no reconocida.");
+						header('refresh:2;url=admin/comisiones');
 							
 					}
 				 }
+				break;
+			case 'users':
+				if (empty($params[2])){
+					$controller->list_users();
+				} else {
+					switch ($params[2]){
+						case 'delete':
+							(!empty($params[3])) ? $controller->delete_user($params[3]) : $controller->delete_user(null);
+							break;
+						case 'elim':
+							$controller->confirm_delete_user();
+							break;
+						case 'permissions':
+							(!empty($params[3])) ? $controller->change_permissions($params[3]) : $controller->change_permissions(null);
+							break;
+						case 'send':
+							$controller->set_permissions();
+							break;
+						default:
+							echo("Acción no reconocida.");
+							header('refresh:2;url=admin/users');
+					}
+				}
+				break;
+			default:
+				echo("Acción no reconocida.");
+				header('refresh:2;url=admin');
 		}
 	}
 	

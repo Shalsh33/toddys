@@ -42,11 +42,7 @@ class model_relaciones extends data_base_connect{
 		
 		foreach ($array as $element){
 			
-			var_dump($element);
-			var_dump($item);
-			var_dump($index);
-			
-			if ($index && $element[$index] == $item){
+			if ($index && $element->$index == $item){
 				
 				return false;
 				
@@ -79,8 +75,8 @@ class model_relaciones extends data_base_connect{
 		
 		foreach($all as $comision){
 			
-			if($this->not_in($comisiones,$comision['id'])){
-				$delete = $this->delete_relacion($id_persona,$comision['id'])
+			if($this->not_in($comisiones,$comision->id)){
+				$delete = $this->delete_relacion($id_persona,$comision->id);
 				if(!$delete){
 					return false;
 				}
@@ -108,8 +104,8 @@ class model_relaciones extends data_base_connect{
 		
 		foreach($all as $persona){
 			
-			if($this->not_in($personas,$persona['id'])){
-				$delete = $this->delete_relacion($persona['id'],$id_comision)
+			if($this->not_in($personas,$persona->id)){
+				$delete = $this->delete_relacion($persona->id,$id_comision);
 				if(!$delete){
 					return false;
 				}
@@ -169,12 +165,12 @@ class model_relaciones extends data_base_connect{
 
 	function get_relaciones_persona($id){
 		
-		$query = $this->db->prepare("SELECT comision.nombre FROM persona INNER JOIN $this->table ON $this->table.id_persona = persona.id
+		$query = $this->db->prepare("SELECT comision.nombre, comision.id FROM persona INNER JOIN $this->table ON $this->table.id_persona = persona.id
 		INNER JOIN comision ON $this->table.id_comision = comision.id WHERE persona.id = ?"); //recibo las comisiones de una persona
 		
 		$query->execute([$id]);
 		
-		$comisiones = $query->fetchALL(PDO:FETCH_OBJ);
+		$comisiones = $query->fetchALL(PDO::FETCH_OBJ);
 		
 		return ($comisiones);
 		
@@ -182,12 +178,12 @@ class model_relaciones extends data_base_connect{
 	
 	function get_relaciones_comision($id){
 		
-		$query = $this->db->prepare("SELECT persona.nombre FROM comision INNER JOIN $this->table ON $this->table.id_comision = comision.id
+		$query = $this->db->prepare("SELECT persona.nombre, persona.id FROM comision INNER JOIN $this->table ON $this->table.id_comision = comision.id
 		INNER JOIN persona ON $this->table.id_persona = persona.id WHERE comision.id = ?"); //recibo las personas de una comisión
 		
 		$query->execute([$id]);
 		
-		$personas = $query->fetchALL(PDO:FETCH_OBJ);
+		$personas = $query->fetchALL(PDO::FETCH_OBJ);
 		
 		return ($personas);
 		

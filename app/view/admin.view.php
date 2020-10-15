@@ -5,7 +5,8 @@ require_once 'app/view/view.php';
 class admin_view extends view{
 	
 	/* Generales */
-	function main_page(){
+	function main_page($level){
+		$this->templateEngine->assign("level",$level);
 		$this->templateEngine->display("templates/admin_main.tpl");
 	}
 	
@@ -93,5 +94,27 @@ class admin_view extends view{
 	
 	/*Users*/
 	
+	function admin_users($datos){
+		
+		$this->templateEngine->assign("datos",$datos);
+		$this->templateEngine->display("templates/admin_users.tpl");
+		
+	}
+	
+	function confirm_delete_user($user){
+		
+		$this->templateEngine->assign("user",$user);
+		$this->templateEngine->assign("action","borrar");
+		$this->templateEngine->display("templates/abm_users.tpl");
+		
+	}
+	
+	function change_permissions($user){
+		
+		$this->templateEngine->assign("user",$user);
+		$this->templateEngine->assign("action","edit");
+		$this->templateEngine->display("templates/abm_users.tpl");
+		
+	}
 	
 }

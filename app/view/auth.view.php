@@ -12,7 +12,8 @@ class auth_view extends view{
 	
 	function alta_user(){
 		
-		$this->templateEngine->display('templates/alta_user.tpl');
+		$this->templateEngine->assign("action","registro");
+		$this->templateEngine->display('templates/abm_users.tpl');
 	}
 	
 	function success(){

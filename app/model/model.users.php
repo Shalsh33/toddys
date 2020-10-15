@@ -15,6 +15,16 @@ class model_users extends data_base_connect {
 		parent::__construct($dsn,$user,$pass);
 	}
 	
+	function get_all(){
+		
+		$query = $this->db->prepare("SELECT id, user, email, role FROM $this->table");
+		$query->execute();
+		
+		$result = $query->fetchAll(PDO::FETCH_OBJ);
+		return ($result);
+		
+	}
+	
 	function get($user){
 		
 		$query = $this->db->prepare("SELECT * FROM $this->table WHERE user = ?");
@@ -25,30 +35,41 @@ class model_users extends data_base_connect {
 		
 	}
 	
+	function get_one($id){
+		
+		$query = $this->db->prepare("SELECT id, user, email, role FROM $this->table WHERE id = ?");
+		$query->execute([$id]);
+		
+		$result = $query->fetch(PDO::FETCH_OBJ);
+		return ($result);
+		
+	}
+	
 	function add($user,$pass,$email,$role){
 		
-		$query = $this->db->prepare("INSERT INTO $this->table (user, pass, email, role) VALUES (?,?,?,?)");
+		$query = $this->db->prepare("INSERT INTO $this->table (user, pass, role) VALUES (?,?,?,?)");
 		$result = $query->execute([$user,$pass,$email,$role]);
 		
 		return ($result);
 		
 	}
 	
-	function edit($user,$role){
+	function edit($email,$role){
 		
-		$query = $this->db->prepare("UPDATE $this->table SET role = ? WHERE user = ? ");
-		$result = $query->execute([$role,$user]);
+		$query = $this->db->prepare("UPDATE $this->table SET role = ? WHERE email = ? ");
+		$result = $query->execute([$role,$email]);
 		
 		return ($result);
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	function delete_user($email){
+		
+		$query = $this->db->prepare("DELETE FROM $this->table WHERE email = ? ");
+		$result = $query->execute([$email]);
+		
+		return ($result);
+		
+	}
 	
 }

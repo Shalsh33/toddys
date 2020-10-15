@@ -18,6 +18,7 @@ class admin_controller extends controller{
 		
 		$this->check_session();
 		$this->view = new admin_view(true, $this->username());
+		$this->check_permissions(1);
 		$this->model_personas = new model_personas();
 		$this->model_comisiones = new model_comisiones();
 		$this->model_relaciones = new model_relaciones();
@@ -29,39 +30,47 @@ class admin_controller extends controller{
 	}
 	
 	
-	private function check_session(){
+	private function check_session(){ //comprueba que exista una sesión
 		
 		
 		if (! ($this->sesion()) ){
-			header('location: ' . BASE_URL . 'login');
+			header('location:' . BASE_URL . 'login');
 			die();
 		}
 		
 	}
 	
-	private function check_permissions($nivel){
+	private function check_permissions($nivel){ //comprueba el nivel de permisos para las áreas del admin
 		
 		switch ($nivel){
-			
 			case 1:
-				return ($_SESSION['permissions'] == "admin" || $_SESSION['permissions'] == "super admin");
+				$permissions = ($_SESSION['permissions'] == "admin" || $_SESSION['permissions'] == "super admin");
 				break;
 			case 2:
-				return ($_SESSION['permissions'] == "super admin");
+				$permissions = ($_SESSION['permissions'] == "super admin");
 				break;
 			default:
-				return false;
+				$permissions = false;
 				break;
+			
+		}
+		
+		if(! $permissions){
+			
+			$this->view->denied();die;
 			
 		}
 		
 	}
 	
-	function init(){
-		$this->view->main_page();
-	}
 	
-	private function set_status($array_ppal,$array_sec){
+	private function set_status($array_ppal,$array_sec){ //Agrega un atributo a las personas que permite saber si son parte
+															//de una comisión o a las comisiones, que permite saber si están asignadas a una persona.
+		foreach($array_ppal as $item){
+			
+			$item->selected = false;
+			
+		}
 		
 		foreach($array_sec as $selected){
 			
@@ -76,17 +85,31 @@ class admin_controller extends controller{
 				
 			}
 			
+		}	
+	}
+	
+	private function redirect($location,$time=3){
+		
+		header('refresh:$time;url=admin/$location');
+		
+	}
+	
+	/*Página principal*/
+	
+	function init(){
+		switch($_SESSION['permissions']){
+			case 'usuario':
+				$level = 0;
+				break;
+			case 'admin':
+				$level = 1;
+				break;
+			case 'super admin':
+				$level = 2;
+				break;
 		}
-		
-		
+		$this->view->main_page($level);
 	}
-	
-	private function redirect($location){
-		
-		header('refresh:5;url=admin/$location');
-		
-	}
-	
 	
 	/*Acciones personas*/
 	
@@ -140,6 +163,7 @@ class admin_controller extends controller{
 		$update = $this->model_relaciones->set_comisiones($comisiones,$id);
 		
 		($update) ? $this->view->action_done() : $this->view->error_param();
+		
 		$this->redirect("personas");
 	}
 	
@@ -164,8 +188,8 @@ class admin_controller extends controller{
 		$presidente = (isset($_POST['presidente']));
 		$foto = (isset($_POST['foto'])) ? $_POST['foto'] : 'none.png';
 		
-		$this->model_personas->insert_persona($nombre,$periodo,$descripcion,$presidente,$foto); 
-		$this->view->change_ready();
+		$add = $this->model_personas->insert($nombre,$periodo,$descripcion,$presidente,$foto); 
+		($add) ? $this->view->action_done() : $this->view->error_param();
 		$this->redirect("personas");
 	}
 	
@@ -182,7 +206,7 @@ class admin_controller extends controller{
 		$result = ($_POST['id']) ? $this->model_personas->delete_persona($_POST['id']) : null;
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
-		$this->redirect("personas");
+		$this->redirect("personas",1);
 		
 		
 	}
@@ -231,6 +255,11 @@ class admin_controller extends controller{
 			}
 
 		}
+		
+		$personas = $_POST['personas'];
+		
+		$update = $this->model_relaciones->set_personas($personas,$id);
+		
 		($update) ? $this->view->action_done() : $this->view->error_param();
 		
 		$this->redirect("comisiones");
@@ -254,8 +283,8 @@ class admin_controller extends controller{
 		}
 			
 		
-		$this->model_comisiones->insert_comision($nombre,$fecha); 
-		$this->view->change_ready();
+		$add = $this->model_comisiones->insert($nombre,$fecha); 
+		($add) ? $this->view->action_done() : $this->view->error_param();
 		$this->redirect("comisiones");
 		
 	}
@@ -274,43 +303,35 @@ class admin_controller extends controller{
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
-		$this->redirect("comisiones");	
+		$this->redirect("comisiones",1);	
 	}
 	
 	/*Usuarios*/
 	//Se necesitan permisos nivel 2 o superior
 	function list_users(){
 		
-		if ($this->check_permissions(2)){
+		$this->check_permissions(2);
 			
-			if ($this->model_users->check_connection()){
-				$array_db = $this->model_users->get();
-				$this->view->admin_users($array_db);
-			} else {
-				$this->view->connection_error();
-			}
-			
-		} else {
-			
-			header("location: admin");
-			
-		}
-		
-		
+		$array_db = $this->model_users->get_all();
+		$this->view->admin_users($array_db);
 		
 	}
 	
 	function delete_user($id){
 		
-		$persona = $this->model_users->get_one($id);
+		$this->check_permissions(2);
 		
-		$this->view->confirm_delete_user($persona);
+		$user = $this->model_users->get_one($id);
+		
+		$this->view->confirm_delete_user($user);
 		
 	}
 	
 	function confirm_delete_user(){
 		
-		$result = ($_POST['id']) ? $this->model_personas->delete_persona($_POST['id']) : null;
+		$this->check_permissions(2);
+		
+		$result = ($_POST['email']) ? $this->model_users->delete_user($_POST['email']) : null;
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
@@ -318,13 +339,26 @@ class admin_controller extends controller{
 		
 	}
 	
-	function change_permissions(){
+	function change_permissions($id){
 		
-		//desarrollar
+		$this->check_permissions(2);
+		
+		$user = $this->model_users->get_one($id);
+		$this->view->change_permissions($user);
 		
 	}
 	
-	/*Relaciones*/
+	function set_permissions(){
+		
+		$this->check_permissions(2);
+		
+		$result = ($_POST['email']) ? $this->model_users->edit($_POST['email'],$_POST['permissions']) : null;
+		
+		($result) ? $this->view->action_done() : $this->view->error_param();
+		
+		$this->redirect("users");
+		
+	}
 	
 	
 }
