@@ -3,11 +3,41 @@
 require_once 'app/controller/admin.controller.php';
 require_once 'app/controller/index.controller.php';
 require_once 'app/controller/auth.controller.php';
+require_once 'libs/Router.php';
 
 
 // defino la base url para la construccion de links con urls semánticas
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
+//Creo el Router
+$router = new Router();
+
+//Asigno las acciones
+//Acción por defecto
+$router->setDefaultRoute('index_controller','inicio');
+//Acciones del Index público
+$router->addRoute('inicio','GET','index_controller','inicio');
+$router->addRoute('personas','GET','index_controller','personas');
+$router->addRoute('personas/:id','GET','index_controller','personas');
+$router->addRoute('comisiones','GET','index_controller','comisiones');
+//Acciones de Auth
+$router->addRoute('login','GET','auth_controller','init');
+$router->addRoute('login','POST','auth_controller','login');
+$router->addRoute('registro','GET','auth_controller','alta_user');
+$router->addRoute('registro','POST','auth_controller','send_form');
+$router->addRoute('logout','GET','auth_controller','logout');
+//Funciones del Admin
+$router->addRoute('admin','GET','admin_controller','init');
+$router->addRoute('admin/:table','GET','admin_controller','admin');
+$router->addRoute('admin/:table','POST','admin_controller','adminAdd');
+$router->addRoute('admin/:table/:id','GET','admin_controller','abmAdmin');
+$router->addRoute('admin/:table/:id/:action','POST','admin_controller','sendForm');
+
+//Ruteo
+$router->route($_GET["action"], $_SERVER['REQUEST_METHOD']);
+
+
+/*
 // lee la acción
 if (!empty($_GET['action'])) {
     $action = $_GET['action'];
@@ -19,45 +49,6 @@ if (!empty($_GET['action'])) {
 $params = explode('/', $action);
 
 // determina que camino seguir según la acción
-switch ($params[0]) {
-	case 'login':
-		$controller = new auth_controller();
-		if (empty($params[1])){
-			$controller->init();
-		} else {
-			$controller->login();
-		}
-		break;
-	case 'registro':
-		$controller = new auth_controller();
-		if (empty($params[1])){
-			$controller->alta_user();
-		} else {
-			$controller->send_form();
-		}
-		break;
-	case 'logout':
-		$controller = new auth_controller();
-		$controller->logout();
-		break;
-    case 'admin':
-		case_admin($params);
-		break;
-	case 'inicio':
-	case 'personas':
-		$controller = new index_controller();
-		(empty($params[1])) ? $controller->personas() : $controller->persona($params[1]);
-		break;
-	case 'comisiones':
-		$controller = new index_controller();
-		$controller->comisiones();
-		break;
-    default:
-        echo('404 Page not found');
-		header('refresh:2;url=inicio');
-        break;
-}
-
 function case_admin ($params){
 	$controller = new admin_controller();
 	
@@ -164,4 +155,4 @@ function case_admin ($params){
 	}
 	
 	
-}
+}*/
