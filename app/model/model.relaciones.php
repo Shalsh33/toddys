@@ -138,7 +138,7 @@ class model_relaciones extends data_base_connect{
 	
 	function get_personas($id_comision){
 		
-		$query = $this->db->prepare("SELECT persona.nombre, persona.id FROM $this->table INNER JOIN persona ON 
+		$query = $this->db->prepare("SELECT persona.nombre, persona.id, persona.normalizedName FROM $this->table INNER JOIN persona ON 
 		$this->table.id_persona = persona.id WHERE $this->table.id_comision = ?;"); //recibo las personas que son parte de la comision
 		
 		$query->execute([$id_comision]); 
