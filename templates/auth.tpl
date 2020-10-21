@@ -3,7 +3,7 @@
 <article id="login">
 	
 	
-	<form class="login" action="login/send" method="post">
+	<form class="login" action="login" method="post">
 	
 		<label for="user">Usuario</label>
 		<input type="text" name="user" placeholder="Usuario">
@@ -15,7 +15,7 @@
 	</form>
 	<h2> 
 	¿No tienes una cuenta? 
-	<a href="registro"><button type="button">¡Registrate!</button></a>
+	<a href="registro"><button type="button">¡Regístrate!</button></a>
 	</h2>
 	
 	{if $error}
