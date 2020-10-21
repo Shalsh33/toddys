@@ -73,9 +73,9 @@ class model_personas extends data_base_connect{
 			}
 		}
 		
-		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, periodo = ?, descripcion = ?, presidente = ?, foto = ? WHERE id = ?");
-		
-		$result = $query->execute([$persona['nombre'],$persona['periodo'],$persona['descripcion'],$persona['presidente'],$persona['foto'],$id]);
+		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, periodo = ?, descripcion = ?, presidente = ?, foto = ?, normalizedName = ? WHERE id = ?");
+		$normalizedName = $this->normalize($persona['nombre');
+		$result = $query->execute([$persona['nombre'],$persona['periodo'],$persona['descripcion'],$persona['presidente'],$persona['foto'],$normalizedName,$id]);
 		
 		return($result);
 	}
