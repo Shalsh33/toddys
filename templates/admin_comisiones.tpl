@@ -16,11 +16,10 @@
 {foreach from=$datos item=comision}
 	<div class="comision"> 
 		<h2>{$comision->nombre}<h2>
-		<a href='admin/comisiones/edit/{$comision->id}'>Editar</a>
-		<a href='admin/comisiones/delete/{$comision->id}'>Eliminar</a>
+		<a href='admin/comisiones/{$comision->id}'>Editar</a>
 	</div>
 {/foreach}
 
 </article>
 
-<script type="text/javascript" src="includes/js/abm_comisiones.js"></script>
+<script type="text/javascript" src="includes/js/add.js"></script>
