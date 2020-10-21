@@ -4,8 +4,12 @@ require_once 'app/view/view.php';
 
 class index_view extends view{
 	
-	function personas($datos){
+	function inicio(){
 		
+		$this->templateEngine->display("templates/inicio.tpl");
+		
+	}
+	function personas($datos){
 		$this->templateEngine->assign("datos",$datos);
 		$this->templateEngine->display("templates/personas.tpl");
 		
