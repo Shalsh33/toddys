@@ -23,11 +23,22 @@ class index_controller extends controller{
 		
 	}
 	
-	function personas(){
+	function inicio(){
 		
-			$datos = $this->model_personas->get_all_extended();
+		$this->view->inicio();
+		
+	}
+	
+	function personas($params = null){
 			
-			$this->view->personas($datos);
+			if (!($params)){
+				$datos = $this->model_personas->get_all_extended();
+				$this->view->personas($datos);
+			} else {
+				
+				$this->persona($params[':id']);
+				
+			}
 		
 			
 			
@@ -35,13 +46,13 @@ class index_controller extends controller{
 	
 	function persona($id){
 		
-		$persona = $this->model_personas->get_one($id);
+		$persona = $this->model_personas->get_one_extended($id);
 		
 		$this->view->persona($persona);
 		
 	}
 	
-	function comisiones(){
+	function comisiones($params){
 		
 		$datos = $this->model_comisiones->get_all_extended();
 		
