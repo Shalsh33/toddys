@@ -21,18 +21,30 @@ class model_personas extends data_base_connect{
 		parent::__construct($dsn,$user,$pass);
 	}
 	
+	private function normalize($nombre){
+		
+		$nombre = str_replace(' ', '+', $nombre);
+		$nombre = str_replace('á', 'a', $nombre);
+		$nombre = str_replace('é', 'e', $nombre);
+		$nombre = str_replace('í', 'i', $nombre);
+		$nombre = str_replace('ó', 'o', $nombre);
+		$nombre = str_replace('ú', 'u', $nombre);
+		return($nombre);
+		
+	}
+	
 	function insert($nombre,$periodo,$desc=null,$presidente,$foto="none.png"){
 		
 		//Si reemplazamos al presidente
 		if ( ($presidente) && ($self->check_presidente()) ){
 				$self->replace_presidente();
 		}
-		
+		$normalizedName = $this->normalize($nombre);
 		// preparamos la consulta
-		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, descripcion, presidente, foto) VALUES (?,?,?,?,?)");
+		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, descripcion, presidente, foto, normalizedName) VALUES (?,?,?,?,?,?)");
 			//La consulta tiene que llevar el nombre de la tabla, sino no se ejecuta!
 		
-		$result = $query->execute([$nombre,$periodo,$desc,$presidente,$foto]);
+		$result = $query->execute([$nombre,$periodo,$desc,$presidente,$foto,$normalizedName]);
 			
 		//devolvemos el resultado de la ejecución (True/False)
 		return ($result);
@@ -138,6 +150,37 @@ class model_personas extends data_base_connect{
 		return($response);
 	}
 	
+	function get_one_extended($id){
+		//Intentamos conseguir la persona por ID
+		$query = $this->db->prepare("SELECT * FROM $this->table WHERE id = ?");
+		
+		$query->execute([$id]);
+		
+		$response = $query->fetch(PDO::FETCH_OBJ);
+		if (!$response){
+			//Si no hay respuesta, probamos si el id en realidad no es un nombre
+			$response = $this->get_by_name($id);
+		}
+		//Si existe, vamos a asignarle las comisiones
+		if ($response){
+			$comisiones = $this->relaciones->get_comisiones($id);
+			$response->comisiones = $comisiones;
+		}
+		
+		return($response);
+	}
+	
+	function get_by_name($name){
+		//Intentamos obtener la persona por Nombre Normalizado
+		$query = $this->db->prepare("SELECT * FROM $this->table WHERE normalizedName = ?");
+		$name = $this->normalize($name);
+		$query->execute([$name]);
+		
+		$response = $query->fetch(PDO::FETCH_OBJ);
+		
+		return($response);
+		
+	}
 	function equal($persona,$id){
 		
 		$compare = $this->get_one($id);
