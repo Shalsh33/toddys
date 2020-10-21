@@ -122,18 +122,29 @@ input[type=number] {
 .flex{
 	display:flex;
 }
-
+#emergente.dnone{
+	display:none;
+}
+#contenido.dnone{
+	display:none;
+}
 #emergente{
-		display:grid;
-		grid-template-columns: 2fr 3fr;
-		grid-template-rows: 1fr 1fr 1fr;
-		grid-gap:10px;
-		position: fixed;
-		top:100;
-		left:20;
 		width:80%;
 		height:80%;
-		margin:auto;
+		margin: 2% 10% 10%;
+	}
+	#emergente > a{
+		
+		position:fixed;
+		top: 100;
+		left: 50;
+		
+	}
+	#emergente > a > img{
+		
+		width:50px;
+		height:50px;
+		
 	}
 /*******************************************************Clases*********************************************************************/
 
@@ -496,7 +507,7 @@ footer > p{
 		grid-area: titulo;
 	}
 	/*Index*/
-	#contenido > .presidente{
+	.presidente{
 		grid-area:recuadro;
 		grid-column:1 / span 2;
 		grid-row:2 / span 1;
@@ -505,7 +516,7 @@ footer > p{
 		grid-template-rows: 1fr 1fr;
 		grid-gap:10px;
 	}
-	#contenido > .persona{
+	.persona{
 		grid-area:recuadro;
 		grid-column:span 1;
 		grid-row:span 1;
@@ -514,7 +525,7 @@ footer > p{
 		grid-template-rows: 1fr 1fr;
 		grid-gap:10px;
 	}
-	#contenido > section{
+	#contenido > section, #emergente>section{
 		
 		padding: 20px;
 		background-color: rgba(0,0,0,0.8);
@@ -525,31 +536,41 @@ footer > p{
 		color: white;
 		
 	}
-	#contenido > section > .img-persona{
+	#emergente > section > *{
+		
+		color: white;
+		
+	}
+	section > .img-persona{
 		grid-column: 1;
 		margin:auto;
 		height:250px;
 		grid-row: 1 / span 3;
 	}
-	#contenido > section > .nombre{
+	section > .nombre{
 		grid-column: 2;
 		grid-row: 1;
 	}
-	#contenido > section > .desc{
-		grid-column: 2;
-		grid-row: 3;
-	}
-	#contenido > section > .relaciones{
+	section > .desc{
 		grid-column: 2;
 		grid-row: 2;
 	}
-	#contenido > section > .relaciones > * > *{
+	.relaciones{
+		grid-column: 2;
+		grid-row: 3;
+	}
+	.relaciones > * > *{
 		color: white;
 	}
 	#contenido > .comision{
 		grid-area:recuadro;
 		grid-column:span 1;
 		grid-row:span 1;
+	}
+	.comentarios{
+		
+		margin-top:50px;
+		
 	}
 	
 	/*contacto*/
