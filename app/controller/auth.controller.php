@@ -35,6 +35,7 @@ class auth_controller extends controller {
 	
 	function login(){
 		
+		
 		$this->check_session();
 		
 		if (isset($_POST['user']) && isset($_POST['pass'])){
