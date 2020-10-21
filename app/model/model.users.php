@@ -34,7 +34,8 @@ class model_users extends data_base_connect {
 		return ($result);
 		
 	}
-	
+	//Get se usa para comparar las contraseñas al momento del login.
+	//Get one se usa para el form de edit (En ningún momento necesitamos la pass del usuario)
 	function get_one($id){
 		
 		$query = $this->db->prepare("SELECT id, user, email, role FROM $this->table WHERE id = ?");
@@ -54,10 +55,10 @@ class model_users extends data_base_connect {
 		
 	}
 	
-	function edit($email,$role){
+	function edit($id,$role){
 		
-		$query = $this->db->prepare("UPDATE $this->table SET role = ? WHERE email = ? ");
-		$result = $query->execute([$role,$email]);
+		$query = $this->db->prepare("UPDATE $this->table SET role = ? WHERE id = ? ");
+		$result = $query->execute([$role,$id]);
 		
 		return ($result);
 		
