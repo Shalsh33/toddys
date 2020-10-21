@@ -24,7 +24,7 @@ class admin_controller extends controller{
 		$this->model_users = new model_users();
 		if (! ($this->model_comisiones->check_connection() && $this->model_personas->check_connection() && $this->model_relaciones->check_connection())){
 			$this->view->connection_error();
-			header('refresh:5;url=inicio');
+			header('refresh:5;url='.BASE_URL.'inicio');
 		}
 	}
 	
@@ -39,13 +39,14 @@ class admin_controller extends controller{
 		
 	}
 	
-	private function check_permissions($nivel){ //comprueba el nivel de permisos para las áreas del admin
+	private function check_permissions($table){ //comprueba el nivel de permisos para las áreas del admin
 		
-		switch ($nivel){
-			case 1:
+		switch ($table){
+			case 'personas':
+			case 'comisiones':
 				$permissions = ($_SESSION['permissions'] == "admin" || $_SESSION['permissions'] == "super admin");
 				break;
-			case 2:
+			case 'users':
 				$permissions = ($_SESSION['permissions'] == "super admin");
 				break;
 			default:
@@ -87,15 +88,10 @@ class admin_controller extends controller{
 		}	
 	}
 	
-	private function redirect($location){
-		
-		header('refresh:3;url= '. BASE_URL .'admin/' . $location);
-		
-	}
 	
+/*Acciones de ruteo*/
 	/*Página principal*/
-	
-	function init(){
+	function init($params = null){
 		$level = 0;
 		switch($_SESSION['permissions']){
 			case 'usuario':
@@ -111,8 +107,64 @@ class admin_controller extends controller{
 		$this->view->main_page($level);
 	}
 	
-	/*Acciones personas*/
+	/*Acceso a los listados de tablas*/
+	function admin($params = null){
+		
+		if ($params){
+			$table = $params[':table'];
+			$this->check_permissions($table);
+			$action = "list_$table";
+			$this->$action();
+		} else {
+			$this->init();
+		}
+		
+	}
 	
+	/*Alta de personas/comisiones*/
+	function adminAdd($params = null){
+		
+		if ($params){
+			$table = $params[':table'];
+			$this->check_permissions($table);
+			$action = "alta_$table";
+			$this->$action();
+		} else {
+			$this->init();
+		}
+		
+	}
+	
+	/*Interfaz de edición*/
+	function abmAdmin($params = null){
+		
+		if ($params){
+			$table = $params[':table'];
+			$this->check_permissions($table);
+			$action = "edit_$table";
+			$this->$action($params[':id']);
+		} else {
+			$this->init();
+		}
+		
+	}
+	
+	/*Acciones de edit o delete*/
+	function sendForm($params){
+		
+		if ($params){
+			$table = $params[':table'];
+			$this->check_permissions($table);
+			$action = "send_".$params[':action']."_$table";
+			$id = $params[':id'];
+			$this->$action($id);
+		} else{
+			$this->view->error_param();
+		}
+		
+	}
+	
+/*Acciones personas*/
 	function list_personas(){
 		
 		$array_db = $this->model_personas->get_all();
@@ -120,9 +172,9 @@ class admin_controller extends controller{
 		
 	}
 	
-	function edit_persona($id){
+	function edit_personas($id){
 		
-		$persona = ($id) ? $this->model_personas->get_one($id) : null;
+		$persona = ($id) ? $this->model_personas->get_one_extended($id) : null;
 		
 		if ($persona) {
 			
@@ -138,9 +190,27 @@ class admin_controller extends controller{
 		}
 	}
 	
-	function send_edit_persona() {
+	function alta_personas(){
 		
-		$id = $_POST['id'];
+		if (isset($_POST['nombre']) && isset($_POST['periodo'])){
+			$nombre = $_POST['nombre'];
+			$periodo = $_POST['periodo'];
+		} else {
+			$this->view->error_param();
+			die;
+		}
+			
+		$descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : null;
+		$presidente = (isset($_POST['presidente']));
+		$foto = (isset($_POST['foto'])) ? $_POST['foto'] : 'none.png';
+		
+		$add = $this->model_personas->insert($nombre,$periodo,$descripcion,$presidente,$foto); 
+		($add) ? $this->view->action_done() : $this->view->error_param();
+		$this->redirect("personas");
+	}
+	
+	function send_edit_personas($id) {
+		
 		$presidente = (isset($_POST['presidente'])) ? true : false;
 		$persona = array(
 			"nombre" => $_POST['nombre'],
@@ -164,67 +234,25 @@ class admin_controller extends controller{
 		
 		($update) ? $this->view->action_done() : $this->view->error_param();
 		
-		$this->redirect("personas");
 	}
-	
-	function add_persona(){
 		
-		$comisiones = $this->model_comisiones->get_all();
-		$this->view->form_alta_persona($comisiones);
+	function send_delete_personas($id){
 		
-	}
-	
-	function send_form_persona(){
-		
-		if (isset($_POST['nombre']) && isset($_POST['periodo'])){
-			$nombre = $_POST['nombre'];
-			$periodo = $_POST['periodo'];
-		} else {
-			$this->view->error_param();
-			die;
-		}
-			
-		$descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : null;
-		$presidente = (isset($_POST['presidente']));
-		$foto = (isset($_POST['foto'])) ? $_POST['foto'] : 'none.png';
-		
-		$add = $this->model_personas->insert($nombre,$periodo,$descripcion,$presidente,$foto); 
-		($add) ? $this->view->action_done() : $this->view->error_param();
-		$this->redirect("personas");
-	}
-	
-	function delete_persona($id){
-		
-		$persona = $this->model_personas->get_one($id);
-		
-		if ($persona){ 
-			$this->view->confirm_delete_persona($persona);
-		} else {
-			$this->view->error_param();
-			$this->redirect("personas");
-		}
-		
-	}
-	
-	function confirm_delete_persona(){
-		
-		$result = ($_POST['id']) ? $this->model_personas->delete_persona($_POST['id']) : null;
+		$result = $this->model_personas->delete_persona($id);
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
-		$this->redirect("personas");
-		
-		
+
 	}
 
-	/*Comisiones*/
+/*Comisiones*/
 	function list_comisiones(){
 		
 		$array_db = $this->model_comisiones->get_all();
 		$this->view->admin_comisiones($array_db);
 		
 	}
-	
-	function edit_comision($id){
+	/*Formulario de edit individual*/
+	function edit_comisiones($id){
 		
 		 $comision = ($id) ? $this->model_comisiones->get_one($id) : null;
 		
@@ -242,42 +270,8 @@ class admin_controller extends controller{
 		}
 		
 	}
-	
-	function send_edit_comision() {
-		
-		$id = $_POST['id'];
-		$comision = array(
-			"nombre" => $_POST['nombre'],
-			"fecha" => $_POST['fecha']
-		);
-		
-		if (! $this->model_comisiones->equal($comision,$id)){
-		
-			$update = $this->model_comisiones->edit($id,$comision);
-			if (!$update) {
-				$this->view->error_param(); 
-				die;
-			}
-
-		}
-		
-		$personas = $_POST['personas'];
-		
-		$update = $this->model_relaciones->set_personas($personas,$id);
-		
-		($update) ? $this->view->action_done() : $this->view->error_param();
-		
-		$this->redirect("comisiones");
-		
-	}
-	
-	function add_comision(){
-		
-		$this->view->form_alta_comision();
-		
-	}
-	
-	function send_form_comision(){
+	/*Recibo de form para alta*/
+	function alta_comisiones(){
 		
 		if (isset($_POST['nombre']) && isset($_POST['fecha'])){
 			$nombre = $_POST['nombre'];
@@ -290,90 +284,82 @@ class admin_controller extends controller{
 		
 		$add = $this->model_comisiones->insert($nombre,$fecha); 
 		($add) ? $this->view->action_done() : $this->view->error_param();
-		$this->redirect("comisiones");
 		
 	}
-	
-	function delete_comision($id){
+	/*Recibo de form para edit individual*/
+	function send_edit_comisiones($id) {
 		
-		$comision = $this->model_comisiones->get_one($id);
+		//Se obtienen los datos del form
+		$comision = array(
+			"nombre" => $_POST['nombre'],
+			"fecha" => $_POST['fecha']
+		);
 		
-		if ($comision){ 
-			$this->view->confirm_delete_comision($comision);
-		} else {
-			$this->view->error_param();
-			$this->redirect("comisiones");
+		//Primero controlamos si existe algún cambio en los datos
+		if (! $this->model_comisiones->equal($comision,$id)){
+			//Si se cambia algo, entonces la comisión se edita
+			$update = $this->model_comisiones->edit($id,$comision);
+			if (!$update) {
+				$this->view->error_param(); 
+				die;
+			}
+
 		}
+		//Se obtiene el arreglo de personas que son parte de la comisión
+		$personas = $_POST['personas'];
+		//Se las agrega a la tabla persona_comision
+		$update = $this->model_relaciones->set_personas($personas,$id);
+		
+		($update) ? $this->view->action_done() : $this->view->error_param();
+		
 		
 	}
-	
-	function confirm_delete_comision(){
 		
-		$result = ($_POST['id']) ? $this->model_comisiones->delete_comision($_POST['id']) : null;
+	function send_delete_comisiones($id){
+		
+		$result = $this->model_comisiones->delete_comision($id);
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
-		
-		$this->redirect("comisiones");	
+			
 	}
 	
-	/*Usuarios*/
+/*Usuarios*/
 	//Se necesitan permisos nivel 2 o superior
 	function list_users(){
 		
-		$this->check_permissions(2);
 			
 		$array_db = $this->model_users->get_all();
 		$this->view->admin_users($array_db);
 		
 	}
 	
-	function delete_user($id){
+	function edit_users($id){
 		
-		$this->check_permissions(2);
 		
 		$user = $this->model_users->get_one($id);
 		
 		if ($user){ 
-			$this->view->confirm_delete_user($user);
+			$this->view->edit_user($user);
 		} else {
 			$this->view->error_param();
-			$this->redirect("users");
 		}
 		
 	}
-	
-	function confirm_delete_user(){
-		
-		$this->check_permissions(2);
-		
-		$result = ($_POST['id']) ? $this->model_users->delete_user($_POST['id']) : null;
+	//El alta de usuarios lo realiza el auth controller
+	function send_edit_users($id){
+		/*Setea los nuevos permisos del usuario*/
+		$result = $this->model_users->edit($id,$_POST['role']);
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
-		$this->redirect("users");
-		
 	}
 	
-	function change_permissions($id){
+	function send_delete_users($id){
 		
-		$this->check_permissions(2);
-		
-		$user = $this->model_users->get_one($id);
-		$this->view->change_permissions($user);
-		
-	}
-	
-	function set_permissions(){
-		
-		$this->check_permissions(2);
-		
-		$result = ($_POST['email']) ? $this->model_users->edit($_POST['email'],$_POST['role']) : null;
+		$result = ($_POST['id']) ? $this->model_users->delete_user($id) : null;
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
-		$this->redirect("users");
-		
 	}
-	
 	
 }
