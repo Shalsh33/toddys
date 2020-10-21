@@ -348,7 +348,8 @@ class admin_controller extends controller{
 	//El alta de usuarios lo realiza el auth controller
 	function send_edit_users($id){
 		/*Setea los nuevos permisos del usuario*/
-		$result = $this->model_users->edit($id,$_POST['role']);
+		$role = $_POST['role'];
+		$result = $this->model_users->edit($id,$role);
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
@@ -356,7 +357,7 @@ class admin_controller extends controller{
 	
 	function send_delete_users($id){
 		
-		$result = ($_POST['id']) ? $this->model_users->delete_user($id) : null;
+		$result = $this->model_users->delete_user($id);
 		
 		($result) ? $this->view->action_done() : $this->view->error_param();
 		
