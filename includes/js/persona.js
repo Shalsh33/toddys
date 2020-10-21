@@ -1,50 +1,103 @@
 //JavaScript Document
 'use strict'
 
-document.addEventListener('DOMContentLoaded', (e) =>{
+
+
+document.addEventListener("DOMContentLoaded",(e)=>{
 	
-	let personas = document.querySelectorAll(".persona");
-	let presidente = document.querySelector(".presidente");
+	
+	let contenido = document.querySelector("#contenido");
 	let emergente = document.querySelector("#emergente");
+	let personas;
+	let back;
 	
-	personas.forEach(persona =>{
-		
-		persona.addEventListener("click", (e)=>{
+	if (window.location.search){
+		let persona = window.location.search.substr(1);
+		fetch(`personas/${persona}`).then(response => response.text()).then (html =>{
+			window.history.pushState({},'',`personas?${persona}`);
+			emergente.innerHTML= html;
+			contenido.innerHTML = "";
+			emergente.classList.toggle("dnone");
+			contenido.classList.toggle("dnone");
+			back = document.querySelector("#back");
+			setTimeout(()=>{
+				back.addEventListener("click",clickBack);
+			},0);
 			
-			fetch(`personas/${persona.id}`).then(response => response.text()).then (html =>{
-				
-				emergente.innerHTML= html;
-				emergente.classList.remove("hidden");
-				emergente.classList.add("visible");
-				window.addEventListener("click",clickEmergente);
-				
-			});
+		});
 		
-	});
-	});
+	} else {
+		fetch ('personas').then(response=>response.text()).then(html=>{
+			contenido.innerHTML=html;
+			window.history.replaceState({},'','personas');
+			eventsPersonas();
+		});
+	}
 	
-	presidente.addEventListener("click", (e)=>{
+	
+	
+	function eventsPersonas(){
+		
+		
+		personas = document.querySelectorAll("section");
+	
+		personas.forEach(persona =>{
 			
-			fetch(`personas/${presidente.id}`).then(response => response.text()).then (html =>{
-				
-				emergente.innerHTML= html;
-				emergente.classList.remove("hidden");
-				emergente.classList.add("visible");
-				window.addEventListener("click",clickEmergente);
-				
-			});
-		
-	});
+			if (persona.classList[0] == "presidente" || persona.classList[0] == "persona"){
+				let id = persona.id;
+				let nombre = persona.querySelector(".nombre");
+				nombre = normalize(nombre.textContent);
+				persona.addEventListener("click", function (){
+					fetch(`personas/${id}`).then(response => response.text()).then (html =>{
+						
+						window.history.pushState({},'',`personas?${nombre}`);
+						emergente.innerHTML= html;
+						contenido.innerHTML = "";
+						emergente.classList.toggle("dnone");
+						contenido.classList.toggle("dnone");
+						back = document.querySelector("#back");
+						setTimeout(()=>{
+							back.addEventListener("click",clickBack);
+						},0);
+						
+					});
+			
+				});
+			}
+		});	
+	}
 	
 	
-	let clickEmergente = function(e){
-			ocultarEmergente();
+	
+	let clickBack = (e) =>{
+		e.preventDefault();
+		ocultarEmergente();
 	};
 	
 	function ocultarEmergente(){
-		emergente.classList.remove("visible");
-		emergente.classList.add("hidden");
-		window.removeEventListener("click",clickEmergente);
+		back.removeEventListener("click",clickBack);
+		emergente.innerHTML= "";
+		emergente.classList.toggle("dnone");
+		contenido.classList.toggle("dnone");
+		fetch ('personas').then(response=>response.text()).then(html=> {
+			window.history.pushState({},'',`personas`);
+			contenido.innerHTML = html;
+			setTimeout(()=>{
+				eventsPersonas();
+			},0);
+		});
+	}
+	
+	function normalize(texto){
+		
+		texto = texto.replace(/ /g, '+'); 
+		texto =texto.replace(/á/g, 'a'); 
+		texto =texto.replace(/é/g, 'e'); 
+		texto =texto.replace(/í/g, 'i'); 
+		texto =texto.replace(/ó/g, 'o'); 
+		texto =texto.replace(/ú/g, 'u'); 
+		return (texto);
+		
 	}
 	
 });
