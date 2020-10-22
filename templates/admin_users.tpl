@@ -4,8 +4,7 @@
 		{foreach from=$datos item=usuario}
 			<div class="persona"> 
 				<h2>{$usuario->email}<h2>
-				<a href='admin/users/permissions/{$usuario->id}'>Cambiar Permisos</a>
-				<a href='admin/users/delete/{$usuario->id}'>Eliminar</a>
+				<a href='admin/users/{$usuario->id}'>Editar</a>
 			</div>
 		{/foreach}
 </article>
