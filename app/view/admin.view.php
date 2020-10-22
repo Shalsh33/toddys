@@ -77,7 +77,7 @@ class admin_view extends view{
 	function edit_user($user){
 		
 		$this->templateEngine->assign("usuario",$user);
-		$this->templateEngine->display("templates/abm_users.tpl");
+		$this->templateEngine->display("templates/edit_users.tpl");
 		
 	}
 	
