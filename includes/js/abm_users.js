@@ -3,42 +3,31 @@
 
 document.addEventListener('DOMContentLoaded', (e) =>{
 	
-	let form = document.querySelector("form");
-	let button = document.querySelector("button");
-	let action = button.id.split('_');
+	let forms = document.querySelectorAll("form");
 	
-	form.addEventListener('submit', function(e){
-		
+	forms.forEach(form =>{
+		form.addEventListener('submit', sendForm);
+	});
+	
+	async function sendForm(e){
 		e.preventDefault();
 		
 		const data = new URLSearchParams(new FormData(this));
-		if(action[0] != "registro"){
-			fetch(`admin/users/${action[0]}`, {
-				method: 'post',
-				body: data,
-			}) . then(response => response.text()) .then(html => {form.innerHTML= html;});
-			
+		let id = window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1);
+		let request = await fetch(`admin/users/${id}/${this.id}`,{
+									method: 'POST',
+									body: data,
+									});
+		if (request.ok){
+			let text = await request.text();
+			this.innerHTML = text;
 			setTimeout( ()=>{ window.location.href = "admin/users";},3000);
 		} else {
-			fetch(`registro/${action[0]}`, {
-				method: 'post',
-				body: data,
-			}) . then(response => response.text()) .then(html => {form.innerHTML= html;});
-			setTimeout( ()=>{ window.location.href = "login";},3000);
+			this.innerHTML = "Error de conexión, intente nuevamente más tarde";
+			setTimeout( ()=>{ window.location.reload();},3000);
 		}
-	
-});
-
-	if (action[0] == "registro"){
-		let user = document.querySelector("#user");
-		let email = document.querySelector("#email");
 		
-		user.addEventListener("keyup", function (e){
-			
-			email.value = this.value + "@todos.com.ar";
-			
-		});
-
-}
+	
+	}
 
 });
