@@ -13,15 +13,14 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 		e.preventDefault();
 		let id = window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1);
 		const data = new URLSearchParams(new FormData(this));
-		
-		let request = await fetch(`admin/personas/${id}/${this.id}`, {
+		let request = await fetch(`admin/personas/${id}/${this.id}`,{
 									method: 'POST',
 									body: data,
 									});
 		if (request.ok){
 			let text = await request.text();
 			this.innerHTML = text;
-			setTimeout( ()=>{ window.location.reload();},3000);
+			setTimeout( ()=>{ window.location.href = "admin/personas";},3000);
 		} else {
 			this.innerHTML = "Error de conexión, intente nuevamente más tarde";
 			setTimeout( ()=>{ window.location.reload();},3000);
