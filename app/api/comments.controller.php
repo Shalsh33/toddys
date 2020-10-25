@@ -7,20 +7,37 @@ class comments_controller{
 	
 	private $model;
 	private $view;
+	private $data;
 	
 	function __construct(){
 		
-		//$this->model = new comments_model();
-		//$this->view = new api_view();
+		$this->model = new comments_model();
+		$this->view = new api_view();
+		$this->data = file_get_contents("php://input");
 		session_start();
+		
+	}
+	
+	private function getData(){
+		
+		return json_decode($this->data);
 		
 	}
 	
 	function getAll($params = null){
 		
+		
+		
 	}
 	
 	function getGroup($params = null){
+		
+		if ($params){
+			$comments = $this->model->getAll($params[':user']);
+			($comments) ? $this->view->response($comments,200) : $this->view->response($comments,404);
+		} else {
+			$this->view->response(false,404);
+		}
 		
 	}
 	
