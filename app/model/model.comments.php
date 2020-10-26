@@ -28,4 +28,14 @@ class comments_model extends data_base_connect{
 
     }
 
+    function add($comment,$user){
+
+        $query = $this->db->prepare("INSERT INTO $this->table (content,date,id_user) VALUES (?,?,?)");
+        $params = array ($comment,$_SERVER['REQUEST_TIME'],$user);
+        $result = $query->execute($params);
+
+        return ($result);
+
+    }
+
 }
