@@ -33,6 +33,7 @@ class comments_controller{
 	function getGroup($params = null){
 		
 		if ($params){
+			
 			$comments = $this->model->getAll($params[':user']);
 			($comments) ? $this->view->response($comments,200) : $this->view->response($comments,404);
 		} else {
