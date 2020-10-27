@@ -13,6 +13,7 @@ class admin_controller extends controller{
 	protected $model_relaciones;
 	protected $model_users;
 	protected $view;
+	protected $permissions;
 
 	function __construct(){
 		
@@ -26,36 +27,35 @@ class admin_controller extends controller{
 			$this->view->connection_error();
 			header('refresh:5;url='.BASE_URL.'inicio');
 		}
+		$this->permissions = $this->permissionsLevel();
 	}
 	
-	
-	private function check_session(){ //comprueba que exista una sesión
-		
-		
-		if (! ($this->sesion()) ){
+	//comprueba que exista una sesión
+	private function check_session(){ 
+		if (! ($this->sesion()) ){ //parent::session(): boolean
 			header('location:' . BASE_URL . 'login');
 			die();
-		}
-		
+		}	
 	}
-	
-	private function check_permissions($table){ //comprueba el nivel de permisos para las áreas del admin
+
+	//comprueba el nivel de permisos para las áreas del admin
+	private function check_permissions($table){ 
 		
 		switch ($table){
 			case 'personas':
 			case 'comisiones':
-				$permissions = ($_SESSION['permissions'] == "admin" || $_SESSION['permissions'] == "super admin");
+				$level = ($this->permissions > 0);
 				break;
 			case 'users':
-				$permissions = ($_SESSION['permissions'] == "super admin");
+				$level = ($this->permissions > 1);
 				break;
 			default:
-				$permissions = false;
+				$level = false;
 				break;
 			
 		}
 		
-		if(! $permissions){
+		if(! $level){
 			
 			$this->view->denied();die;
 			
@@ -63,24 +63,24 @@ class admin_controller extends controller{
 		
 	}
 	
-	
-	private function set_status($array_ppal,$array_sec){ //Agrega un atributo a las personas que permite saber si son parte
-															//de una comisión o a las comisiones, que permite saber si están asignadas a una persona.
-		foreach($array_ppal as $item){
+	//Agrega un atributo a las personas que permite saber si son parte de una comisión o a las comisiones, que permite saber si están asignadas a una persona.
+	private function set_status($array_ppal,$array_sec){
+
+		foreach($array_ppal as $item){ //Recorro el array principal (Todos los elementos de la db)
 			
-			$item->selected = false;
+			$item->selected = false; //A cada item se le agrega el atributo "selected" (default en false)
 			
 		}
-		
-		foreach($array_sec as $selected){
-			
-			foreach($array_ppal as $item){
-				
-				if ($selected->id == $item ->id){
-					
-					$item->selected = true;
-					break;
 
+		foreach($array_sec as $selected){ //luego del array secundario (los que realmente están asignados)
+			
+			foreach($array_ppal as $item){ //voy a comparar los elementos
+				
+				if ($selected->id == $item ->id){ //si coinciden 
+					
+					$item->selected = true; //Marco que la relación está establecida
+					break; //Sigo con el siguiente elemento
+							// Ver costo de ejecución. ¿Preferible ordenar los arr y usar búsqueda booleana?
 				} 
 				
 			}
@@ -92,19 +92,7 @@ class admin_controller extends controller{
 /*Acciones de ruteo*/
 	/*Página principal*/
 	function init($params = null){
-		$level = 0;
-		switch($_SESSION['permissions']){
-			case 'usuario':
-				$level = 0;
-				break;
-			case 'admin':
-				$level = 1;
-				break;
-			case 'super admin':
-				$level = 2;
-				break;
-		}
-		$this->view->main_page($level);
+		$this->view->main_page($this->permissions);
 	}
 	
 	/*Acceso a los listados de tablas*/
@@ -163,7 +151,15 @@ class admin_controller extends controller{
 		}
 		
 	}
-	
+
+/************************Funciones de cada tabla******************************/	
+/* 
+List: Muestra la lista de todas las tablas
+Edit: Muestra la interfaz de edición/borrado de una persona en particular
+Alta: Agrega un elemento a la db (Se llama desde el form del admin de c/tabla). En caso de usuarios el alta se hace via auth.controller
+Send_action: Envía los forms de edición o borrado de un elemento en particular.
+*/
+
 /*Acciones personas*/
 	function list_personas(){
 		
