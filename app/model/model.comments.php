@@ -38,7 +38,7 @@ class comments_model extends data_base_connect{
     function getAll(){
 
         $query = $this->db->prepare("SELECT * FROM $this->table");
-        $query->excecute([]);
+        $query->execute([]);
 
         $response = $query->fetchAll(PDO::FETCH_OBJ);
         return ($response);
