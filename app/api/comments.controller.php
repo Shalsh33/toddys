@@ -2,12 +2,14 @@
 
 require_once 'app/model/model.comments.php';
 require_once 'app/api/api.view.php';
+require_once 'app/controller/controller.php';
 
-class comments_controller{
+class comments_controller extends controller{
 	
 	private $model;
 	private $view;
 	private $data;
+	private $permissions;
 	
 	function __construct(){
 		
@@ -15,6 +17,7 @@ class comments_controller{
 		$this->view = new api_view();
 		$this->data = file_get_contents("php://input");
 		session_start();
+		$this->permissions = $this->permissionsLevel();
 		
 	}
 	
@@ -24,18 +27,48 @@ class comments_controller{
 		
 	}
 	
+	/*
+	Obtiene todos los comentarios (Para la vista administrador) o los de una persona en específico (Para la index view)
+	*/
 	function getAll($params = null){
 		
-		
+		if (isset($_GET['persona'])){ //Consigo los específicos de una persona
+
+			$name = $_GET['persona'];
+			$name = str_replace(' ', '+', $name);
+			$comments = $this->model->getAllPersona($name);
+			if ($comments){ //Si tiene comentarios
+				$this->view->response($comments,200); //Los devuelvo
+			 } else {
+				$code = $this->model->exist('persona','normalizedName',$name);
+				$this->view->response(false,$code); //Si no tiene comentarios, me fijo que exista la persona (para saber el código de respuesta)
+			}
+		} else { //Sino, pido todos los comentarios para el admin
+			if ($this->permissions > 0){ //Si el usuario tiene permisos +0 (Admin o superior)
+				$comments = $this->model->getAll();
+				($comments) ? $this->view->response($comments,200) : $this->view->response(false,404); //Pido todos los comentarios y los devuelvo
+			} else {
+				$this->view->response(false,403); //Sino, el usuario no tiene permisos (403 Forbidden)
+			}
+
+		}
 		
 	}
 	
+	/*
+	Obtiene todos los comentarios de un usuario por su ID (Es lo que la admin page de Users va a mostrar a los no admins)
+	*/
 	function getGroup($params = null){
 		
 		if ($params){
-			
-			$comments = $this->model->getAll($params[':user']);
-			($comments) ? $this->view->response($comments,200) : $this->view->response($comments,404);
+			$user = $params[':user'];
+			$comments = $this->model->getAllUser($user);
+			if ($comments) {
+				$this->view->response($comments,200);
+			} else {
+				$code = $this->model->exist('users','id',$user);
+				$this->view->response($comments,$code);
+			}
 		} else {
 			$this->view->response(false,404);
 		}
@@ -44,6 +77,8 @@ class comments_controller{
 	
 	function add ($params = null){
 		
+
+
 	}
 	
 	function deleteUserComments($params = null){
