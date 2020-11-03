@@ -3,11 +3,11 @@
 	<h1 class="tituloPpal"> Administrador DB personas </h1>
 <div>
 <h2>Agregar persona</h2>
-	<form>
+	<form enctype="multipart/form-data">
 		<input type='text' name='nombre' placeholder='nombre'></input>
 		<input type='text' name='periodo' placeholder='periodo'></input>
 		<input type='text' name='descripcion' placeholder='descripcion'></input>
-		<input type='text' name='foto' placeholder='foto'></input>
+		<input type='file' name='foto[]' placeholder='foto' id="foto" multiple></input>
 		<input type='checkbox' name='presidente'></input>
 		<button type='submit' id="send">Enviar</button>
 	</form>

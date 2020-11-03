@@ -2,16 +2,19 @@
 
 include_once 'app/model/database.php';
 require_once 'app/model/model.relaciones.php';
+require_once 'app/model/model.imagenes.php';
 
 //El admin hereda atributos y funciones de db_conect
 class model_personas extends data_base_connect{
 	
 	private $table;
 	private $relaciones;
+	private $imagenes;
 	
 	function __construct(){
 		//Defino El host, los datos de la db y la tabla que vamos a usar
 		$this->relaciones = new model_relaciones();
+		$this->imagenes = new model_imagenes();
 		$this->table = "persona";
 		$host = "localhost";
 		$dbname = "bloque_de_todos";
@@ -33,21 +36,20 @@ class model_personas extends data_base_connect{
 		
 	}
 	
-	function insert($nombre,$periodo,$desc=null,$presidente,$foto="none.png"){
+	function insert($nombre,$periodo,$desc=null,$presidente){
 		
 		//Si reemplazamos al presidente
-		if ( ($presidente) && ($self->check_presidente()) ){
-				$self->replace_presidente();
+		if ( ($presidente) && ($this->check_presidente()) ){
+				$this->replace_presidente();
 		}
 		$normalizedName = $this->normalize($nombre);
 		// preparamos la consulta
-		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, descripcion, presidente, foto, normalizedName) VALUES (?,?,?,?,?,?)");
-			//La consulta tiene que llevar el nombre de la tabla, sino no se ejecuta!
+		$query = $this->db->prepare("INSERT INTO $this->table (nombre, periodo, descripcion, presidente, normalizedName) VALUES (?,?,?,?,?)");
 		
-		$result = $query->execute([$nombre,$periodo,$desc,$presidente,$foto,$normalizedName]);
-			
+		$result = $query->execute([$nombre,$periodo,$desc,$presidente,$normalizedName]);
+
 		//devolvemos el resultado de la ejecución (True/False)
-		return ($result);
+		return ($result) ? $this->db->lastInsertId() : false;
 		
 	}
 	
@@ -73,9 +75,9 @@ class model_personas extends data_base_connect{
 			}
 		}
 		
-		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, periodo = ?, descripcion = ?, presidente = ?, foto = ?, normalizedName = ? WHERE id = ?");
+		$query = $this->db->prepare("UPDATE $this->table SET nombre = ?, periodo = ?, descripcion = ?, presidente = ?, normalizedName = ? WHERE id = ?");
 		$normalizedName = $this->normalize($persona['nombre']);
-		$result = $query->execute([$persona['nombre'],$persona['periodo'],$persona['descripcion'],$persona['presidente'],$persona['foto'],$normalizedName,$id]);
+		$result = $query->execute([$persona['nombre'],$persona['periodo'],$persona['descripcion'],$persona['presidente'],$normalizedName,$id]);
 		
 		return($result);
 	}
@@ -131,8 +133,9 @@ class model_personas extends data_base_connect{
 			$persona = $response[$i];
 			
 			$comisiones = $this->relaciones->get_comisiones($persona->id);
-			
+			$foto = $this->imagenes->get_all_persona($persona->id);
 			$persona->comisiones = $comisiones;
+			$persona->foto = $foto; 
 			
 		}
 	

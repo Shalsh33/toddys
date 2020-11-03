@@ -5,12 +5,14 @@ require_once "app/Model/model.personas.php";
 require_once "app/Model/model.comisiones.php";
 require_once "app/model/model.users.php";
 require_once "app/View/admin.view.php";
+require_once 'app/model/model.imagenes.php';
 
 class admin_controller extends controller{
 
 	protected $model_personas;
 	protected $model_comisiones;
 	protected $model_relaciones;
+	protected $model_imagenes;
 	protected $model_users;
 	protected $view;
 	protected $permissions;
@@ -23,6 +25,7 @@ class admin_controller extends controller{
 		$this->model_comisiones = new model_comisiones();
 		$this->model_relaciones = new model_relaciones();
 		$this->model_users = new model_users();
+		$this->model_imagenes = new model_imagenes();
 		if (! ($this->model_comisiones->check_connection() && $this->model_personas->check_connection() && $this->model_relaciones->check_connection())){
 			$this->view->connection_error();
 			header('refresh:5;url='.BASE_URL.'inicio');
@@ -188,6 +191,8 @@ Send_action: Envía los forms de edición o borrado de un elemento en particular
 	
 	function alta_personas(){
 		
+		
+
 		if (isset($_POST['nombre']) && isset($_POST['periodo'])){
 			$nombre = $_POST['nombre'];
 			$periodo = $_POST['periodo'];
@@ -198,11 +203,35 @@ Send_action: Envía los forms de edición o borrado de un elemento en particular
 			
 		$descripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion'] : null;
 		$presidente = (isset($_POST['presidente']));
-		$foto = (isset($_POST['foto'])) ? $_POST['foto'] : 'none.png';
+
+		//Array con las posibles banderas de errores
+		$flags = array();
 		
-		$add = $this->model_personas->insert($nombre,$periodo,$descripcion,$presidente,$foto); 
-		($add) ? $this->view->action_done() : $this->view->error_param();
-		$this->redirect("personas");
+		$add = $this->model_personas->insert($nombre,$periodo,$descripcion,$presidente); 
+
+		if ($add && isset($_FILES)){
+			//foreach ($_FILES["foto"] as $key => $value){}
+			for($i = 0; $i<count($_FILES["foto"]["name"]);$i++){
+				if(strpos($_FILES["foto"]["type"][$i],"image/") !== false){
+					$img = $this->model_imagenes->add($add,$_FILES["foto"]["tmp_name"][$i],$_FILES["foto"]["name"][$i]);
+					if (!$img){
+						//flag "upload": falla en la subida del archivo
+						$flags["upload"] = true;
+					}
+				} else {
+					//flag "type": El archivo no es un tipo admitido (imagen)
+					$flags["type"] = true;
+				}
+			}
+		} else if(! $add) {
+			$this->view->error_param();die;
+		} else {
+			//flag "none": No se subió ningún archivo.
+			$flags["none"] = true;
+		}
+
+		$this->view->action_done($flags);
+		
 	}
 	
 	function send_edit_personas($id) {
@@ -213,7 +242,6 @@ Send_action: Envía los forms de edición o borrado de un elemento en particular
 			"periodo" => $_POST['periodo'],
 			"descripcion" => $_POST['descripcion'],
 			"presidente" => $presidente,
-			"foto" => $_POST['foto']
 		);
 		
 		if (! $this->model_personas->equal($persona,$id)){

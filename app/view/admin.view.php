@@ -10,8 +10,9 @@ class admin_view extends view{
 		$this->templateEngine->display("templates/admin_main.tpl");
 	}
 //Avisos
-	function action_done(){
+	function action_done($flags = null){
 		
+		var_dump($flags);
 		echo '<h1>Cambio realizado con èxito. Redireccionando a admin page</h1>';
 	
 	}
