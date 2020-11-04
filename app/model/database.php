@@ -4,12 +4,14 @@ class data_base_connect{
 	
 	protected $db;
 	
-	protected function __construct(){
-		$host = "localhost";
-		$dbname = "bloque_de_todos";
-		$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
-		$user = "root";
-		$pass = "";
+	protected function __construct($dsn = null, $user = null, $pass = null){
+		if (!$dsn){
+			$host = "localhost";
+			$dbname = "bloque_de_todos";
+			$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
+			$user = "root";
+			$pass = "";
+		}
 		$this->db = $this->connect($dsn,$user,$pass);
 	}
 	
@@ -24,7 +26,7 @@ class data_base_connect{
 	
 	function check_connection (){
 		
-		return ($this->db);
+		return ($this->db) ? true : false;
 		
 	}
 	
