@@ -7,12 +7,7 @@ class model_users extends data_base_connect {
 	
 	function __construct(){
 		$this->table = "users";
-		$host = "localhost";
-		$dbname = "bloque_de_todos";
-		$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
-		$user = "root";
-		$pass = "";
-		parent::__construct($dsn,$user,$pass);
+		parent::__construct();
 	}
 	
 	function get_all(){

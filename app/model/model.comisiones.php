@@ -13,12 +13,7 @@ class model_comisiones extends data_base_connect{
 		//Defino El host, los datos de la db y la tabla que vamos a usar
 		$this->relaciones = new model_relaciones();
 		$this->table = "comision";
-		$host = "localhost";
-		$dbname = "bloque_de_todos";
-		$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
-		$user = "root";
-		$pass = "";
-		parent::__construct($dsn,$user,$pass);
+		parent::__construct();
 	}
 	
 	function insert($nombre,$fecha){

@@ -9,12 +9,7 @@ class model_imagenes extends data_base_connect{
 	function __construct(){
 		//Defino El host, los datos de la db y la tabla que vamos a usar
 		$this->table = "imagen";
-		$host = "localhost";
-		$dbname = "bloque_de_todos";
-		$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
-		$user = "root";
-		$pass = "";
-		parent::__construct($dsn,$user,$pass);
+		parent::__construct();
     }
     
     function get_all_persona($id){

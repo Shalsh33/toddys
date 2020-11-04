@@ -16,12 +16,7 @@ class model_personas extends data_base_connect{
 		$this->relaciones = new model_relaciones();
 		$this->imagenes = new model_imagenes();
 		$this->table = "persona";
-		$host = "localhost";
-		$dbname = "bloque_de_todos";
-		$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
-		$user = "root";
-		$pass = "";
-		parent::__construct($dsn,$user,$pass);
+		parent::__construct();
 	}
 	
 	private function normalize($nombre){

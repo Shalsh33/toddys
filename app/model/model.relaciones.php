@@ -10,12 +10,7 @@ class model_relaciones extends data_base_connect{
 	function __construct(){
 		//Defino El host, los datos de la db y la tabla que vamos a usar
 		$this->table = "persona_comision";
-		$host = "localhost";
-		$dbname = "bloque_de_todos";
-		$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
-		$user = "root";
-		$pass = "";
-		parent::__construct($dsn,$user,$pass);
+		parent::__construct();
 	}
 	
 	private function insert($id_persona,$id_comision){

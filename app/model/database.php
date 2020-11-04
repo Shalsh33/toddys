@@ -4,7 +4,12 @@ class data_base_connect{
 	
 	protected $db;
 	
-	protected function __construct($dsn,$user,$pass){
+	protected function __construct(){
+		$host = "localhost";
+		$dbname = "bloque_de_todos";
+		$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
+		$user = "root";
+		$pass = "";
 		$this->db = $this->connect($dsn,$user,$pass);
 	}
 	
