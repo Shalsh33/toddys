@@ -7,6 +7,8 @@ require_once 'libs/Router.php';
 //Creo el Router
 $router = new Router();
 
+$router->setDefaultRoute('comments_controller','wrong_path');
+
 //Asigno las acciones
 $router->addRoute('comments','GET','comments_controller','getAll');
 $router->addRoute('comments/:user','GET','comments_controller','getGroup');

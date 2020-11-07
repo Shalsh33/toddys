@@ -90,7 +90,12 @@ class comments_controller extends controller{
 	}
 	
 	function edit($params = null){
-		
+		if($params){
+			$id = $params[':id'];
+			$body = json_decode($this->data);
+			$result = $this->model->edit($id,$body->content);
+			($result) ? $this->view->response($result,200) : $this->view->response($result,404);
+		}
 	}
 	
 	function deleteComment($params = null){

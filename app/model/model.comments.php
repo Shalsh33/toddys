@@ -90,4 +90,12 @@ class comments_model extends data_base_connect{
 
     }
 
+    function edit($id,$comment){
+
+        $query = $this->db->prepare("UPDATE $this->table SET (`content`, `edited`, `date_edited`) VALUES (?,?,?) WHERE id = ?");
+        $date = new DateTime('now',new DateTimeZone('America/Buenos_Aires'));
+        $result = $query->execute([$comment,true,$date->format('Y-m-d h:i:s'),$id]);
+
+    }
+
 }
