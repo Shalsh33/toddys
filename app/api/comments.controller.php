@@ -27,6 +27,12 @@ class comments_controller extends controller{
 		
 	}
 	
+	function wrong_path(){
+
+		$this->view->response("false",404);
+
+	}
+
 	/*
 	Obtiene todos los comentarios (Para la vista administrador) o los de una persona en específico (Para la index view)
 	*/
@@ -67,7 +73,7 @@ class comments_controller extends controller{
 				$this->view->response($comments,200);
 			} else {
 				$code = $this->model->exist('users','id',$user);
-				$this->view->response($comments,$code);
+				$this->view->response($comments,$code); //Si existe el usuario, devuelve "false" con un código 200, sino, "false" con 404
 			}
 		} else {
 			$this->view->response(false,404);
@@ -77,7 +83,19 @@ class comments_controller extends controller{
 	
 	function add ($params = null){
 		
-
+		if($params){
+			$user = $params[':user'];
+			$request = $this->getData();
+			if ($request->persona && $request->content){
+				$comment = $request->content;
+				$persona = $request->persona;
+				$result = $this->model->add($comment,$user,$persona);
+				($result) ? $this->view->response($result,201) : $this->view->response($result,404);
+			} else{
+				$this->view->response("Solicitud incompleta",204);
+			}
+			
+		}
 
 	}
 	
