@@ -8,7 +8,8 @@ class api_view{
        
         $this->status = array (
             200 => "OK",
-            201 => "created",
+            201 => "Created",
+            204 => "No Content",
             400 => "Bad Request",
             401 => "Unautorized",
             403 => "Forbidden",
@@ -28,7 +29,12 @@ class api_view{
     }
 
     private function requestStatus($code){
-        return ($this->status[$code]);
+        try{
+            $state = $this->status[$code];
+        } catch (Exception $e){
+            $state = $this->status[500];
+        }
+        return $state;
     }
 
 }
