@@ -27,6 +27,8 @@ class comments_controller extends controller{
 		
 	}
 	
+	//Camino por defecto si la ruta se especifica mal
+
 	function wrong_path(){
 
 		$this->view->response("false",404);
@@ -34,11 +36,23 @@ class comments_controller extends controller{
 	}
 
 	/*
-	Obtiene todos los comentarios (Para la vista administrador) o los de una persona en específico (Para la index view)
+	Obtiene todos los comentarios (Para la vista administrador) o los de un usuario en específico (Para la admin view personal)
 	*/
 	function getAll($params = null){
 		
-		if (isset($_GET['persona'])){ //Consigo los específicos de una persona
+		if ((!(isset($_GET) || $_GET['user'] == 'all')) ){ //Si estoy pidiendo todos los comentarios, tengo que tener permisos de super admin
+			if ($this->permissions > 1){
+				$comments = $this->model->getAll();
+				($comments) ? $this->view->response($comments,200) : $this->view->response(false,500);
+			} else {
+				$this->view->response(false,403);
+			}
+		} else {
+			$user = $_GET['user'];
+			$comments = $this->model->getAllUser($user);
+		}
+
+		/*if (isset($_GET['persona'])){ //Consigo los específicos de una persona
 
 			$name = $_GET['persona'];
 			$name = str_replace(' ', '+', $name);
@@ -57,7 +71,7 @@ class comments_controller extends controller{
 				$this->view->response(false,403); //Sino, el usuario no tiene permisos (403 Forbidden)
 			}
 
-		}
+		}*/
 		
 	}
 	
@@ -67,13 +81,15 @@ class comments_controller extends controller{
 	function getGroup($params = null){
 		
 		if ($params){
-			$user = $params[':user'];
-			$comments = $this->model->getAllUser($user);
+			$persona = $params[':persona'];
+			$persona = str_replace(' ', '+', $persona);
+			$comments = $this->model->getAllPersona($persona);
 			if ($comments) {
 				$this->view->response($comments,200);
 			} else {
-				$code = $this->model->exist('users','id',$user);
-				$this->view->response($comments,$code); //Si existe el usuario, devuelve "false" con un código 200, sino, "false" con 404
+				$exist = $this->model->exist('persona','normalizedName',$persona);
+				$code = ($exist) ? 200 : 404;
+				$this->view->response(false,$code); //Si existe el usuario, devuelve "false" con un código 200, sino, "false" con 404
 			}
 		} else {
 			$this->view->response(false,404);
@@ -81,43 +97,83 @@ class comments_controller extends controller{
 		
 	}
 	
+	//agrega un comentario
 	function add ($params = null){
 		
 		if($params){
-			$user = $params[':user'];
+			$persona = $params[':persona'];
+			$persona = str_replace(' ', '+', $persona);
 			$request = $this->getData();
-			if ($request->persona && $request->content){
+			if ($request->user && $request->content){
 				$comment = $request->content;
-				$persona = $request->persona;
+				$user = $request->user;
 				$result = $this->model->add($comment,$user,$persona);
-				($result) ? $this->view->response($result,201) : $this->view->response($result,404);
+				($result) ? $this->view->response($result,201) : $this->view->response($result,418); //418: soy una tetera ☺
 			} else{
-				$this->view->response("Solicitud incompleta",204);
+				$this->view->response(false,204);
 			}
 			
 		}
 
 	}
 	
-	function deleteUserComments($params = null){
+	//Borra todos los comentarios de una persona (Función cascada de borrado de personas)
+	function deletePersonaComments($params = null){
+
+		if ($params){
+			$persona = $params[':persona'];
+			$persona = str_replace(' ', '+', $persona);
+			if ($this->permissions>0){
+				$result = $this->model->deletePersona($persona);
+				($result) ? $this->view->response(true,200) : $this->view->response(false,404);
+			} else {
+				$this->view->response(false,403);
+			}
+		}
 		
 	}
 	
+	//Obtiene un solo comentario
 	function getOne($params = null){
 		
-	}
-	
-	function edit($params = null){
-		if($params){
-			$id = $params[':id'];
-			$body = json_decode($this->data);
-			$result = $this->model->edit($id,$body->content);
-			($result) ? $this->view->response($result,200) : $this->view->response($result,404);
+		if ($params){
+			$user = $params[':user'];
+			$idComment = $params[':comment'];
+			$result = $this->model->getOne($user,$idComment);
+			($result) ? $this->view->response($result,200) : $this->view->response(false,404);
+		} else {
+			$this->view->response(false,404);
 		}
 	}
-	
+	//Modifica el comentario
+	function edit($params = null){
+
+		if($params){
+			$id = $params[':comment'];
+			$user = $params[':user'];
+			$body = json_decode($this->data);
+			$result = $this->model->edit($id,$body->content,$user,$body->persona);
+			($result) ? $this->view->response($result,200) : $this->view->response($result,404);
+		} else {
+			$this->view->response(false,404);
+		}
+	}
+	//Elimina el comentario
 	function deleteComment($params = null){
 		
+		if($params){
+			$id = $params[':comment'];
+			$user = $params[':user'];
+
+			if ($this->permissions>1 || $this->compareSession($user)){
+				$result = $this->model->deleteComment($id);
+				($result) ? $this->view->response($result,200) : $this->view->response($result,404);
+			} else {
+				$this->view->response(false,403);
+			}
+		} else {
+			$this->view->response(false,404);
+		}
 	}
 	
 	

@@ -14,10 +14,7 @@ class comments_model extends data_base_connect{
 
     function exist($table,$search,$value){
 
-        //Return values
-        $true = 200;
-        $false = 404;
-
+        
         $sql = "SELECT $table.* FROM $table
         WHERE $table.$search = ?";
 
@@ -26,7 +23,7 @@ class comments_model extends data_base_connect{
 
         $response = $query->fetch(PDO::FETCH_OBJ);
 
-        return ($response) ? $true : $false;
+        return ($response) ? true : false;
 
     }
 
@@ -90,12 +87,27 @@ class comments_model extends data_base_connect{
 
     }
 
-    function edit($id,$comment){
+    function edit($id,$comment,$id_user,$id_persona){
 
-        $query = $this->db->prepare("UPDATE $this->table SET (`content`, `edited`, `date_edited`) VALUES (?,?,?) WHERE id = ?");
+        $query = $this->db->prepare("UPDATE $this->table SET (`content`, `edited`, `date_edited`) VALUES (?,?,?) WHERE id = ? AND id_user = ? AND id_persona = ?");
         $date = new DateTime('now',new DateTimeZone('America/Buenos_Aires'));
-        $result = $query->execute([$comment,true,$date->format('Y-m-d h:i:s'),$id]);
+        $result = $query->execute([$comment,true,$date->format('Y-m-d h:i:s'),$id,$id_user,$id_persona]);
+        return $result;
+    }
 
+    function getOne($user,$id){
+        $query = $this->db->prepare("SELECT * FROM $this->table WHERE id = ? AND id_user = ?");
+        $query->execute([$id,$user]);
+        $result =  $query->fetch(PDO::FETCH_OBJ);
+        return $result;
+    }
+
+    function deletePersona($persona){
+
+        $query = $this->db->prepare("DELETE FROM $this->table INNER JOIN persona ON $this->table.id_persona = persona.id WHERE persona.normalizedName = ?");
+        $result = $query->execute([$persona]);
+
+        return ($result);
     }
 
 }
