@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 			},0);
 			
 		});
+		cargarComentarios(persona);
 		
 	} else {
 		fetch ('personas').then(response=>response.text()).then(html=>{
@@ -34,7 +35,17 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 		});
 	}
 	
-	
+	async function cargarComentarios(persona){
+
+		let div = document.querySelector(".comentarios");
+		let response = await fetch(`api/comments?persona=${persona}`);
+		let comments = await response.json();
+
+		comments.forEach( comentario =>{
+			
+		})
+
+	}
 	
 	function eventsPersonas(){
 		
