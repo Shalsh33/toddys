@@ -32,7 +32,6 @@ $router->addRoute('admin/:table','GET','admin_controller','admin');
 $router->addRoute('admin/:table','POST','admin_controller','adminAdd');
 $router->addRoute('admin/:table/:id','GET','admin_controller','abmAdmin');
 $router->addRoute('admin/:table/:id/:action','POST','admin_controller','sendForm');
-
 //Ruteo
 $router->route($_GET["action"], $_SERVER['REQUEST_METHOD']);
 
