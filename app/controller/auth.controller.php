@@ -13,7 +13,7 @@ class auth_controller extends controller {
 		
 		$this->view = new auth_view(false);
 		$this->model = new model_users();
-		
+		session_start();
 		
 	}
 	
@@ -60,7 +60,6 @@ class auth_controller extends controller {
 	
 	function logout(){
 		
-		session_start();
 		$_SESSION = array();
 		session_destroy();
 		
@@ -68,10 +67,10 @@ class auth_controller extends controller {
 	
 	private function create_session($data){
 		
-		session_start();
+		header("refresh: 3; url =".BASE_URL."admin");
 		$_SESSION['user'] = $data->user;
 		$_SESSION['permissions'] = $data->role;
-		header("location: " . BASE_URL . "admin");
+		
 		
 	}
 	
@@ -98,8 +97,15 @@ class auth_controller extends controller {
 			$role = "user";
 			
 			$query = $this->model->add($user,$pass,$email,$role);
-			($query) ? $this->view->success() : $this->view->fail();
-			header('refresh:3;url='.BASE_URL.'login');
+			if ($query) {
+				$this->view->success();
+				$sesion = (object) ["user" => $user, "role" => "user"];
+				$this->create_session($sesion);
+			}else{
+				$this->view->fail();
+				header('refresh:3;url='.BASE_URL.'login');
+			}
+			
 		} else{
 			$this->view->fail();
 			header('refresh:2;url='.BASE_URL.'registro');

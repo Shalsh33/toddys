@@ -17,7 +17,7 @@ class auth_view extends view{
 	
 	function success(){
 		
-		echo("Registro realizado con éxito. Redirigiendo al login.");
+		echo("Registro realizado con éxito. Redirigiendo al inicio.");
 		
 	}
 	
