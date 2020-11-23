@@ -3,7 +3,6 @@ import navScript from './scripts.js';
 
 
 let query = window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1);
-console.log(query);
 let request = window.location.search.substr(1);
 
 fetch('header').then(response => response.text()).then(html => {
