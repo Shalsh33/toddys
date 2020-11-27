@@ -51,30 +51,9 @@ class comments_controller extends controller{
 			$user = $_GET['user'];
 			$comments = $this->model->getAllUser($user);
 		}
-
-		/*if (isset($_GET['persona'])){ //Consigo los específicos de una persona
-
-			$name = $_GET['persona'];
-			$name = str_replace(' ', '+', $name);
-			$comments = $this->model->getAllPersona($name);
-			if ($comments){ //Si tiene comentarios
-				$this->view->response($comments,200); //Los devuelvo
-			 } else {
-				$code = $this->model->exist('persona','normalizedName',$name);
-				$this->view->response(false,$code); //Si no tiene comentarios, me fijo que exista la persona (para saber el código de respuesta)
-			}
-		} else { //Sino, pido todos los comentarios para el admin
-			if ($this->permissions > 0){ //Si el usuario tiene permisos +0 (Admin o superior)
-				$comments = $this->model->getAll();
-				($comments) ? $this->view->response($comments,200) : $this->view->response(false,404); //Pido todos los comentarios y los devuelvo
-			} else {
-				$this->view->response(false,403); //Sino, el usuario no tiene permisos (403 Forbidden)
-			}
-
-		}*/
 		
 	}
-	
+
 	/*
 	Obtiene todos los comentarios de un usuario por su ID (Es lo que la admin page de Users va a mostrar a los no admins)
 	*/
@@ -82,7 +61,7 @@ class comments_controller extends controller{
 		
 		if ($params){
 			$persona = $params[':persona'];
-			$persona = str_replace(' ', '+', $persona);
+			$persona = str_replace(' ', '+', $persona); //php convierte automaticamente los + en un espacio
 			$comments = $this->model->getAllPersona($persona);
 			if ($comments) {
 				$this->view->response($comments,200);
@@ -108,11 +87,13 @@ class comments_controller extends controller{
 				$comment = $request->content;
 				$user = $request->user;
 				$result = $this->model->add($comment,$user,$persona);
-				($result) ? $this->view->response($result,201) : $this->view->response($result,418); //418: soy una tetera ☺
+				($result) ? $this->view->response($result,201) : $this->view->response($result,418); //418: soy una tetera *.*
 			} else{
 				$this->view->response(false,204);
 			}
 			
+		} else {
+			$this->view->response(false,404);
 		}
 
 	}
@@ -129,6 +110,8 @@ class comments_controller extends controller{
 			} else {
 				$this->view->response(false,403);
 			}
+		} else {
+			$this->view->response(false,404);
 		}
 		
 	}
