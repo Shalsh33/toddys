@@ -30,5 +30,14 @@ class controller{
 		}
 
 	}
+
+	protected function compareSession($user){
+	
+		if (!isset($_SESSION)){
+			session_start();
+		}
+
+		return ($_SESSION['id'] == $user);
+	}
 	
 }
