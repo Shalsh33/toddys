@@ -70,6 +70,7 @@ class auth_controller extends controller {
 		header("refresh: 3; url =".BASE_URL."admin");
 		$_SESSION['user'] = $data->user;
 		$_SESSION['permissions'] = $data->role;
+		$_SESSION['id'] = $data->id;
 		
 		
 	}
@@ -99,7 +100,7 @@ class auth_controller extends controller {
 			$query = $this->model->add($user,$pass,$email,$role);
 			if ($query) {
 				$this->view->success();
-				$sesion = (object) ["user" => $user, "role" => "user"];
+				$sesion = (object) ["user" => $user, "role" => "user", "id" => $query];
 				$this->create_session($sesion);
 			}else{
 				$this->view->fail();
