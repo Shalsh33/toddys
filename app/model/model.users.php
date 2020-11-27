@@ -46,7 +46,7 @@ class model_users extends data_base_connect {
 		$query = $this->db->prepare("INSERT INTO $this->table (user, pass, email, role) VALUES (?,?,?,?)");
 		$result = $query->execute([$user,$pass,$email,$role]);
 		
-		return ($result);
+		return ($result) ? $this->db->lastInsertId() : false ;
 		
 	}
 	

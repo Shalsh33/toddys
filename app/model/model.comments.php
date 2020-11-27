@@ -83,7 +83,7 @@ class comments_model extends data_base_connect{
         $params = array ($comment,$date->format('Y-m-d h:i:s'),$user,$persona);
         $result = $query->execute($params);
 
-        return ($result);
+        return ($result) ? $params : false;
 
     }
 
@@ -92,7 +92,7 @@ class comments_model extends data_base_connect{
         $query = $this->db->prepare("UPDATE $this->table SET (`content`, `edited`, `date_edited`) VALUES (?,?,?) WHERE id = ? AND id_user = ? AND id_persona = ?");
         $date = new DateTime('now',new DateTimeZone('America/Buenos_Aires'));
         $result = $query->execute([$comment,true,$date->format('Y-m-d h:i:s'),$id,$id_user,$id_persona]);
-        return $result;
+        return ($result) ? $this->getOne($id_user,$id) : false;
     }
 
     function getOne($user,$id){
@@ -110,4 +110,11 @@ class comments_model extends data_base_connect{
         return ($result);
     }
 
+    function deleteComment($id){
+
+        $query = $this->db->prepare("DELETE FROM $this->table WHERE id = ?");
+        $result = $query->execute([$id]);
+
+        return ($result);
+    }
 }
