@@ -23,6 +23,6 @@
 </section>
 <section class="comentarios">
 
-	<p>desarrollar</p>
+	{include file="templates/vue/comments.vue"}
 
 </section>
