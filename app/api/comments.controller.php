@@ -31,33 +31,16 @@ class comments_controller extends controller{
 
 	function wrong_path(){
 
-		$this->view->response("false",404);
+		$this->view->response("Ruta mal especificada",404);
 
 	}
 
-	/*
-	Obtiene todos los comentarios (Para la vista administrador) o los de un usuario en específico (Para la admin view personal)
-	*/
-	function getAll($params = null){
-		
-		if ((!(isset($_GET) || $_GET['user'] == 'all')) ){ //Si estoy pidiendo todos los comentarios, tengo que tener permisos de super admin
-			if ($this->permissions > 1){
-				$comments = $this->model->getAll();
-				($comments) ? $this->view->response($comments,200) : $this->view->response(false,500);
-			} else {
-				$this->view->response(false,403);
-			}
-		} else {
-			$user = $_GET['user'];
-			$comments = $this->model->getAllUser($user);
-		}
-		
-	}
+
 
 	/*
 	Obtiene todos los comentarios de un usuario por su ID (Es lo que la admin page de Users va a mostrar a los no admins)
 	*/
-	function getGroup($params = null){
+	function getAll($params = null){
 		
 		if ($params){
 			$persona = $params[':persona'];
@@ -106,7 +89,7 @@ class comments_controller extends controller{
 			$persona = str_replace(' ', '+', $persona);
 			if ($this->permissions>0){
 				$result = $this->model->deletePersona($persona);
-				($result) ? $this->view->response(true,200) : $this->view->response(false,404);
+				($result) ? $this->view->response(true,200) : $this->view->response(false,500);
 			} else {
 				$this->view->response(false,403);
 			}
@@ -114,19 +97,6 @@ class comments_controller extends controller{
 			$this->view->response(false,404);
 		}
 		
-	}
-	
-	//Obtiene un solo comentario
-	function getOne($params = null){
-		
-		if ($params){
-			$user = $params[':user'];
-			$idComment = $params[':comment'];
-			$result = $this->model->getOne($user,$idComment);
-			($result) ? $this->view->response($result,200) : $this->view->response(false,404);
-		} else {
-			$this->view->response(false,404);
-		}
 	}
 	//Modifica el comentario
 	function edit($params = null){
@@ -136,7 +106,7 @@ class comments_controller extends controller{
 			$user = $params[':user'];
 			$body = json_decode($this->data);
 			$result = $this->model->edit($id,$body->content,$user,$body->persona);
-			($result) ? $this->view->response($result,200) : $this->view->response($result,404);
+			($result) ? $this->view->response($result,200) : $this->view->response($result,500);
 		} else {
 			$this->view->response(false,404);
 		}
@@ -145,14 +115,24 @@ class comments_controller extends controller{
 	function deleteComment($params = null){
 		
 		if($params){
-			$id = $params[':comment'];
-			$user = $params[':user'];
-
-			if ($this->permissions>1 || $this->compareSession($user)){
-				$result = $this->model->deleteComment($id);
-				($result) ? $this->view->response($result,200) : $this->view->response($result,404);
-			} else {
-				$this->view->response(false,403);
+			try{
+				$id = $params[':comment'];
+				if (! is_numeric($id)){
+					throw new Exception('ID del comentario mal especificada');
+				}
+				$user = $params[':user'];
+				if (! is_numeric($user)){
+					throw new Exception('ID del usuario mal especificada');
+				}
+				
+				if ($this->permissions>1 || $this->compareSession($user)){
+					$result = $this->model->deleteComment($id);
+					($result) ? $this->view->response($result,200) : $this->view->response($result,500);
+				} else {
+					$this->view->response(false,403);
+				}
+			} catch (Exception $e){
+				$this->view->response($e->getMessage(),404);
 			}
 		} else {
 			$this->view->response(false,404);
