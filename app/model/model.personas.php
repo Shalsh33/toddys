@@ -106,7 +106,7 @@ class model_personas extends data_base_connect{
 	
 	function get_all(){
 		
-		$query = $this->db->prepare("SELECT * FROM $this->table");
+		$query = $this->db->prepare("SELECT $this->table.*, imagen.nombre FROM $this->table INNER JOIN imagen on imagen.id_persona = $this->table.id WHERE imagen.principal");
 		
 		$query->execute();
 		
@@ -117,7 +117,7 @@ class model_personas extends data_base_connect{
 	
 	function get_all_extended(){
 		
-		$query = $this->db->prepare("SELECT * FROM $this->table");
+		$query = $this->db->prepare("SELECT * FROM $this->table INNER JOIN imagen on imagen.id_persona = $this->table.id WHERE imagen.principal");
 		
 		$query->execute();
 		
@@ -128,9 +128,7 @@ class model_personas extends data_base_connect{
 			$persona = $response[$i];
 			
 			$comisiones = $this->relaciones->get_comisiones($persona->id);
-			$foto = $this->imagenes->get_all_persona($persona->id);
-			$persona->comisiones = $comisiones;
-			$persona->foto = $foto; 
+			$persona->comisiones = $comisiones; 
 			
 		}
 	
@@ -163,11 +161,14 @@ class model_personas extends data_base_connect{
 		if ($response){
 			$comisiones = $this->relaciones->get_comisiones($id);
 			$response->comisiones = $comisiones;
+			$imagenes = $this->imagenes->get_all_persona($id);
+			$response->imagenes = $imagenes;
 		}
 		
 		return($response);
 	}
 	
+
 	function get_by_name($name){
 		//Intentamos obtener la persona por Nombre Normalizado
 		$query = $this->db->prepare("SELECT * FROM $this->table WHERE normalizedName = ?");

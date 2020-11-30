@@ -72,7 +72,7 @@ class comments_model extends data_base_connect{
 
         $response = $query->fetchAll(PDO::FETCH_OBJ);
 
-        return ($response);
+        return ($response) ? $response : $this->exist('users','id',$user);
 
     }
 
