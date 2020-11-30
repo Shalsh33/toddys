@@ -23,9 +23,8 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 			setTimeout(()=>{
 				back.addEventListener("click",clickBack);
 			},0);
-			
+			comentarios();
 		});
-		cargarComentarios(persona);
 		
 	} else {
 		fetch ('personas').then(response=>response.text()).then(html=>{
@@ -33,18 +32,6 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 			window.history.replaceState({},'','personas');
 			eventsPersonas();
 		});
-	}
-	
-	async function cargarComentarios(persona){
-
-		let div = document.querySelector(".comentarios");
-		let response = await fetch(`api/comments?persona=${persona}`);
-		let comments = await response.json();
-
-		comments.forEach( comentario =>{
-			
-		})
-
 	}
 	
 	function eventsPersonas(){
@@ -70,7 +57,7 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 						setTimeout(()=>{
 							back.addEventListener("click",clickBack);
 						},0);
-						
+						comentarios();
 					});
 			
 				});
@@ -79,7 +66,34 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 	}
 	
 	
+	async function comentarios(){
+		const app = new Vue({
+			el: "#comments",
+			data: {
+				comments : []
+			},
+			methods : {
+				eliminar : function(e) {
+					e.preventDefault();
+					deleteComment();
+				}
+			}
+		});
 	
+		let id = window.location.search.substr(1);;
+		console.log(id);
+		const request = await fetch(`api/comments/${id}`);
+	
+		const data = await request.json();
+	
+		if (Array.isArray(data)){
+			app.comments = data;
+		} else {
+			app.comments.push(data);
+		}
+		
+	}
+
 	let clickBack = (e) =>{
 		e.preventDefault();
 		ocultarEmergente();
