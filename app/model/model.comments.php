@@ -41,7 +41,7 @@ class comments_model extends data_base_connect{
 
         $sql = "SELECT 
         $this->table.id, $this->table.content, $this->table.date,
-        users.email FROM $this->table
+        $this->table.edited, $this->table.date_edited, users.email FROM $this->table
         INNER JOIN users ON users.id = $this->table.id_user 
         INNER JOIN persona ON persona.id = $this->table.id_persona
         WHERE persona.normalizedName = ?";
