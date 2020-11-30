@@ -10,11 +10,9 @@ $router = new Router();
 $router->setDefaultRoute('comments_controller','wrong_path');
 
 //Asigno las acciones
-$router->addRoute('comments','GET','comments_controller','getAll');
-$router->addRoute('comments/:persona','GET','comments_controller','getGroup');
+$router->addRoute('comments/:persona','GET','comments_controller','getAll');
 $router->addRoute('comments/:persona','POST','comments_controller','add');
 $router->addRoute('comments/:persona','DELETE','comments_controller','deletePersonaComments');
-$router->addRoute('comments/:user/:comment','GET','comments_controller','getOne');
 $router->addRoute('comments/:user/:comment','PUT','comments_controller','edit');
 $router->addRoute('comments/:user/:comment','DELETE','comments_controller','deleteComment');
 
