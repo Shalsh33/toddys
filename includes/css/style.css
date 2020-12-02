@@ -406,7 +406,7 @@ footer > p{
 	
 	/*css general*/
 	article{
-		margin: 0 3%;
+		margin: 0 1%;
 	}
 	header{
 		height: 80px;
@@ -424,6 +424,7 @@ footer > p{
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 25px;
+		z-index:100;
 	}
 	#navLinks{
 		width:auto;
@@ -624,6 +625,7 @@ footer > p{
 		position:fixed;
 		bottom:0;
 		width:100%;
+		z-index: 100;
 	}
 	/*footer*/
 	footer .logochico p{

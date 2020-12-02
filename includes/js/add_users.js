@@ -21,8 +21,6 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 		e.preventDefault();
 		const data = new URLSearchParams(new FormData(this));
 		
-		let tabla = window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1);
-		
 		let request = await fetch(`registro`, {
 									method: 'POST',
 									body: data,

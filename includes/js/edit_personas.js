@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 	async function sendForm(e){
 		e.preventDefault();
 		let id = window.location.pathname.substr(window.location.pathname.lastIndexOf('/')+1);
-		const data = new URLSearchParams(new FormData(this));
+		const data = new FormData(this);
 		let request = await fetch(`admin/personas/${id}/${this.id}`,{
 									method: 'POST',
 									body: data,

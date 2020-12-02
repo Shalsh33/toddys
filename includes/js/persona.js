@@ -24,6 +24,9 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 				back.addEventListener("click",clickBack);
 			},0);
 			comentarios();
+			$('.carousel').carousel({
+				interval: 3000
+			  })
 		});
 		
 	} else {
@@ -58,6 +61,9 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 							back.addEventListener("click",clickBack);
 						},0);
 						comentarios();
+						$('.carousel').carousel({
+							interval: 3000
+						  })
 					});
 			
 				});
@@ -70,7 +76,10 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 		const app = new Vue({
 			el: "#comments",
 			data: {
-				comments : []
+				comments : [],
+				user : "",
+				permissions : "",
+				comentarios : false
 			},
 			methods : {
 				eliminar : function(e) {
@@ -79,17 +88,28 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 				}
 			}
 		});
-	
+		
+		let data = document.querySelector("body").dataset;
+		app.user = data.u;
+		app.permissions = data.p;
 		let id = window.location.search.substr(1);;
-		console.log(id);
 		const request = await fetch(`api/comments/${id}`);
+		
+		if (request.ok){
+			const data = await request.json();
 	
-		const data = await request.json();
-	
-		if (Array.isArray(data)){
-			app.comments = data;
-		} else {
-			app.comments.push(data);
+			if (Array.isArray(data)){
+				app.comments = data;
+				app.comentarios = true;
+			} else {
+				if (data){
+					app.comments.push(data);
+					app.comentarios = true;
+				} else {
+					app.comments.push({'content' : "Aún no hay comentarios"})
+				}
+			}
+			console.log(app.comments);
 		}
 		
 	}
@@ -125,4 +145,6 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 		
 	}
 	
+	
+
 });
