@@ -25,7 +25,7 @@ class model_imagenes extends data_base_connect{
     function get_all_persona($id){
 
         
-        $query = $this->db->prepare("SELECT $this->table.* FROM $this->table INNER JOIN persona ON $this->table.id_persona = persona.id WHERE persona.nombre = ? OR persona.id = ? ORDER BY principal");
+        $query = $this->db->prepare("SELECT $this->table.* FROM $this->table INNER JOIN persona ON $this->table.id_persona = persona.id WHERE persona.nombre = ? OR persona.id = ? ORDER BY principal desc");
         $query->execute([$id,$id]);
 
         $result = $query->fetchAll(PDO::FETCH_OBJ);
