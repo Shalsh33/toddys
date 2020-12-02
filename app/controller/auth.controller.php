@@ -67,11 +67,10 @@ class auth_controller extends controller {
 	
 	private function create_session($data){
 		
-		header("refresh: 3; url =".BASE_URL."admin");
 		$_SESSION['user'] = $data->user;
 		$_SESSION['permissions'] = $data->role;
 		$_SESSION['id'] = $data->id;
-		
+		header("Location:".BASE_URL."admin");
 		
 	}
 	
