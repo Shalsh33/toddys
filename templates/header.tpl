@@ -7,8 +7,7 @@
 		<link rel="stylesheet" href="includes/css/style.css">
 		<title> Bloque de Todos </title>
 	</head>
-	<div id="user" class="hidden">{$smarty.session.user}</div>
-<div id="permissions" class="hidden">{$smarty.session.permissions}</div>
+
 	<body data-u="{$smarty.session.user}" data-p="{$smarty.session.permissions}">
 		<header>
 		

@@ -1,4 +1,5 @@
 {include file="templates/header.tpl"}
+<a href="admin/personas" id="back"><img src="includes/img/back.png" alt="back"></a>
 <script type="text/javascript" src="includes/js/edit_personas.js"></script>
 <article>
 	<h1 class="tituloPpal"> Administrador personas</h1>
@@ -19,7 +20,7 @@
 			<input type='text' name='nombre' placeholder='nombre' value="{$persona->nombre}"></input>
 			<input type='text' name='periodo' placeholder='periodo' value="{$persona->periodo}"></input>
 			<input type='text' name='descripcion' placeholder='descripcion' value="{$persona->descripcion}"></input>
-			<input type='file' name='foto[]' placeholder='foto' id="foto" multiple></input>
+			<input type='file' name='foto[]' placeholder='foto' multiple></input>
 			<input type='checkbox' name='presidente' {if $persona->presidente} checked {/if}> Presidente</input>
 			<p>Comisiones: </p>
 			{foreach from=$comisiones item=comision}
@@ -36,21 +37,25 @@
 		<div>
 			<h1> Control de fotos: </h1>
 		</div>
-		<section class="d-flex">
+		<section class="d-flex fotos">
 			{foreach from=$persona->imagenes item=foto}
 			
-				<img class="col-2 wd-100" src="{$foto->nombre}" alt=" "></img>
+				<img class="col-2 wd-100" src="{$foto->nombre}" alt=" "/>
 				<div class="col-2">
 					{if $foto->principal eq 0}
 						<div class="mt-5">
-							<button data-id="{$foto->id}" data-action="delete" class="btn btn-dark">Eliminar</button>
+							<button data-id="{$foto->id}" data-action="delete" class="btn btn-dark img-control">Eliminar</button>
 						</div>
 						<div class="mt-5">
-							<button data-id="{$foto->id}" data-action="principal" class="btn btn-dark">Convertir en portada</button>
+							<button data-id="{$foto->id}" data-action="principal" class="btn btn-dark img-control">Convertir en portada</button>
 						</div>
 					{else}
 						<div>
 							<h1 class="align-middle"> Portada actual (Las portadas no se pueden eliminar)</h1>
+							<form enctype="multipart/form-data" id="replace" data-id="{$foto->id}" data-action="replace">
+								<input type='file' name='foto' placeholder='foto' id="foto"/>Suba una nueva foto para reemplazar la portada 
+								<button class="btn btn-dark">Reemplazar</button>
+							</form>
 						</div>
 					{/if}
 				</div>
@@ -71,3 +76,4 @@
 
 </article>
 
+<script type="text/javascript" src="includes/js/images.js"></script>

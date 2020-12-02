@@ -1,4 +1,5 @@
 {include file="templates/header.tpl"}
+<a href="admin/users" id="back"><img src="includes/img/back.png" alt="back"></a>
 
 <article>
 	<h1 class="tituloPpal"> Administrador usuarios => {$usuario->email}</h1> 
