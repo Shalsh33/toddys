@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 	
 	let user = document.querySelector("#user");
 	let email = document.querySelector("#email");
-		
+	console.log(user);
 	user.addEventListener("keyup", function (e){
 			
 		email.value = this.value + "@todos.com.ar";
@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 		if (request.ok){
 			let text = await request.text();
 			this.innerHTML = text;
-			setTimeout( ()=>{ window.location.href = `inicio`;},1000);
+			setTimeout( ()=>{ window.location.href = `inicio`;},2000);
 		} else {
 			this.innerHTML = "Error de conexión, intente nuevamente más tarde";
-			setTimeout( ()=>{ window.location.reload;},3000);
+			setTimeout( ()=>{ window.location.reload();},3000);
 		}
 	}
 
