@@ -12,14 +12,27 @@ class admin_view extends view{
 //Avisos
 	function action_done($flags = null){
 		
-		var_dump($flags);
-		echo '<h1>Cambio realizado con èxito. Redireccionando a admin page</h1>';
+		if (! $flags){
+			echo '<h1>Cambio realizado con éxito.';
+		} else {
+			echo '<h1> Ha ocurrido un problema en la subida de archivos ->';
+			if (isset($flags['upload'])){
+				echo 'El archivo no pudo ser subido.';
+			}
+			if (isset($flags['type'])){
+				echo 'El archivo no es una imagen.';
+			}
+			if (isset($flags['none'])){
+				echo 'No hay archivos para subir.';
+			}
+			echo '</h1>';
+		}
 	
 	}
 	
 	function error_param(){
 		
-		echo '<h1>Parámetro mal especificado. Redireccionando a admin page</h1>';
+		echo '<h1>Parámetro mal especificado.</h1>';
 		
 	}
 	
