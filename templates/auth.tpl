@@ -10,12 +10,12 @@
 	  
 		<label for="pass">Password</label>
 		<input type="password" name="pass" placeholder="Contraseña">
-		<button type="submit">Entrar</button>
+		<button type="submit" class="btn btn-dark">Entrar</button>
 	
 	</form>
 	<h2> 
 	¿No tienes una cuenta? 
-	<a href="registro"><button type="button">¡Regístrate!</button></a>
+	<a href="registro"><button type="button" class="btn btn-dark">¡Regístrate!</button></a>
 	</h2>
 	
 	{if $error}

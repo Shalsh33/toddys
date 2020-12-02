@@ -6,8 +6,32 @@
 		{else} 
 			<h2 class="nombre">{$persona->nombre}</h2>
 		{/if}
+
+		<div id="carouselExampleIndicators" class="img-persona carousel slide col-6" data-ride="carousel">
+			<ol class="carousel-indicators">
+			{for $i=1 to count($persona->imagenes)}
+				<li data-target="#carouselExampleIndicators" data-slide-to="{$i-1}" {if $i eq 1}class="active"{/if}></li>
+			{/for}
+			</ol>
+			<div class="carousel-inner">
+				{foreach from=$persona->imagenes item=foto}
+					<div class="carousel-item {if $foto->principal}active{/if}">
+						<img class="d-block w-100" src="{$foto->nombre}" alt="{$persona->nombre}">
+					</div>
+				{/foreach}
+			</div>
+			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Anterior</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Siguiente foto</span>
+			</a>
+		</div>
 		
-		<img class="img-persona" src="includes/img/{$persona->foto}" alt="{$persona->nombre}"/>
+
+
 		
 		{if $persona->descripcion}
 			<p class="desc">{$persona->descripcion}</p>
