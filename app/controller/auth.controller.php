@@ -66,11 +66,12 @@ class auth_controller extends controller {
 	}
 	
 	private function create_session($data){
-		
+
+		header("refresh: 0; url = ".BASE_URL."admin");
 		$_SESSION['user'] = $data->user;
 		$_SESSION['permissions'] = $data->role;
 		$_SESSION['id'] = $data->id;
-		header("Location:".BASE_URL."admin");
+		
 		
 	}
 	
@@ -103,12 +104,12 @@ class auth_controller extends controller {
 				$this->create_session($sesion);
 			}else{
 				$this->view->fail();
-				header('refresh:3;url='.BASE_URL.'login');
+				header('Location:'.BASE_URL.'registro');
 			}
 			
 		} else{
 			$this->view->fail();
-			header('refresh:2;url='.BASE_URL.'registro');
+			header('Location:'.BASE_URL.'registro');
 		}
 	}
 	

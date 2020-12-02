@@ -14,12 +14,18 @@ class controller{
 	
 	protected function username(){
 		
+		if (!isset($_SESSION)){
+			session_start();
+		}
 		return ($_SESSION['user']);
 		
 	}
 	
 	protected function permissionsLevel(){
 
+		if (!isset($_SESSION)){
+			session_start();
+		}
 		if(!isset($_SESSION['permissions'])){
 			return 0;
 		}

@@ -28,8 +28,7 @@ class images_controller extends controller{
 
     function images_upload($add){
 		$flags = array();
-
-		if ($add && isset($_FILES)){
+		if ($add && isset($_FILES) && (!empty($_FILES)) ){
 			for($i = 0; $i<count($_FILES["foto"]["name"]);$i++){
 				if(strpos($_FILES["foto"]["type"][$i],"image/") !== false){
 					$img = $this->model->add($add,$_FILES["foto"]["tmp_name"][$i],$_FILES["foto"]["name"][$i]);
@@ -54,7 +53,7 @@ class images_controller extends controller{
 
     function upload($id_f){
         $id = $this->model->get_persona($id_f);
-        if (isset($_FILES)){
+        if (isset($_FILES) && (!empty($_FILES)) ){
             if(strpos($_FILES["foto"]["type"],"image/") !== false){
                 $img = $this->model->add($id,$_FILES["foto"]["tmp_name"],$_FILES["foto"]["name"]);
                 return ($img);
@@ -86,6 +85,7 @@ class images_controller extends controller{
 
         $new = $this->upload($old);
         $result = $this->model->replace_image($old,$new);
+        ($result) ? $this->view->action_done() : $this->view->error_param();
 
     }
 
