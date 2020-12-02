@@ -3,6 +3,7 @@
 require_once 'app/controller/admin.controller.php';
 require_once 'app/controller/index.controller.php';
 require_once 'app/controller/auth.controller.php';
+require_once 'app/controller/images.controller.php';
 require_once 'libs/Router.php';
 
 
@@ -32,6 +33,8 @@ $router->addRoute('admin/:table','GET','admin_controller','admin');
 $router->addRoute('admin/:table','POST','admin_controller','adminAdd');
 $router->addRoute('admin/:table/:id','GET','admin_controller','abmAdmin');
 $router->addRoute('admin/:table/:id/:action','POST','admin_controller','sendForm');
+//Imagenes
+$router->addRoute('admin/imagenes/:id/:action','POST','images_controller','init');
 //Ruteo
 $router->route($_GET["action"], $_SERVER['REQUEST_METHOD']);
 
