@@ -31,6 +31,16 @@ class model_personas extends data_base_connect{
 		
 	}
 	
+	function normalized_to_id($normalized){
+
+		$query = $this->db->prepare("SELECT id FROM $this->table WHERE normalizedName = ?");
+		$query->execute([$normalized]);
+
+		$result = $query->fetch(PDO::FETCH_OBJ);
+
+		return ($result) ? $result->id : 0;
+	}
+
 	function insert($nombre,$periodo,$desc=null,$presidente){
 		
 		//Si reemplazamos al presidente
@@ -106,7 +116,7 @@ class model_personas extends data_base_connect{
 	
 	function get_all(){
 		
-		$query = $this->db->prepare("SELECT $this->table.*, imagen.nombre FROM $this->table INNER JOIN imagen on imagen.id_persona = $this->table.id WHERE imagen.principal");
+		$query = $this->db->prepare("SELECT * FROM $this->table");
 		
 		$query->execute();
 		
@@ -117,7 +127,7 @@ class model_personas extends data_base_connect{
 	
 	function get_all_extended(){
 		
-		$query = $this->db->prepare("SELECT * FROM $this->table INNER JOIN imagen on imagen.id_persona = $this->table.id WHERE imagen.principal");
+		$query = $this->db->prepare("SELECT * FROM $this->table");
 		
 		$query->execute();
 		
@@ -129,6 +139,8 @@ class model_personas extends data_base_connect{
 			
 			$comisiones = $this->relaciones->get_comisiones($persona->id);
 			$persona->comisiones = $comisiones; 
+			$foto = $this->imagenes->get_principal($persona->id);
+			$persona->foto = $foto;
 			
 		}
 	
@@ -164,7 +176,7 @@ class model_personas extends data_base_connect{
 			$imagenes = $this->imagenes->get_all_persona($id);
 			$response->imagenes = $imagenes;
 		}
-		
+	
 		return($response);
 	}
 	
@@ -184,7 +196,7 @@ class model_personas extends data_base_connect{
 		
 		$compare = $this->get_one($id);
 		
-		if ($persona['nombre'] == $compare->nombre && $persona['periodo'] == $compare->periodo && $persona['descripcion'] == $compare->descripcion && $persona['foto'] == $compare->foto && ($persona['presidente'] == $compare->presidente) ){
+		if ($persona['nombre'] == $compare->nombre && $persona['periodo'] == $compare->periodo && $persona['descripcion'] == $compare->descripcion && ($persona['presidente'] == $compare->presidente) ){
 			return true;
 		}
 		return false;
