@@ -44,8 +44,13 @@ class comments_controller extends controller{
 		
 		if ($params){
 			$persona = $params[':persona'];
+			if (!isset($_GET['page'])){
+				$page = 1;
+			} else {
+				$page = $_GET['page'];
+			}
 			$persona = str_replace(' ', '+', $persona); //php convierte automaticamente los + en un espacio
-			$comments = $this->model->getAllPersona($persona);
+			$comments = $this->model->getAllPersona($persona,$page);
 			if ($comments) {
 				$this->view->response($comments,200);
 			} else {
@@ -66,9 +71,12 @@ class comments_controller extends controller{
 			$persona = $params[':persona'];
 			$persona = str_replace(' ', '+', $persona);
 			$request = $this->getData();
-			if ($request->user && $request->content){
+			if ($request->content){
 				$comment = $request->content;
-				$user = $request->user;
+				if(! isset($_SESSION)){
+					session_start();
+				}
+				$user = $_SESSION['id'];
 				$result = $this->model->add($comment,$user,$persona);
 				($result) ? $this->view->response($result,201) : $this->view->response($result,418); //418: soy una tetera *.*
 			} else{
