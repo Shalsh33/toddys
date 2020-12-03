@@ -239,7 +239,7 @@ Send_action: Envía los forms de edición o borrado de un elemento en particular
 		
 		$update = $this->model_relaciones->set_comisiones($comisiones,$id);
 
-		$flags = (empty($_FILES['foto']['nombre'])) ? false : $this->images->images_upload($id);
+		$flags =  $this->images->images_upload($id);
 
 		($update) ? $this->view->action_done($flags) : $this->view->error_param();
 		

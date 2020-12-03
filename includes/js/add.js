@@ -30,10 +30,10 @@ document.addEventListener('DOMContentLoaded', (e) =>{
 		if (request.ok){
 			let text = await request.text();
 			this.innerHTML = text;
-			//setTimeout( ()=>{ window.location.href = `admin/${tabla}`;},3000);
+			setTimeout( ()=>{ window.location.reload();},1000);
 		} else {
 			this.innerHTML = "Error de conexión, intente nuevamente más tarde";
-			//setTimeout( ()=>{ window.location.reload;},3000);
+			setTimeout( ()=>{ window.location.reload();},1000);
 		}
 	}
 

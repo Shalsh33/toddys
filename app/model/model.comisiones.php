@@ -3,7 +3,7 @@
 include_once 'app/model/database.php';
 require_once 'app/model/model.relaciones.php';
 
-//El model hereda atributos y funciones de db_conect
+
 class model_comisiones extends data_base_connect{
 	
 	private $table;
@@ -11,7 +11,7 @@ class model_comisiones extends data_base_connect{
 	private $limit;
 	
 	function __construct(){
-		//Defino El host, los datos de la db y la tabla que vamos a usar
+		
 		$this->relaciones = new model_relaciones();
 		$this->table = "comision";
 		$this->limit = 4;
