@@ -72,19 +72,56 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 	}
 	
 	
+	async function deleteComment(dataset,app){
+		const id = dataset.id;
+		const user = dataset.user;
+		const req = await fetch(`api/comments/${user}/${id}`,{
+			method: 'DELETE'
+		});
+		if(req.ok){
+			const res = await req.json();
+			remove(app.comments,id);
+		}
+
+		
+	}
+
+	function remove(array,id){
+
+		for (let i=0;i<array.length;i++){
+			if (array[i].id == id) {
+				array.splice( i, 1 );
+				break;
+			}
+		}
+
+	}
+
 	async function comentarios(){
 		const app = new Vue({
 			el: "#comments",
 			data: {
-				comments : [],
+				comments : [{'content' : "Aún no hay comentarios"}],
+				id : "",
 				user : "",
 				permissions : "",
-				comentarios : false
+				comentarios : false,
+				more : true,
+				page: 1
 			},
 			methods : {
 				eliminar : function(e) {
 					e.preventDefault();
-					deleteComment();
+					deleteComment(e.target.dataset,this);
+				},
+				cargarMas : function(e) {
+					e.preventDefault();
+					this.page++;
+					cargaComentarios(this);
+				},
+				editar : function(e){
+					e.preventDefault();
+					
 				}
 			}
 		});
@@ -92,26 +129,51 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 		let data = document.querySelector("body").dataset;
 		app.user = data.u;
 		app.permissions = data.p;
-		let id = window.location.search.substr(1);;
-		const request = await fetch(`api/comments/${id}`);
+		app.id = window.location.search.substr(1);;
+		cargaComentarios(app);
+
+		let form = document.querySelector("#add");
+		form.addEventListener("submit",async function submit(e){
+			e.preventDefault();
+			let data = {'content': document.querySelector('input[name="content"]').value}
+			let persona = window.location.search.substr(1);
+			const req = await fetch(`api/comments/${persona}`,{
+				method: 'POST',
+				headers: {
+					"content-type": "application/json"
+				},
+				body: JSON.stringify(data)
+			});
+			if (req.ok){
+				console.log(req);
+				let res = await req.json();
+				app.comments.splice(0,0,res);
+			}
+		});
+		
+	}
+
+	async function cargaComentarios(vue){
+		const request = await fetch(`api/comments/${vue.id}?page=${vue.page}`);
 		
 		if (request.ok){
 			const data = await request.json();
-	
+			if(vue.page == 1 && data){
+				vue.comments=[];
+			}
 			if (Array.isArray(data)){
-				app.comments = data;
-				app.comentarios = true;
+				
+				vue.comments = vue.comments.concat(data);
+				vue.comentarios = true;
 			} else {
 				if (data){
-					app.comments.push(data);
-					app.comentarios = true;
+					vue.comments.push(data);
+					vue.comentarios = true;
 				} else {
-					app.comments.push({'content' : "Aún no hay comentarios"})
+					vue.more=false;
 				}
 			}
-			console.log(app.comments);
 		}
-		
 	}
 
 	let clickBack = (e) =>{
