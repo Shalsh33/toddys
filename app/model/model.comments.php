@@ -91,7 +91,7 @@ class comments_model extends data_base_connect{
         $result = $query->execute($params);
         $obj = ($result) ?
         (object) array ('id' => $this->db->lastInsertId(), 'content' => $comment, 'date' => $date->format('Y-m-d H:i:s'), 
-        'id_user' => $user, 'id_persona' => $id_persona, 'edited' => false) : false;
+        'id_user' => $user, 'id_persona' => $id_persona, 'edited' => false, 'user'=>$_SESSION['user']) : false;
 
         return ($obj);
 
