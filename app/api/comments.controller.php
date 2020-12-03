@@ -113,7 +113,7 @@ class comments_controller extends controller{
 			$id = $params[':comment'];
 			$user = $params[':user'];
 			$body = json_decode($this->data);
-			$result = $this->model->edit($id,$body->content,$user,$body->persona);
+			$result = $this->model->edit($id,$body->content,$user);
 			($result) ? $this->view->response($result,200) : $this->view->response($result,500);
 		} else {
 			$this->view->response(false,404);

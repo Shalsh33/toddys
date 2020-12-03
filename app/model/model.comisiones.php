@@ -8,11 +8,13 @@ class model_comisiones extends data_base_connect{
 	
 	private $table;
 	private $relaciones;
+	private $limit;
 	
 	function __construct(){
 		//Defino El host, los datos de la db y la tabla que vamos a usar
 		$this->relaciones = new model_relaciones();
 		$this->table = "comision";
+		$this->limit = 4;
 		parent::__construct();
 	}
 	
@@ -58,9 +60,11 @@ class model_comisiones extends data_base_connect{
 		return ($response);
 	}
 	
-	function get_all_extended(){ //recibe las comisiones y los miembros de cada una
+	function get_all_extended($page){ //recibe las comisiones y los miembros de cada una
 		
-		$query = $this->db->prepare("SELECT * FROM $this->table");
+		$offset = ($page-1)*$this->limit;
+
+		$query = $this->db->prepare("SELECT * FROM $this->table LIMIT $offset,$this->limit");
 		
 		$query->execute();
 		

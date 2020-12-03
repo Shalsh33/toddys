@@ -8,7 +8,7 @@
 		<title> Bloque de Todos </title>
 	</head>
 
-	<body data-u="{$smarty.session.user}" data-p="{$smarty.session.permissions}">
+	<body {if isset($smarty.session.user) and isset($smarty.session.permissions)}data-u="{$smarty.session.user}" data-p="{$smarty.session.permissions}"{/if}>
 		<header>
 		
 			<nav id="nav" class="navhide"> <!--Se define la barra de navegación-->
@@ -24,7 +24,7 @@
 				<section id="navLinks"> <!--Div para la lista de navegación-->
 					<ul> <!--Se define la lista para la barra de navegación-->
 						<a class="nav" href="inicio"><li>Inicio</li></a>
-						<a class="nav" href="comisiones"><li>Comisiones</li></a>
+						<a class="nav" href="comisiones?page=1"><li>Comisiones</li></a>
 						<a class="nav" href="admin"><li>Soy miembro</li></a>
 						{if $sesion} 
 							 <a class="nav" id="logout" href="logout"><li> <div> Logueado como {$user} </div> Desconectarse<li></a>

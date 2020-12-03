@@ -29,5 +29,20 @@ class data_base_connect{
 		return ($this->db) ? true : false;
 		
 	}
+
+	function exist($table,$search,$value){
+
+        
+        $sql = "SELECT $table.* FROM $table
+        WHERE $table.$search = ?";
+
+        $query = $this->db->prepare($sql);
+        $query->execute([$value]);
+
+        $response = $query->fetch(PDO::FETCH_OBJ);
+
+        return ($response) ? true : false;
+
+    }
 	
 }

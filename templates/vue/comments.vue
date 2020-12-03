@@ -1,12 +1,35 @@
 {literal}
 
     <article id="comments" class="min-vh-100">
-	<section>
-		<form id="add">
-			<label for="content">comentario</label>
-			<input type="text" name="content" />
-			<button type="submit" class="btn btn-dark">Comentar</button>
-		</form>
+	<section v-if="user" class="d-flex justify-content-around">
+		<section>
+			<h1 class="text-light"> Agregar un comentario</h1>
+			<form id="add">
+			
+				<label for="content" class="d-none">comentario</label>
+				<input type="text" name="content" placeholder="comentario" />
+			
+				<button type="submit" class="btn btn-dark">Comentar</button>
+				<p id="send"></p>
+			</form>
+			</section>
+		<section>
+			<h1 class="text-light"> Calificar </h1>
+			<form class="calificacion d-flex justify-content-center">
+			
+				<input id="radio1" type="radio" name="estrellas" value="5" v-bind:checked="5 == calificacion">
+				<label for="radio1">★</label>
+				<input id="radio2" type="radio" name="estrellas" value="4" v-bind:checked="4 == calificacion">
+				<label for="radio2">★</label>
+				<input id="radio3" type="radio" name="estrellas" value="3" v-bind:checked="3 == calificacion">
+				<label for="radio3">★</label>
+				<input id="radio4" type="radio" name="estrellas" value="2" v-bind:checked="2 == calificacion">
+				<label for="radio4">★</label>
+				<input id="radio5" type="radio" name="estrellas" value="1" v-bind:checked="1 == calificacion">
+				<label for="radio5">★</label>
+			</form>
+			<p id="info" class="text-primary"></p>
+		</section>
 	</section>
     <h2 class="text-white"> Comentarios: </h2>
         <section  v-for="comment in comments">
@@ -24,7 +47,9 @@
 				</div>
                 <div class="col-2" v-if="(permissions == 'admin' || permissions == 'super admin' || comment.user == user) && comentarios">
                     <button class="btn btn-dark" :data-id=comment.id :data-user=comment.id_user v-on:click="eliminar"> Eliminar </button>
-                    <button v-if="comment.user == user" :data-id=comment.id :data-user=comment.id_user class="btn btn-dark"> Modificar </button>
+                    <button v-if="comment.user == user" :data-id=comment.id :data-user=comment.id_user class="btn btn-dark" v-on:click="editar"> Modificar </button>
+					<button v-if="comment.user == user" class="btn btn-dark d-none" id="sendEdit"> Enviar </button>
+					<button v-if="comment.user == user" class="btn btn-dark d-none" id="cancelEdit"> Cancelar </button>
                 </div>
 			</div>
         </section>

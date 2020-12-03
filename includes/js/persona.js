@@ -105,6 +105,7 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 				id : "",
 				user : "",
 				permissions : "",
+				calificacion : 0,
 				comentarios : false,
 				more : true,
 				page: 1
@@ -121,7 +122,7 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 				},
 				editar : function(e){
 					e.preventDefault();
-					
+					edit(e.target,this);
 				}
 			}
 		});
@@ -131,26 +132,79 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 		app.permissions = data.p;
 		app.id = window.location.search.substr(1);;
 		cargaComentarios(app);
+		actualizarPromedio(app);
+		getCalificacion(app);
+		
+		
+	}
 
-		let form = document.querySelector("#add");
-		form.addEventListener("submit",async function submit(e){
+	async function edit(node,vue){
+
+		let botonera = node.parentNode;
+		let row = node.parentNode.parentNode;
+		let comment = row.childNodes[2];
+		let value = comment.childNodes[0].innerHTML;
+		comment.innerHTML = "<input type='text' name='modif' value='" + value +"'/>";
+		let buttons = botonera.childNodes;
+		buttons.forEach(boton =>{
+			if(boton.nodeName != "#text"){
+				boton.classList.toggle("d-none");
+			}
+		});
+		let send = document.querySelector("#sendEdit");
+		let cancel = document.querySelector("#cancelEdit");
+		send.addEventListener("click", async function(e){
 			e.preventDefault();
-			let data = {'content': document.querySelector('input[name="content"]').value}
-			let persona = window.location.search.substr(1);
-			const req = await fetch(`api/comments/${persona}`,{
-				method: 'POST',
+			value = document.querySelector("input[name='modif']").value;
+			let data = { 'content' : value};
+			const req = await fetch(`api/comments/${node.dataset.user}/${node.dataset.id}`,{
+				method : 'PUT',
 				headers: {
 					"content-type": "application/json"
 				},
 				body: JSON.stringify(data)
 			});
 			if (req.ok){
-				console.log(req);
-				let res = await req.json();
-				app.comments.splice(0,0,res);
+				buttons.forEach(boton =>{
+					if(boton.nodeName != "#text"){
+						boton.classList.toggle("d-none");
+					}
+				});
+				comment.innerHTML = "<p>" + value + "</p>";
+			} else {
+				window.location.reload();
 			}
+
 		});
+		cancel.addEventListener("click", (e)=>{
+			buttons.forEach(boton =>{
+				boton.classList.toggle("d-none");
+			});
+			comment.innerHTML = "<p>" + value + "</p>";
+		})
 		
+
+	}
+
+	async function getCalificacion(vue){
+		const req = await fetch(`api/calificacion/${vue.id}/${vue.user}`);
+		if (req.ok){
+			const res = await req.json();
+			vue.calificacion = res.valor;
+		}
+	}
+
+	async function actualizarPromedio(vue){
+		const req = await fetch(`api/calificacion/${vue.id}`);
+
+		if (req.ok){
+			const res = await req.json();
+			let star = document.querySelector("#star");
+			star.innerHTML = "";
+			for(let i = 0;i<res.prom;i++){
+				star.innerHTML += "★";
+			}
+		}
 	}
 
 	async function cargaComentarios(vue){
@@ -173,6 +227,57 @@ document.addEventListener("DOMContentLoaded",(e)=>{
 					vue.more=false;
 				}
 			}
+		}
+		forms(vue);
+	}
+
+	async function forms(vue){
+		if (vue.user){
+			let form = document.querySelector("#add");
+			form.addEventListener("submit",async function submit(e){
+				e.preventDefault();
+				let p = document.querySelector("#send");
+				let content = document.querySelector('input[name="content"]');
+				if (content.value != ""){
+					let data = {'content': content.value }
+					let persona = window.location.search.substr(1);
+					const req = await fetch(`api/comments/${persona}`,{
+						method: 'POST',
+						headers: {
+							"content-type": "application/json"
+						},
+						body: JSON.stringify(data)
+					});
+					if (req.ok){
+						let res = await req.json();
+						vue.comments.splice(0,0,res);
+						content.value = "";
+						p.innerHTML = "comentario enviado con éxito";
+					}
+				} else {
+					p.innerHTML = "Se necesita un comentario";
+				}
+			});
+
+			let calificacion = document.querySelectorAll("input[type='radio']");
+			calificacion.forEach(input =>{
+				input.addEventListener("change",async function(e){
+					let data = {'estrellas' : input.value};
+					const req = await fetch(`api/calificacion/${vue.id}`,{
+						method : 'POST',
+						headers: {
+							"content-type": "application/json"
+						},
+						body: JSON.stringify(data)
+					});
+					if (req.ok){
+						document.querySelector("#info").innerHTML = "Gracias por su calificacion";
+						actualizarPromedio(vue);
+					} else {
+						document.querySelector("#info").innerHTML = "Ocurrió un error, intente de nuevo más tarde";
+					}
+				})
+			})
 		}
 	}
 

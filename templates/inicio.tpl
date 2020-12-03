@@ -1,5 +1,5 @@
 {include file="templates/header.tpl"}
-<article id="contenido">
+<article id="contenido" style="margin-bottom: 5rem;">
 </article>
 <article id="emergente" class="dnone"></article>
 <script type="text/javascript" src="includes/js/persona.js"></script>

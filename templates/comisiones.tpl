@@ -9,4 +9,13 @@
 	<p> {foreach from=$comision->personas item=persona} <a href="personas?{$persona->normalizedName}">{$persona->nombre}</a>,{/foreach} </p>
 	</section>
 {/foreach}
+
 </article>
+<div class="d-flex justify-content-center">
+{if $page>1}
+	<a href="comisiones?page={$page-1}"><button class="btn btn-dark">Página anterior</button></a>
+{/if}
+{if not $last}
+	<a href="comisiones?page={$page+1}"><button class="btn btn-dark">Página siguiente</button></a>
+{/if}
+</div>

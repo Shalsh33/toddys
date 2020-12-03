@@ -22,9 +22,10 @@ class index_view extends view{
 		
 	}
 	
-	function comisiones($datos){
-		
+	function comisiones($datos,$page,$last){
 		$this->templateEngine->assign("datos",$datos);
+		$this->templateEngine->assign("page", $page);
+		$this->templateEngine->assign("last", $last);
 		$this->templateEngine->display("templates/comisiones.tpl");
 		
 	}

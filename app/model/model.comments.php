@@ -17,21 +17,6 @@ class comments_model extends data_base_connect{
 
     }
 
-    function exist($table,$search,$value){
-
-        
-        $sql = "SELECT $table.* FROM $table
-        WHERE $table.$search = ?";
-
-        $query = $this->db->prepare($sql);
-        $query->execute([$value]);
-
-        $response = $query->fetch(PDO::FETCH_OBJ);
-
-        return ($response) ? true : false;
-
-    }
-
     function getAll(){
 
         $query = $this->db->prepare("SELECT * FROM $this->table");
@@ -97,12 +82,15 @@ class comments_model extends data_base_connect{
 
     }
 
-    function edit($id,$comment,$id_user,$id_persona){
+    function edit($id,$comment,$id_user){
 
-        $query = $this->db->prepare("UPDATE $this->table SET (`content`, `edited`, `date_edited`) VALUES (?,?,?) WHERE id = ? AND id_user = ? AND id_persona = ?");
+        $sql = "UPDATE $this->table SET `content` = ? , `edited` = ? , `date_edit` = ? WHERE id = ?";
+        $query = $this->db->prepare($sql);
         $date = new DateTime('now',new DateTimeZone('America/Buenos_Aires'));
-        $result = $query->execute([$comment,true,$date->format('Y-m-d H:i:s'),$id,$id_user,$id_persona]);
-        return ($result) ? $this->getOne($id_user,$id) : false;
+        $params = [$comment,true,$date->format('Y-m-d H:i:s'),$id];
+        
+        $result = $query->execute($params);
+        return ($result) ? true : false;
     }
 
     function getOne($user,$id){

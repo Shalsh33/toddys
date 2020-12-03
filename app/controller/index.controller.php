@@ -54,9 +54,15 @@ class index_controller extends controller{
 	
 	function comisiones($params){
 		
-		$datos = $this->model_comisiones->get_all_extended();
+		if(isset($_GET['page'])){
+			$page = $_GET['page'];
+		} else {
+			$page = 1;
+		}
+		$datos = $this->model_comisiones->get_all_extended($page);
 		
-		$this->view->comisiones($datos);
+		$last = ($datos) ? false : true;
+		$this->view->comisiones($datos,$page,$last);
 		
 	}
 	

@@ -34,11 +34,11 @@
 
 		
 		{if $persona->descripcion}
-			<p class="desc">{$persona->descripcion}</p>
+			<p class="desc">{$persona->descripcion}
 		{else}
-			<p class="desc">Descripción no disponible.</p>
+			<p class="desc">Descripción no disponible.
 		{/if}
-		
+		Calificación: <span id="star"> </span></p>
 		<div class="relaciones">
 			<h2> <a href=comisiones>Comisiones:</a> </h2>
 			<p> {foreach from=$persona->comisiones item=comision} {$comision->nombre},{/foreach} </p>

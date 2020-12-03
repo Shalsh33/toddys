@@ -31,7 +31,27 @@ nav {
 	background-color: rgba(0,0,0,0.9);
 	color:white;
 }
-
+input[type="radio"] {
+	display: none;
+  }
+  
+  label {
+	color: grey;
+  }
+  
+  .calificacion {
+	direction: rtl;
+	unicode-bidi: bidi-override;
+  }
+  
+  .calificacion > label:hover,
+  .calificacion > label:hover ~ label {
+	color: orange;
+  }
+  
+  input[type="radio"]:checked ~ label {
+	color: orange;
+  }
 .logo{
 	width: 50%;
 }
@@ -501,7 +521,7 @@ footer > p{
 			"recuadro recuadro"
 			"recuadro recuadro"
 			"recuadro recuadro";
-		margin: 0 3% 200px;
+		margin: 0 3%;
 		grid-gap:25px;
 			
 	}
