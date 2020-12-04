@@ -55,7 +55,11 @@ class comments_controller extends controller{
 				$this->view->response($comments,200);
 			} else {
 				$exist = $this->model->exist('persona','normalizedName',$persona);
-				$code = ($exist) ? 200 : 404;
+				if ($exist){
+					$code = 200;
+				} else {
+					$code = 404;
+				}
 				$this->view->response(false,$code); //Si existe el usuario, devuelve "false" con un código 200, sino, "false" con 404
 			}
 		} else {

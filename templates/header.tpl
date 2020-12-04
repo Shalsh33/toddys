@@ -49,7 +49,7 @@
 			
 			<section id="developer">
 			
-				<p> Desarrollado por TuVieja </p>
+				<p> Desarrollado por BlasM </p>
 
 			</section>
 
